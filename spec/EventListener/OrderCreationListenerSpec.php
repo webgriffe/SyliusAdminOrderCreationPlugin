@@ -5,26 +5,25 @@ declare(strict_types=1);
 namespace spec\Sylius\AdminOrderCreationPlugin\EventListener;
 
 use PhpSpec\ObjectBehavior;
-use SM\Factory\FactoryInterface;
+use Sylius\Abstraction\StateMachine\StateMachineInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\OrderCheckoutTransitions;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
-use Sylius\Component\Resource\StateMachine\StateMachineInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 final class OrderCreationListenerSpec extends ObjectBehavior
 {
     function let(
         OrderProcessorInterface $orderProcessor,
-        FactoryInterface $stateMachineFactory
+        StateMachineInterface $stateMachine,
     ) {
-        $this->beConstructedWith($orderProcessor, $stateMachineFactory);
+        $this->beConstructedWith($orderProcessor, $stateMachine);
     }
 
     function it_processes_order_before_creation(
         OrderProcessorInterface $orderProcessor,
         GenericEvent $event,
-        OrderInterface $order
+        OrderInterface $order,
     ) {
         $event->getSubject()->willReturn($order);
 
@@ -35,58 +34,52 @@ final class OrderCreationListenerSpec extends ObjectBehavior
     }
 
     function it_completes_order_before_creation(
-        FactoryInterface $stateMachineFactory,
-        GenericEvent $event,
         StateMachineInterface $stateMachine,
-        OrderInterface $order
+        GenericEvent $event,
+        OrderInterface $order,
     ) {
         $event->getSubject()->willReturn($order);
 
-        $stateMachineFactory->get($order, 'sylius_order_checkout')->willReturn($stateMachine);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_ADDRESS)->shouldBeCalled();
-        $stateMachine->can(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->willReturn(true);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->shouldBeCalled();
-        $stateMachine->can(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->willReturn(true);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->shouldBeCalled();
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_COMPLETE)->shouldBeCalled();
+        $stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_ADDRESS)->shouldBeCalled();
+        $stateMachine->can($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->willReturn(true);
+        $stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->shouldBeCalled();
+        $stateMachine->can($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->willReturn(true);
+        $stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->shouldBeCalled();
+        $stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_COMPLETE)->shouldBeCalled();
 
         $this->completeOrderBeforeCreation($event);
     }
 
     function it_completes_order_without_payment_before_creation(
-        FactoryInterface $stateMachineFactory,
-        GenericEvent $event,
         StateMachineInterface $stateMachine,
-        OrderInterface $order
+        GenericEvent $event,
+        OrderInterface $order,
     ) {
         $event->getSubject()->willReturn($order);
 
-        $stateMachineFactory->get($order, 'sylius_order_checkout')->willReturn($stateMachine);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_ADDRESS)->shouldBeCalled();
-        $stateMachine->can(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->willReturn(true);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->shouldBeCalled();
-        $stateMachine->can(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->willReturn(false);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->shouldNotBeCalled();
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_COMPLETE)->shouldBeCalled();
+        $stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_ADDRESS)->shouldBeCalled();
+        $stateMachine->can($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->willReturn(true);
+        $stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->shouldBeCalled();
+        $stateMachine->can($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->willReturn(false);
+        $stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->shouldNotBeCalled();
+        $stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_COMPLETE)->shouldBeCalled();
 
         $this->completeOrderBeforeCreation($event);
     }
 
     function it_completes_order_without_shipping_before_creation(
-        FactoryInterface $stateMachineFactory,
-        GenericEvent $event,
         StateMachineInterface $stateMachine,
-        OrderInterface $order
+        GenericEvent $event,
+        OrderInterface $order,
     ) {
         $event->getSubject()->willReturn($order);
 
-        $stateMachineFactory->get($order, 'sylius_order_checkout')->willReturn($stateMachine);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_ADDRESS)->shouldBeCalled();
-        $stateMachine->can(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->willReturn(false);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->shouldNotBeCalled();
-        $stateMachine->can(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->willReturn(true);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->shouldBeCalled();
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_COMPLETE)->shouldBeCalled();
+        $stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_ADDRESS)->shouldBeCalled();
+        $stateMachine->can($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->willReturn(false);
+        $stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->shouldNotBeCalled();
+        $stateMachine->can($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->willReturn(true);
+        $stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->shouldBeCalled();
+        $stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_COMPLETE)->shouldBeCalled();
 
         $this->completeOrderBeforeCreation($event);
     }

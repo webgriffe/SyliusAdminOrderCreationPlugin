@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\Provider;
 
-use Payum\Core\Model\GatewayConfigInterface;
 use Payum\Core\Payum;
 use Payum\Core\Security\TokenInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
+use Sylius\Component\Payment\Model\GatewayConfigInterface;
 
 final class PaymentTokenProvider implements PaymentTokenProviderInterface
 {
@@ -40,14 +40,14 @@ final class PaymentTokenProvider implements PaymentTokenProviderInterface
             return $tokenFactory->createAuthorizeToken(
                 $gatewayConfig->getGatewayName(),
                 $payment,
-                $this->afterPayRoute
+                $this->afterPayRoute,
             );
         }
 
         return $tokenFactory->createCaptureToken(
             $gatewayConfig->getGatewayName(),
             $payment,
-            $this->afterPayRoute
+            $this->afterPayRoute,
         );
     }
 }

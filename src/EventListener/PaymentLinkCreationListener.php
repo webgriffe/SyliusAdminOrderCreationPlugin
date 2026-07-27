@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Sylius\AdminOrderCreationPlugin\EventListener;
 
 use Doctrine\Persistence\ObjectManager;
-use Payum\Core\Model\GatewayConfigInterface;
 use Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
 use Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
+use Sylius\Component\Payment\Model\GatewayConfigInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Webmozart\Assert\Assert;
 
@@ -28,7 +28,7 @@ final class PaymentLinkCreationListener
     public function __construct(
         PaymentTokenProviderInterface $paymentTokenProvider,
         ObjectManager $orderManager,
-        OrderPaymentLinkSenderInterface $orderPaymentLinkSender
+        OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
     ) {
         $this->paymentTokenProvider = $paymentTokenProvider;
         $this->orderManager = $orderManager;

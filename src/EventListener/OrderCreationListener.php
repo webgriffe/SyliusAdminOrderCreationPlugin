@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\EventListener;
 
-use SM\Factory\FactoryInterface;
+use Sylius\Abstraction\StateMachine\StateMachineInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\OrderCheckoutTransitions;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
@@ -16,13 +16,13 @@ final class OrderCreationListener
     /** @var OrderProcessorInterface */
     private $orderProcessor;
 
-    /** @var FactoryInterface */
-    private $stateMachineFactory;
+    /** @var StateMachineInterface */
+    private $stateMachine;
 
-    public function __construct(OrderProcessorInterface $orderProcessor, FactoryInterface $stateMachineFactory)
+    public function __construct(OrderProcessorInterface $orderProcessor, StateMachineInterface $stateMachine)
     {
         $this->orderProcessor = $orderProcessor;
-        $this->stateMachineFactory = $stateMachineFactory;
+        $this->stateMachine = $stateMachine;
     }
 
     public function processOrderBeforeCreation(GenericEvent $event): void
@@ -39,14 +39,13 @@ final class OrderCreationListener
         $order = $event->getSubject();
         Assert::isInstanceOf($order, OrderInterface::class);
 
-        $stateMachine = $this->stateMachineFactory->get($order, 'sylius_order_checkout');
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_ADDRESS);
-        if ($stateMachine->can(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)) {
-            $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING);
+        $this->stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_ADDRESS);
+        if ($this->stateMachine->can($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)) {
+            $this->stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING);
         }
-        if ($stateMachine->can(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)) {
-            $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT);
+        if ($this->stateMachine->can($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)) {
+            $this->stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT);
         }
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_COMPLETE);
+        $this->stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_COMPLETE);
     }
 }
