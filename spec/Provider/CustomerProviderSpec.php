@@ -31,7 +31,7 @@ class CustomerProviderSpec extends ObjectBehavior
 
     function it_finds_a_customer_by_id(
         CustomerRepositoryInterface $customerRepository,
-        CustomerInterface $customer
+        CustomerInterface $customer,
     ) {
         $customerRepository->find('1')->willReturn($customer);
 
@@ -39,7 +39,7 @@ class CustomerProviderSpec extends ObjectBehavior
     }
 
     function it_throws_an_exception_if_no_customer_was_found(
-        CustomerRepositoryInterface $customerRepository
+        CustomerRepositoryInterface $customerRepository,
     ) {
         $customerRepository->find('2')->willReturn(null);
 
@@ -50,7 +50,7 @@ class CustomerProviderSpec extends ObjectBehavior
     function it_creates_a_customer_with_a_given_email(
         FactoryInterface $customerFactory,
         CustomerInterface $customer,
-        CustomerRepositoryInterface $customerRepository
+        CustomerRepositoryInterface $customerRepository,
     ) {
         $customerFactory->createNew()->willReturn($customer);
 

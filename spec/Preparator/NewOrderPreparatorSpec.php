@@ -20,7 +20,7 @@ final class NewOrderPreparatorSpec extends ObjectBehavior
     function let(
         OrderFactoryInterface $orderFactory,
         FormFactoryInterface $formFactory,
-        OrderProcessorInterface $orderProcessor
+        OrderProcessorInterface $orderProcessor,
     ): void {
         $this->beConstructedWith($orderFactory, $formFactory, $orderProcessor);
     }
@@ -37,7 +37,7 @@ final class NewOrderPreparatorSpec extends ObjectBehavior
         Request $request,
         OrderInterface $order,
         OrderInterface $orderWithData,
-        FormInterface $form
+        FormInterface $form,
     ): void {
         $request->attributes = new ParameterBag([
             'customerId' => '1',

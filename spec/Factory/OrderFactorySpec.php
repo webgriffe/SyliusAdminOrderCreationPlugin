@@ -23,13 +23,13 @@ final class OrderFactorySpec extends ObjectBehavior
         FactoryInterface $baseOrderFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
-        ReorderProcessor $reorderProcessor
+        ReorderProcessor $reorderProcessor,
     ) {
         $this->beConstructedWith(
             $baseOrderFactory,
             $customerRepository,
             $channelRepository,
-            $reorderProcessor
+            $reorderProcessor,
         );
     }
 
@@ -53,7 +53,7 @@ final class OrderFactorySpec extends ObjectBehavior
         CustomerInterface $customer,
         ChannelInterface $channel,
         CurrencyInterface $currency,
-        LocaleInterface $locale
+        LocaleInterface $locale,
     ): void {
         $baseOrderFactory->createNew()->willReturn($order);
 
@@ -79,7 +79,7 @@ final class OrderFactorySpec extends ObjectBehavior
 
     function it_throws_an_exception_if_the_customer_does_not_exist(
         FactoryInterface $baseOrderFactory,
-        CustomerRepositoryInterface $customerRepository
+        CustomerRepositoryInterface $customerRepository,
     ): void {
         $customerRepository->find('1')->willReturn(null);
 
@@ -97,7 +97,7 @@ final class OrderFactorySpec extends ObjectBehavior
         ChannelRepositoryInterface $channelRepository,
         OrderInterface $order,
         CustomerInterface $customer,
-        ChannelInterface $channel
+        ChannelInterface $channel,
     ): void {
         $baseOrderFactory->createNew()->willReturn($order);
 
@@ -123,7 +123,7 @@ final class OrderFactorySpec extends ObjectBehavior
         OrderInterface $order,
         CustomerInterface $customer,
         ChannelInterface $channel,
-        CurrencyInterface $currency
+        CurrencyInterface $currency,
     ): void {
         $baseOrderFactory->createNew()->willReturn($order);
 
@@ -150,7 +150,7 @@ final class OrderFactorySpec extends ObjectBehavior
         FactoryInterface $baseOrderFactory,
         ReorderProcessor $reorderProcessor,
         OrderInterface $order,
-        OrderInterface $reorder
+        OrderInterface $reorder,
     ): void {
         $baseOrderFactory->createNew()->willReturn($reorder);
 

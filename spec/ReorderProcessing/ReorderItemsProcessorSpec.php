@@ -19,7 +19,7 @@ final class ReorderItemsProcessorSpec extends ObjectBehavior
     function let(
         FactoryInterface $orderItemFactory,
         OrderItemQuantityModifierInterface $orderItemQuantityModifier,
-        OrderModifierInterface $orderModifier
+        OrderModifierInterface $orderModifier,
     ): void {
         $this->beConstructedWith($orderItemFactory, $orderItemQuantityModifier, $orderModifier);
     }
@@ -40,7 +40,7 @@ final class ReorderItemsProcessorSpec extends ObjectBehavior
         OrderItemInterface $firstNewOrderItem,
         OrderItemInterface $secondNewOrderItem,
         ProductVariantInterface $firstProductVariant,
-        ProductVariantInterface $secondProductVariant
+        ProductVariantInterface $secondProductVariant,
     ): void {
         $order->getItems()->willReturn(new ArrayCollection([
             $firstOrderItem->getWrappedObject(),

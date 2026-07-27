@@ -20,7 +20,7 @@ final class AvailableShippingMethodsListProviderSpec extends ObjectBehavior
         ShippingMethodsResolverInterface $shippingMethodsResolver,
         ShipmentInterface $shipment,
         ShippingMethodInterface $freeShippingMethod,
-        ShippingMethodInterface $dhlShippingMethod
+        ShippingMethodInterface $dhlShippingMethod,
     ) {
         $shippingMethodsResolver->getSupportedMethods($shipment)->willReturn([
             $freeShippingMethod,

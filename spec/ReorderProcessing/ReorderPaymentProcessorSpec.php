@@ -30,7 +30,7 @@ final class ReorderPaymentProcessorSpec extends ObjectBehavior
         OrderInterface $reorder,
         PaymentInterface $payment,
         PaymentInterface $newPayment,
-        PaymentMethodInterface $paymentMethod
+        PaymentMethodInterface $paymentMethod,
     ): void {
         $order->hasPayments()->willReturn(true);
         $order->getPayments()->willReturn(new ArrayCollection([$payment->getWrappedObject()]));

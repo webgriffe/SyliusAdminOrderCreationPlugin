@@ -27,7 +27,7 @@ final class OrderPaymentLinkSenderSpec extends ObjectBehavior
         SenderInterface $sender,
         OrderInterface $order,
         CustomerInterface $customer,
-        PaymentInterface $payment
+        PaymentInterface $payment,
     ) {
         $order->getLastPayment(PaymentInterface::STATE_NEW)->willReturn($payment);
         $order->getCustomer()->willReturn($customer);
@@ -42,7 +42,7 @@ final class OrderPaymentLinkSenderSpec extends ObjectBehavior
                 [
                     'order' => $order,
                     'paymentLink' => 'http://payment-link.com',
-                ]
+                ],
             )
             ->shouldBeCalled()
         ;

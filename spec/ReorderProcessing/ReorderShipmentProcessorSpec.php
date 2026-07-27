@@ -30,7 +30,7 @@ final class ReorderShipmentProcessorSpec extends ObjectBehavior
         OrderInterface $reorder,
         ShipmentInterface $shipment,
         ShipmentInterface $newShipment,
-        ShippingMethodInterface $shippingMethod
+        ShippingMethodInterface $shippingMethod,
     ): void {
         $order->hasShipments()->willReturn(true);
         $order->getShipments()->willReturn(new ArrayCollection([$shipment->getWrappedObject()]));

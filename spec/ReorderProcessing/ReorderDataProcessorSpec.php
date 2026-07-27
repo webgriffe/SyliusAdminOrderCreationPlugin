@@ -24,7 +24,7 @@ final class ReorderDataProcessorSpec extends ObjectBehavior
         ChannelInterface $channel,
         CustomerInterface $customer,
         AddressInterface $shippingAddress,
-        AddressInterface $billingAddress
+        AddressInterface $billingAddress,
     ): void {
         $order->getChannel()->willReturn($channel);
         $order->getCustomer()->willReturn($customer);

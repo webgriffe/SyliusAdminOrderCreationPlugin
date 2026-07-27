@@ -1,0 +1,276 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#1 \\$email of method Sylius\\\\AdminOrderCreationPlugin\\\\Provider\\\\CustomerProviderInterface\\:\\:provideNewCustomer\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/Controller/CustomerCreationAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$customerId of method Sylius\\\\AdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/Controller/OrderCreateAction.php
+
+		-
+			message: "#^Parameter \\#2 \\$channelCode of method Sylius\\\\AdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/Controller/OrderCreateAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$customerId of method Sylius\\\\AdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/Controller/OrderPreviewAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$order of method Sylius\\\\Component\\\\Order\\\\Processor\\\\OrderProcessorInterface\\:\\:process\\(\\) expects Sylius\\\\Component\\\\Order\\\\Model\\\\OrderInterface, mixed given\\.$#"
+			count: 1
+			path: src/Controller/OrderPreviewAction.php
+
+		-
+			message: "#^Parameter \\#2 \\$channelCode of method Sylius\\\\AdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/Controller/OrderPreviewAction.php
+
+		-
+			message: "#^Cannot cast mixed to int\\.$#"
+			count: 1
+			path: src/Controller/ProvideAvailableShippingMethodsAction.php
+
+		-
+			message: "#^Cannot call method getAmount\\(\\) on mixed\\.$#"
+			count: 1
+			path: src/Form/Type/AdjustmentType.php
+
+		-
+			message: "#^Cannot call method setAmount\\(\\) on mixed\\.$#"
+			count: 1
+			path: src/Form/Type/AdjustmentType.php
+
+		-
+			message: "#^Cannot call method setLabel\\(\\) on mixed\\.$#"
+			count: 1
+			path: src/Form/Type/AdjustmentType.php
+
+		-
+			message: "#^Cannot call method setType\\(\\) on mixed\\.$#"
+			count: 1
+			path: src/Form/Type/AdjustmentType.php
+
+		-
+			message: "#^Cannot access offset 'billingAddress' on mixed\\.$#"
+			count: 1
+			path: src/Form/Type/NewOrderType.php
+
+		-
+			message: "#^Cannot access offset 'shippingAddress' on mixed\\.$#"
+			count: 1
+			path: src/Form/Type/NewOrderType.php
+
+		-
+			message: "#^Parameter \\#1 \\$orderData of method Sylius\\\\AdminOrderCreationPlugin\\\\Form\\\\Type\\\\NewOrderType\\:\\:isBillingAddressEmpty\\(\\) expects array, mixed given\\.$#"
+			count: 1
+			path: src/Form/Type/NewOrderType.php
+
+		-
+			message: "#^Cannot access offset 'quantity' on mixed\\.$#"
+			count: 2
+			path: src/Form/Type/OrderItemType.php
+
+		-
+			message: "#^Parameter \\#1 \\$customerId of method Sylius\\\\AdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/Preparator/NewOrderPreparator.php
+
+		-
+			message: "#^Parameter \\#2 \\$channelCode of method Sylius\\\\AdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/Preparator/NewOrderPreparator.php
+
+		-
+			message: "#^Parameter \\#1 \\$gatewayName of method Payum\\\\Core\\\\Security\\\\GenericTokenFactoryInterface\\:\\:createAuthorizeToken\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: src/Provider/PaymentTokenProvider.php
+
+		-
+			message: "#^Parameter \\#1 \\$gatewayName of method Payum\\\\Core\\\\Security\\\\GenericTokenFactoryInterface\\:\\:createCaptureToken\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: src/Provider/PaymentTokenProvider.php
+
+		-
+			message: "#^Cannot call method getCode\\(\\) on Sylius\\\\Component\\\\Product\\\\Model\\\\ProductVariantInterface\\|false\\.$#"
+			count: 2
+			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
+
+		-
+			message: "#^Cannot call method getDescriptor\\(\\) on Sylius\\\\Component\\\\Product\\\\Model\\\\ProductVariantInterface\\|false\\.$#"
+			count: 4
+			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
+
+		-
+			message: "#^Parameter \\#1 \\$customerEmail of method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Page\\\\Admin\\\\NewOrderCustomerPageInterface\\:\\:selectCustomer\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
+
+		-
+			message: "#^Parameter \\#1 \\$productCode of method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Page\\\\Admin\\\\OrderPreviewPageInterface\\:\\:hasItemDiscountValidationMessage\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
+
+		-
+			message: "#^Parameter \\#1 \\$productCode of method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Page\\\\Admin\\\\OrderPreviewPageInterface\\:\\:lowerItemWithProductPriceBy\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
+
+		-
+			message: "#^Parameter \\#1 \\$productVariantDescriptor of method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElementInterface\\:\\:removeProduct\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
+
+		-
+			message: "#^Parameter \\#1 \\$productVariantDescriptor of method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElementInterface\\:\\:specifyQuantity\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
+
+		-
+			message: "#^Property Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Context\\\\Admin\\\\ManagingOrdersContext\\:\\:\\$addressComparator is never read, only written\\.$#"
+			count: 1
+			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
+
+		-
+			message: "#^Cannot call method click\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 1
+			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
+
+		-
+			message: "#^Cannot call method clickLink\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 1
+			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
+
+		-
+			message: "#^Cannot call method findAll\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 1
+			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
+
+		-
+			message: "#^Cannot call method getText\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 2
+			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
+
+		-
+			message: "#^Cannot call method hasClass\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 3
+			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
+
+		-
+			message: "#^Cannot call method isVisible\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 1
+			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
+
+		-
+			message: "#^Method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElement\\:\\:__construct\\(\\) has parameter \\$parameters with no type specified\\.$#"
+			count: 1
+			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
+
+		-
+			message: "#^Method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElement\\:\\:addItemAndWaitForIt\\(\\) should return Behat\\\\Mink\\\\Element\\\\NodeElement but returns Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 1
+			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
+
+		-
+			message: "#^Parameter \\#1 \\$addressForm of method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElement\\:\\:fillAddressData\\(\\) expects Behat\\\\Mink\\\\Element\\\\NodeElement, Behat\\\\Mink\\\\Element\\\\NodeElement\\|null given\\.$#"
+			count: 2
+			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
+
+		-
+			message: "#^Parameter \\#2 \\$value of method Behat\\\\Mink\\\\Element\\\\TraversableElement\\:\\:fillField\\(\\) expects array\\<int, string\\>\\|bool\\|string, int given\\.$#"
+			count: 2
+			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
+
+		-
+			message: "#^Parameter \\#2 \\$value of method Behat\\\\Mink\\\\Element\\\\TraversableElement\\:\\:fillField\\(\\) expects array\\<int, string\\>\\|bool\\|string, string\\|null given\\.$#"
+			count: 6
+			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
+
+		-
+			message: "#^Method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Element\\:\\:__construct\\(\\) has parameter \\$parameters with no type specified\\.$#"
+			count: 1
+			path: tests/Behat/Element/Element.php
+
+		-
+			message: "#^Method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Element\\:\\:getSelectorAsXpath\\(\\) has parameter \\$selector with no type specified\\.$#"
+			count: 1
+			path: tests/Behat/Element/Element.php
+
+		-
+			message: "#^Method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Element\\:\\:resolveParameters\\(\\) should return string but returns array\\.$#"
+			count: 1
+			path: tests/Behat/Element/Element.php
+
+		-
+			message: "#^Parameter \\#1 \\$selector of method Behat\\\\Mink\\\\Selector\\\\SelectorsHandler\\:\\:selectorToXpath\\(\\) expects string, int\\|string\\|null given\\.$#"
+			count: 1
+			path: tests/Behat/Element/Element.php
+
+		-
+			message: "#^Property Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Element\\:\\:\\$parameters has no type specified\\.$#"
+			count: 1
+			path: tests/Behat/Element/Element.php
+
+		-
+			message: "#^Method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Page\\\\Admin\\\\NewOrderCustomerPage\\:\\:__construct\\(\\) has parameter \\$parameters with no type specified\\.$#"
+			count: 1
+			path: tests/Behat/Page/Admin/NewOrderCustomerPage.php
+
+		-
+			message: "#^Cannot call method clickLink\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 2
+			path: tests/Behat/Page/Admin/OrderPreviewPage.php
+
+		-
+			message: "#^Cannot call method fillField\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 2
+			path: tests/Behat/Page/Admin/OrderPreviewPage.php
+
+		-
+			message: "#^Cannot call method find\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 2
+			path: tests/Behat/Page/Admin/OrderPreviewPage.php
+
+		-
+			message: "#^Cannot call method focus\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 2
+			path: tests/Behat/Page/Admin/OrderPreviewPage.php
+
+		-
+			message: "#^Cannot call method getText\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 2
+			path: tests/Behat/Page/Admin/OrderPreviewPage.php
+
+		-
+			message: "#^Cannot call method has\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 2
+			path: tests/Behat/Page/Admin/OrderPreviewPage.php
+
+		-
+			message: "#^Cannot call method press\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 2
+			path: tests/Behat/Page/Admin/OrderPreviewPage.php
+
+		-
+			message: "#^Cannot call method find\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 1
+			path: tests/Behat/Page/Admin/OrderShowPage.php
+
+		-
+			message: "#^Cannot call method click\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 2
+			path: tests/Behat/Service/AutoCompleteSelector.php
+
+		-
+			message: "#^Cannot call method getText\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 1
+			path: tests/Behat/Service/AutoCompleteSelector.php
+
+		-
+			message: "#^Cannot call method hasClass\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 1
+			path: tests/Behat/Service/AutoCompleteSelector.php

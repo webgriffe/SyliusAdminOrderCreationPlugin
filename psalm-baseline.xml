@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="6.16.1@f1f5de594dc76faf8784e02d3dc4716c91c6f6ac">
+  <file src="src/Controller/CustomerCreationAction.php">
+    <UnusedClass>
+      <code><![CDATA[CustomerCreationAction]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Controller/OrderCreateAction.php">
+    <UnusedClass>
+      <code><![CDATA[OrderCreateAction]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Controller/OrderPreviewAction.php">
+    <UnusedClass>
+      <code><![CDATA[OrderPreviewAction]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Controller/ProvideAvailableShippingMethodsAction.php">
+    <UnusedClass>
+      <code><![CDATA[ProvideAvailableShippingMethodsAction]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Controller/SelectNewOrderCustomerAction.php">
+    <UnusedClass>
+      <code><![CDATA[SelectNewOrderCustomerAction]]></code>
+    </UnusedClass>
+    <UnusedParam>
+      <code><![CDATA[$request]]></code>
+    </UnusedParam>
+  </file>
+  <file src="src/DependencyInjection/Configuration.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getConfigTreeBuilder(): TreeBuilder]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[Configuration]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/DependencyInjection/SyliusAdminOrderCreationExtension.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function getMigrationsDirectory(): string]]></code>
+      <code><![CDATA[protected function getMigrationsNamespace(): string]]></code>
+      <code><![CDATA[protected function getNamespacesOfMigrationsExecutedBefore(): array]]></code>
+      <code><![CDATA[public function load(array $config, ContainerBuilder $container): void]]></code>
+      <code><![CDATA[public function prepend(ContainerBuilder $container): void]]></code>
+    </MissingOverrideAttribute>
+    <ParamNameMismatch>
+      <code><![CDATA[$config]]></code>
+    </ParamNameMismatch>
+    <UnusedVariable>
+      <code><![CDATA[$loader]]></code>
+    </UnusedVariable>
+  </file>
+  <file src="src/Doctrine/ORM/CustomerRepositoryInterface.php">
+    <MissingTemplateParam>
+      <code><![CDATA[BaseCustomerRepositoryInterface]]></code>
+    </MissingTemplateParam>
+    <UnusedClass>
+      <code><![CDATA[CustomerRepositoryInterface]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Doctrine/ORM/ProductVariantRepositoryInterface.php">
+    <MissingTemplateParam>
+      <code><![CDATA[BaseProductVariantRepositoryInterface]]></code>
+    </MissingTemplateParam>
+    <UnusedClass>
+      <code><![CDATA[ProductVariantRepositoryInterface]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/EventListener/OrderCreationListener.php">
+    <UnusedClass>
+      <code><![CDATA[OrderCreationListener]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/EventListener/PaymentLinkCreationListener.php">
+    <UnusedClass>
+      <code><![CDATA[PaymentLinkCreationListener]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Factory/OrderFactory.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function createForCustomerAndChannel(string $customerId, string $channelCode): OrderInterface]]></code>
+      <code><![CDATA[public function createFromExistingOrder(OrderInterface $order): OrderInterface]]></code>
+      <code><![CDATA[public function createNew(): OrderInterface]]></code>
+    </MissingOverrideAttribute>
+    <UnnecessaryVarAnnotation>
+      <code><![CDATA[OrderInterface]]></code>
+    </UnnecessaryVarAnnotation>
+    <UnusedClass>
+      <code><![CDATA[OrderFactory]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Factory/OrderFactoryInterface.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[createFromExistingOrder]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Form/Type/AdjustmentType.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function buildForm(FormBuilderInterface $builder, array $options): void]]></code>
+      <code><![CDATA[public function configureOptions(OptionsResolver $resolver): void]]></code>
+      <code><![CDATA[public function getBlockPrefix(): string]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/Form/Type/CurrencyCodeChoiceType.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function buildForm(FormBuilderInterface $builder, array $options): void]]></code>
+      <code><![CDATA[public function getBlockPrefix(): string]]></code>
+      <code><![CDATA[public function getParent(): string]]></code>
+    </MissingOverrideAttribute>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Form/Type/CustomerAutocompleteChoiceType.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function buildView(FormView $view, FormInterface $form, array $options): void]]></code>
+      <code><![CDATA[public function configureOptions(OptionsResolver $resolver): void]]></code>
+      <code><![CDATA[public function getBlockPrefix(): string]]></code>
+      <code><![CDATA[public function getParent(): string]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/Form/Type/LocaleCodeChoiceType.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function buildForm(FormBuilderInterface $builder, array $options): void]]></code>
+      <code><![CDATA[public function getBlockPrefix(): string]]></code>
+      <code><![CDATA[public function getParent(): string]]></code>
+    </MissingOverrideAttribute>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Form/Type/NewOrderCustomerCreateType.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function buildForm(FormBuilderInterface $builder, array $options): void]]></code>
+      <code><![CDATA[public function getBlockPrefix()]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/Form/Type/NewOrderCustomerSelectType.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function buildForm(FormBuilderInterface $builder, array $options): void]]></code>
+      <code><![CDATA[public function getBlockPrefix()]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/Form/Type/NewOrderType.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function buildForm(FormBuilderInterface $builder, array $options): void]]></code>
+      <code><![CDATA[public function getBlockPrefix(): string]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/Form/Type/OrderItemType.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function buildForm(FormBuilderInterface $builder, array $options): void]]></code>
+      <code><![CDATA[public function configureOptions(OptionsResolver $resolver): void]]></code>
+      <code><![CDATA[public function getBlockPrefix(): string]]></code>
+    </MissingOverrideAttribute>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Form/Type/PaymentType.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function buildForm(FormBuilderInterface $builder, array $options): void]]></code>
+      <code><![CDATA[public function getBlockPrefix(): string]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/Form/Type/ShipmentType.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function buildForm(FormBuilderInterface $builder, array $options): void]]></code>
+      <code><![CDATA[public function getBlockPrefix(): string]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/Preparator/NewOrderPreparator.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function prepareFromRequest(Request $request): OrderInterface]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[NewOrderPreparator]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Provider/AvailableShippingMethodsListProvider.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Provider/CustomerProvider.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function provideExistingCustomer(string $id): CustomerInterface]]></code>
+      <code><![CDATA[public function provideNewCustomer(string $email): CustomerInterface]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[CustomerProvider]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Provider/CustomerProviderInterface.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[provideExistingCustomer]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Provider/PaymentTokenProvider.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getPaymentToken(PaymentInterface $payment): TokenInterface]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[PaymentTokenProvider]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/ReorderProcessing/CompositeReorderProcessor.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function process(OrderInterface $order, OrderInterface $reorder): void]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[CompositeReorderProcessor]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/ReorderProcessing/ReorderDataProcessor.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function process(OrderInterface $order, OrderInterface $reorder): void]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[ReorderDataProcessor]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/ReorderProcessing/ReorderItemsProcessor.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function process(OrderInterface $order, OrderInterface $reorder): void]]></code>
+    </MissingOverrideAttribute>
+    <UnnecessaryVarAnnotation>
+      <code><![CDATA[OrderItemInterface]]></code>
+    </UnnecessaryVarAnnotation>
+    <UnusedClass>
+      <code><![CDATA[ReorderItemsProcessor]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/ReorderProcessing/ReorderPaymentProcessor.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function process(OrderInterface $order, OrderInterface $reorder): void]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[ReorderPaymentProcessor]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/ReorderProcessing/ReorderShipmentProcessor.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function process(OrderInterface $order, OrderInterface $reorder): void]]></code>
+    </MissingOverrideAttribute>
+    <UnnecessaryVarAnnotation>
+      <code><![CDATA[ShipmentInterface]]></code>
+    </UnnecessaryVarAnnotation>
+    <UnusedClass>
+      <code><![CDATA[ReorderShipmentProcessor]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Sender/OrderPaymentLinkSender.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function sendPaymentLink(OrderInterface $order): void]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[OrderPaymentLinkSender]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/SyliusAdminOrderCreationPlugin.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function build(ContainerBuilder $container): void]]></code>
+      <code><![CDATA[public function getPath(): string]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[SyliusAdminOrderCreationPlugin]]></code>
+    </UnusedClass>
+  </file>
+</files>
