@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\AdminOrderCreationPlugin\Form\Type;
+namespace Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type;
 
 use Sylius\Bundle\CurrencyBundle\Form\Type\CurrencyChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\DataTransformer\ResourceToIdentifierTransformer;

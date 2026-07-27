@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Service;
+namespace Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Service;
 
 use Behat\Mink\Element\ElementInterface;
 use Behat\Testwork\Call\Exception\FatalThrowableError;

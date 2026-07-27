@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\AdminOrderCreationPlugin\ReorderProcessing;
+namespace Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing;
 
 use Laminas\Stdlib\PriorityQueue;
 use Sylius\Component\Core\Model\OrderInterface;

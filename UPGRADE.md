@@ -32,8 +32,8 @@ declare(strict_types=1);
 
 namespace App\Doctrine\ORM;
 
-use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepositoryInterface;
-use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepositoryTrait;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Doctrine\ORM\CustomerRepositoryInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Doctrine\ORM\CustomerRepositoryTrait;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\CustomerRepository as BaseCustomerRepository;
 
 final class CustomerRepository extends BaseCustomerRepository implements CustomerRepositoryInterface
@@ -50,8 +50,8 @@ declare(strict_types=1);
 
 namespace App\Doctrine\ORM;
 
-use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryInterface;
-use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductVariantRepository as BaseProductVariantRepository;
 
 final class ProductVariantRepository extends BaseProductVariantRepository implements ProductVariantRepositoryInterface

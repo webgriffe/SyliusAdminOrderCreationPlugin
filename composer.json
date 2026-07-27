@@ -1,5 +1,5 @@
 {
-    "name": "sylius/admin-order-creation-plugin",
+    "name": "webgriffe/sylius-admin-order-creation-plugin",
     "type": "sylius-plugin",
     "keywords": ["sylius", "sylius-plugin", "symfony", "e-commerce", "admin order creation"],
     "description": "Sylius Plugin for order creation in Admin panel",
@@ -64,12 +64,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Sylius\\AdminOrderCreationPlugin\\": "src/"
+            "Webgriffe\\SyliusAdminOrderCreationPlugin\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Sylius\\AdminOrderCreationPlugin\\": ["tests/", "tests/TestApplication/src/"]
+            "Tests\\Webgriffe\\SyliusAdminOrderCreationPlugin\\": ["tests/", "tests/TestApplication/src/"]
         }
     },
     "scripts": {

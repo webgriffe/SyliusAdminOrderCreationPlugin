@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace spec\Sylius\AdminOrderCreationPlugin\EventListener;
+namespace spec\Webgriffe\SyliusAdminOrderCreationPlugin\EventListener;
 
 use PhpSpec\ObjectBehavior;
 use Sylius\Abstraction\StateMachine\StateMachineInterface;

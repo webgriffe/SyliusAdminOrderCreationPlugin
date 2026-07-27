@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\AdminOrderCreationPlugin\DependencyInjection;
+namespace Webgriffe\SyliusAdminOrderCreationPlugin\DependencyInjection;
 
 use Sylius\Bundle\CoreBundle\DependencyInjection\PrependDoctrineMigrationsTrait;
 use Symfony\Component\Config\FileLocator;
@@ -28,12 +28,12 @@ final class SyliusAdminOrderCreationExtension extends Extension implements Prepe
 
     protected function getMigrationsNamespace(): string
     {
-        return 'Sylius\AdminOrderCreationPlugin\Migrations';
+        return 'Webgriffe\SyliusAdminOrderCreationPlugin\Migrations';
     }
 
     protected function getMigrationsDirectory(): string
     {
-        return '@SyliusAdminOrderCreationPlugin/src/Migrations';
+        return '@WebgriffeSyliusAdminOrderCreationPlugin/src/Migrations';
     }
 
     protected function getNamespacesOfMigrationsExecutedBefore(): array

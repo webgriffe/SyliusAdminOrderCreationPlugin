@@ -259,13 +259,13 @@
       <code><![CDATA[OrderPaymentLinkSender]]></code>
     </UnusedClass>
   </file>
-  <file src="src/SyliusAdminOrderCreationPlugin.php">
+  <file src="src/WebgriffeSyliusAdminOrderCreationPlugin.php">
     <MissingOverrideAttribute>
       <code><![CDATA[public function build(ContainerBuilder $container): void]]></code>
       <code><![CDATA[public function getPath(): string]]></code>
     </MissingOverrideAttribute>
     <UnusedClass>
-      <code><![CDATA[SyliusAdminOrderCreationPlugin]]></code>
+      <code><![CDATA[WebgriffeSyliusAdminOrderCreationPlugin]]></code>
     </UnusedClass>
   </file>
 </files>

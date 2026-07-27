@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\AdminOrderCreationPlugin\Sender;
+namespace Webgriffe\SyliusAdminOrderCreationPlugin\Sender;
 
 use Sylius\Component\Core\Model\OrderInterface;
 

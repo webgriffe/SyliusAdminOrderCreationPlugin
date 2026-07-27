@@ -2,7 +2,7 @@ sylius_admin_order_creation_select_order_customer:
     path: /admin/orders/new/select-customer
     methods: [GET]
     defaults:
-        _controller: Sylius\AdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction
+        _controller: Webgriffe\SyliusAdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction
 
 sylius_admin_order_creation_customer_create:
     path: /admin/orders/new/customer/{customerEmail}/{channelCode}
@@ -10,7 +10,7 @@ sylius_admin_order_creation_customer_create:
     options:
         expose: true
     defaults:
-        _controller: Sylius\AdminOrderCreationPlugin\Controller\CustomerCreationAction
+        _controller: Webgriffe\SyliusAdminOrderCreationPlugin\Controller\CustomerCreationAction
 
 sylius_admin_order_creation_order_create:
     path: /admin/orders/new/{customerId}/{channelCode}
@@ -23,9 +23,9 @@ sylius_admin_order_creation_order_create:
             event: admin_create
             section: admin
             permission: true
-            template: '@SyliusAdminOrderCreationPlugin/order/create.html.twig'
+            template: '@WebgriffeSyliusAdminOrderCreationPlugin/order/create.html.twig'
             form:
-                type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
+                type: Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
                 method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
                 arguments: [$customerId, $channelCode]
@@ -36,10 +36,10 @@ sylius_admin_order_creation_order_preview:
     path: /admin/orders/new/{customerId}/{channelCode}/preview
     methods: [POST]
     defaults:
-        _controller: Sylius\AdminOrderCreationPlugin\Controller\OrderPreviewAction
+        _controller: Webgriffe\SyliusAdminOrderCreationPlugin\Controller\OrderPreviewAction
         _sylius:
             form:
-                type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
+                type: Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
                 method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
                 arguments: [$customerId, $channelCode]
@@ -55,9 +55,9 @@ sylius_admin_order_creation_order_create_from_preview:
             event: admin_create
             section: admin
             permission: true
-            template: '@SyliusAdminOrderCreationPlugin/order/preview.html.twig'
+            template: '@WebgriffeSyliusAdminOrderCreationPlugin/order/preview.html.twig'
             form:
-                type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
+                type: Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
                 method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
                 arguments: [$customerId, $channelCode]
@@ -68,7 +68,7 @@ sylius_admin_order_creation_order_create_back:
     options:
         expose: true
     defaults:
-        _controller: Sylius\AdminOrderCreationPlugin\Controller\OrderCreateAction
+        _controller: Webgriffe\SyliusAdminOrderCreationPlugin\Controller\OrderCreateAction
     requirements:
         customerId: \d+
 
@@ -83,13 +83,13 @@ sylius_admin_order_creation_reorder:
             event: admin_create
             section: admin
             permission: true
-            template: '@SyliusAdminOrderCreationPlugin/order/create.html.twig'
+            template: '@WebgriffeSyliusAdminOrderCreationPlugin/order/create.html.twig'
             form:
-                type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
+                type: Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
                 method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createFromExistingOrder']
                 arguments: ["expr:service('sylius.repository.order').find($id)"]
 
 sylius_admin_order_creation_ajax:
     prefix: admin/ajax
-    resource: "@SyliusAdminOrderCreationPlugin/config/ajax.yaml"
+    resource: "@WebgriffeSyliusAdminOrderCreationPlugin/config/ajax.yaml"

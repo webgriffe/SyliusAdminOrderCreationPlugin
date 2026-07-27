@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Sylius\AdminOrderCreationPlugin;
+namespace Webgriffe\SyliusAdminOrderCreationPlugin;
 
-use Sylius\AdminOrderCreationPlugin\DependencyInjection\Compiler\RegisterReorderProcessorsPass;
+use Webgriffe\SyliusAdminOrderCreationPlugin\DependencyInjection\Compiler\RegisterReorderProcessorsPass;
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-final class SyliusAdminOrderCreationPlugin extends Bundle
+final class WebgriffeSyliusAdminOrderCreationPlugin extends Bundle
 {
     use SyliusPluginTrait;
 

@@ -4,23 +4,23 @@
     <services>
         <defaults public="true" />
 
-        <service id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\CompositeReorderProcessor" public="false" />
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\CompositeReorderProcessor" public="false" />
 
-        <service id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderDataProcessor" >
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderDataProcessor" >
             <tag name="sylius_admin_order_creation.reorder_processor" priority="40"/>
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderShipmentProcessor">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderShipmentProcessor">
             <argument type="service" id="sylius.factory.shipment" />
             <tag name="sylius_admin_order_creation.reorder_processor" priority="30" />
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderPaymentProcessor">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderPaymentProcessor">
             <argument type="service" id="sylius.factory.payment" />
             <tag name="sylius_admin_order_creation.reorder_processor" priority="20" />
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderItemsProcessor">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderItemsProcessor">
             <argument type="service" id="sylius.factory.order_item" />
             <argument type="service" id="Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface" />
             <argument type="service" id="Sylius\Component\Order\Modifier\OrderModifierInterface" />

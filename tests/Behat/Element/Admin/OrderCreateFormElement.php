@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin;
+namespace Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Element\Admin;
 
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
@@ -10,8 +10,8 @@ use Behat\Mink\Exception\Exception;
 use Behat\Mink\Session;
 use DMore\ChromeDriver\ChromeDriver;
 use Sylius\Component\Core\Model\AddressInterface;
-use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Element;
-use Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
+use Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Element\Element;
+use Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
 
 class OrderCreateFormElement extends Element implements OrderCreateFormElementInterface
 {

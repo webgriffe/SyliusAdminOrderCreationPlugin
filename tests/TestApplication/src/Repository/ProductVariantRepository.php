@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\AdminOrderCreationPlugin\Repository;
+namespace Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Repository;
 
-use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryInterface;
-use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductVariantRepository as BaseProductVariantRepository;
 
 final class ProductVariantRepository extends BaseProductVariantRepository implements ProductVariantRepositoryInterface

@@ -1,2 +1,2 @@
 sylius_admin_order_creation_plugin:
-    resource: "@SyliusAdminOrderCreationPlugin/config/routing.yaml"
+    resource: "@WebgriffeSyliusAdminOrderCreationPlugin/config/routing.yaml"

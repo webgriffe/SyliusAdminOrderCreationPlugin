@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin;
+namespace Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin;
 
 use Behat\Mink\Session;
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 use Symfony\Component\Routing\RouterInterface;
-use Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
+use Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
 
 final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomerPageInterface
 {

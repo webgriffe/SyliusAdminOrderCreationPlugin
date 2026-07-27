@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin;
+namespace Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Element\Admin;
 
 use Sylius\Component\Core\Model\AddressInterface;
 

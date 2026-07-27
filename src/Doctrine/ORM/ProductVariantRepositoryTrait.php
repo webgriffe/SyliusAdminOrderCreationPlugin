@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\AdminOrderCreationPlugin\Doctrine\ORM;
+namespace Webgriffe\SyliusAdminOrderCreationPlugin\Doctrine\ORM;
 
 use Doctrine\ORM\EntityManager;
 

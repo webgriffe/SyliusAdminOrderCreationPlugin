@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace spec\Sylius\AdminOrderCreationPlugin\Provider;
+namespace spec\Webgriffe\SyliusAdminOrderCreationPlugin\Provider;
 
 use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
-use Sylius\AdminOrderCreationPlugin\Provider\CustomerProvider;
-use Sylius\AdminOrderCreationPlugin\Provider\CustomerProviderInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\CustomerProvider;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\CustomerProviderInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;

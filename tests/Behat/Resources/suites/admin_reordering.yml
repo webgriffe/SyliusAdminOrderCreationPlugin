@@ -36,6 +36,6 @@ default:
                 - sylius.behat.context.ui.channel
                 - sylius.behat.context.ui.email
 
-                - Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext
+                - Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext
             filters:
                 tags: "@admin_order_creation_admin_reordering && @ui"

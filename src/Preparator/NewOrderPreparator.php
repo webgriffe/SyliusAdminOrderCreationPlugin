@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Sylius\AdminOrderCreationPlugin\Preparator;
+namespace Webgriffe\SyliusAdminOrderCreationPlugin\Preparator;
 
-use Sylius\AdminOrderCreationPlugin\Factory\OrderFactoryInterface;
-use Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactoryInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Symfony\Component\Form\FormFactoryInterface;

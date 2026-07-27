@@ -55,6 +55,6 @@ sylius_admin_order_creation_ajax_provide_available_shipping_methods:
     path: /admin/orders/available-shipping-methods/{customerId}/{channelCode}/{shipmentNumber}
     methods: [GET]
     defaults:
-        _controller: Sylius\AdminOrderCreationPlugin\Controller\ProvideAvailableShippingMethodsAction
+        _controller: Webgriffe\SyliusAdminOrderCreationPlugin\Controller\ProvideAvailableShippingMethodsAction
     options:
         expose: true

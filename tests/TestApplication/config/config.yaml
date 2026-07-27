@@ -1,16 +1,16 @@
 imports:
     - { resource: "packages/*.yaml" }
-    - { resource: "@SyliusAdminOrderCreationPlugin/config/config.yaml" }
+    - { resource: "@WebgriffeSyliusAdminOrderCreationPlugin/config/config.yaml" }
     - { resource: "services_test.php" }
 
 sylius_customer:
     resources:
         customer:
             classes:
-                repository: Tests\Sylius\AdminOrderCreationPlugin\Repository\CustomerRepository
+                repository: Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Repository\CustomerRepository
 
 sylius_product:
     resources:
         product_variant:
             classes:
-                repository: Tests\Sylius\AdminOrderCreationPlugin\Repository\ProductVariantRepository
+                repository: Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Repository\ProductVariantRepository

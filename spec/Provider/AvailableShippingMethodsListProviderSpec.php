@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace spec\Sylius\AdminOrderCreationPlugin\Provider;
+namespace spec\Webgriffe\SyliusAdminOrderCreationPlugin\Provider;
 
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\ShipmentInterface;

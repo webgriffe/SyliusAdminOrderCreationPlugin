@@ -8,115 +8,115 @@
     <services>
         <defaults public="true" />
 
-        <service id="Sylius\AdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction">
             <argument type="service" id="form.factory" />
             <argument type="service" id="twig" />
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\Controller\OrderPreviewAction">
-            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" />
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Controller\OrderPreviewAction">
+            <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactory" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="sylius.order_processing.order_processor" />
             <argument type="service" id="twig" />
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\Controller\OrderCreateAction">
-            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" />
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Controller\OrderCreateAction">
+            <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactory" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="twig" />
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\Controller\ProvideAvailableShippingMethodsAction">
-            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Preparator\NewOrderPreparator" />
-            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Provider\AvailableShippingMethodsListProvider" />
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Controller\ProvideAvailableShippingMethodsAction">
+            <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Preparator\NewOrderPreparator" />
+            <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Provider\AvailableShippingMethodsListProvider" />
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\Provider\AvailableShippingMethodsListProvider">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Provider\AvailableShippingMethodsListProvider">
             <argument type="service" id="Sylius\Component\Shipping\Resolver\ShippingMethodsResolverInterface" />
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerSelectType">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderCustomerSelectType">
             <tag name="form.type" />
         </service>
-        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerCreateType">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderCustomerCreateType">
             <tag name="form.type" />
         </service>
-        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType">
             <argument>%sylius.model.order.class%</argument>
             <argument>%sylius.form.type.order.validation_groups%</argument>
             <tag name="form.type" />
         </service>
-        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\OrderItemType">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\OrderItemType">
             <argument>%sylius.model.order_item.class%</argument>
             <argument type="service" id="sylius.form.data_mapper.order_item_quantity" />
             <argument>%sylius.form.type.order_item.validation_groups%</argument>
             <tag name="form.type" />
         </service>
-        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\ShipmentType">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\ShipmentType">
             <argument>%sylius.model.shipment.class%</argument>
             <argument>%sylius.form.type.shipment.validation_groups%</argument>
             <tag name="form.type" />
         </service>
-        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\PaymentType">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\PaymentType">
             <argument>%sylius.model.payment.class%</argument>
             <argument>%sylius.form.type.payment.validation_groups%</argument>
             <tag name="form.type" />
         </service>
-        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\AdjustmentType">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\AdjustmentType">
             <argument>%sylius.model.adjustment.class%</argument>
             <tag name="form.type" />
         </service>
-        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\LocaleCodeChoiceType">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\LocaleCodeChoiceType">
             <argument type="service" id="sylius.repository.locale" />
             <tag name="form.type" />
         </service>
-        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\CurrencyCodeChoiceType" >
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\CurrencyCodeChoiceType" >
             <argument type="service" id="sylius.repository.currency" />
             <tag name="form.type" />
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\Controller\CustomerCreationAction">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Controller\CustomerCreationAction">
             <argument type="service" id="router"/>
-            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Provider\CustomerProvider" />
+            <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Provider\CustomerProvider" />
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactory">
             <argument type="service" id="sylius.factory.order" />
             <argument type="service" id="sylius.repository.customer" />
             <argument type="service" id="sylius.repository.channel" />
-            <argument type="service" id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\CompositeReorderProcessor"/>
+            <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\CompositeReorderProcessor"/>
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\EventListener\OrderCreationListener">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\EventListener\OrderCreationListener">
             <argument type="service" id="sylius.order_processing.order_processor" />
             <argument type="service" id="Sylius\Abstraction\StateMachine\StateMachineInterface" />
             <tag name="kernel.event_listener" event="sylius.order.pre_admin_create" method="processOrderBeforeCreation" />
             <tag name="kernel.event_listener" event="sylius.order.pre_admin_create" method="completeOrderBeforeCreation" />
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\EventListener\PaymentLinkCreationListener">
-            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProvider" />
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\EventListener\PaymentLinkCreationListener">
+            <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Provider\PaymentTokenProvider" />
             <argument type="service" id="sylius.manager.order" />
-            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSender" />
+            <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Sender\OrderPaymentLinkSender" />
             <tag name="kernel.event_listener" event="sylius.order.post_admin_create" method="setPaymentLink" />
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSender">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Sender\OrderPaymentLinkSender">
             <argument type="service" id="sylius.email_sender" />
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProvider">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Provider\PaymentTokenProvider">
             <argument type="service" id="payum" />
             <argument type="string">sylius_shop_order_after_pay</argument>
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\Provider\CustomerProvider">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Provider\CustomerProvider">
             <argument type="service" id="sylius.repository.customer"/>
             <argument type="service" id="sylius.factory.customer"/>
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\Preparator\NewOrderPreparator">
-            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" />
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Preparator\NewOrderPreparator">
+            <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactory" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="sylius.order_processing.order_processor" />
         </service>

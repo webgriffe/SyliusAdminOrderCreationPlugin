@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace spec\Sylius\AdminOrderCreationPlugin\Factory;
+namespace spec\Webgriffe\SyliusAdminOrderCreationPlugin\Factory;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Sylius\AdminOrderCreationPlugin\Factory\OrderFactoryInterface;
-use Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactoryInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;

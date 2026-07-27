@@ -1,4 +1,4 @@
 suites:
     main:
-        namespace: Sylius\AdminOrderCreationPlugin
-        psr4_prefix: Sylius\AdminOrderCreationPlugin
+        namespace: Webgriffe\SyliusAdminOrderCreationPlugin
+        psr4_prefix: Webgriffe\SyliusAdminOrderCreationPlugin

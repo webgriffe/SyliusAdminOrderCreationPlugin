@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin;
+namespace Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Context\Admin;
 
 use Behat\Behat\Context\Context;
 use Sylius\Behat\NotificationType;
@@ -13,12 +13,12 @@ use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElementInterface;
-use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPageInterface;
-use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPageInterface;
-use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderPreviewPageInterface;
-use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPageInterface;
-use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\ReorderPageInterface;
+use Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElementInterface;
+use Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPageInterface;
+use Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPageInterface;
+use Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin\OrderPreviewPageInterface;
+use Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPageInterface;
+use Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin\ReorderPageInterface;
 use Webmozart\Assert\Assert;
 
 final class ManagingOrdersContext implements Context

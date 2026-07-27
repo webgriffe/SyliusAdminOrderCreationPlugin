@@ -39,7 +39,7 @@ Requires Sylius `~2.2.0` and PHP `^8.2`.
 1. Require plugin with composer:
 
     ```bash
-    composer require sylius/admin-order-creation-plugin
+    composer require webgriffe/sylius-admin-order-creation-plugin
     ```
 
     > Remember to allow community recipes with `composer config extra.symfony.allow-contrib true` or during plugin installation process
@@ -47,28 +47,28 @@ Requires Sylius `~2.2.0` and PHP `^8.2`.
 2. Register the bundle in `config/bundles.php`:
 
     ```php
-    Sylius\AdminOrderCreationPlugin\SyliusAdminOrderCreationPlugin::class => ['all' => true],
+    Webgriffe\SyliusAdminOrderCreationPlugin\WebgriffeSyliusAdminOrderCreationPlugin::class => ['all' => true],
     ```
 
 3. Import plugin configuration in `config/packages/sylius_admin_order_creation_plugin.yaml`:
 
     ```yaml
     imports:
-        - { resource: "@SyliusAdminOrderCreationPlugin/config/config.yaml" }
+        - { resource: "@WebgriffeSyliusAdminOrderCreationPlugin/config/config.yaml" }
     ```
 
 4. Import plugin routes in `config/routes/sylius_admin_order_creation_plugin.yaml`:
 
     ```yaml
     sylius_admin_order_creation_plugin:
-        resource: "@SyliusAdminOrderCreationPlugin/config/routing.yaml"
+        resource: "@WebgriffeSyliusAdminOrderCreationPlugin/config/routing.yaml"
     ```
 
 5. Copy Sylius templates overridden in plugin to your templates directory (e.g `templates/bundles/`):
 
     ```bash
     mkdir -p templates/bundles/SyliusAdminBundle/
-    cp -R vendor/sylius/admin-order-creation-plugin/templates/bundles/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
+    cp -R vendor/webgriffe/sylius-admin-order-creation-plugin/templates/bundles/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
     ```
 
 6. Override repositories
@@ -87,8 +87,8 @@ Requires Sylius `~2.2.0` and PHP `^8.2`.
     
       namespace App\Repository;
       
-      use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepositoryInterface;
-      use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepositoryTrait;
+      use Webgriffe\SyliusAdminOrderCreationPlugin\Doctrine\ORM\CustomerRepositoryInterface;
+      use Webgriffe\SyliusAdminOrderCreationPlugin\Doctrine\ORM\CustomerRepositoryTrait;
       use Sylius\Bundle\CoreBundle\Doctrine\ORM\CustomerRepository as BaseCustomerRepository;
       
       final class CustomerRepository extends BaseCustomerRepository implements CustomerRepositoryInterface
@@ -104,8 +104,8 @@ Requires Sylius `~2.2.0` and PHP `^8.2`.
     
       namespace App\Repository;
 
-      use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryInterface;
-      use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
+      use Webgriffe\SyliusAdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryInterface;
+      use Webgriffe\SyliusAdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
       use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductVariantRepository as BaseProductVariantRepository;
       
       final class ProductVariantRepository extends BaseProductVariantRepository implements ProductVariantRepositoryInterface

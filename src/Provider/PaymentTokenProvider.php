@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\AdminOrderCreationPlugin\Provider;
+namespace Webgriffe\SyliusAdminOrderCreationPlugin\Provider;
 
 use Payum\Core\Payum;
 use Payum\Core\Security\TokenInterface;

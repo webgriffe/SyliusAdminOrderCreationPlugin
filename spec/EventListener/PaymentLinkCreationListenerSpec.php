@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace spec\Sylius\AdminOrderCreationPlugin\EventListener;
+namespace spec\Webgriffe\SyliusAdminOrderCreationPlugin\EventListener;
 
 use Doctrine\Persistence\ObjectManager;
 use Payum\Core\Payum;
 use Payum\Core\Security\TokenInterface;
 use PhpSpec\ObjectBehavior;
-use Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
-use Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;

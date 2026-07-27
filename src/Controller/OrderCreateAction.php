@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Sylius\AdminOrderCreationPlugin\Controller;
+namespace Webgriffe\SyliusAdminOrderCreationPlugin\Controller;
 
-use Sylius\AdminOrderCreationPlugin\Factory\OrderFactoryInterface;
-use Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactoryInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,7 +42,7 @@ final class OrderCreateAction
         $form = $this->formFactory->create(NewOrderType::class, $order);
         $form->handleRequest($request);
 
-        return new Response($this->twig->render('@SyliusAdminOrderCreationPlugin/order/create.html.twig', [
+        return new Response($this->twig->render('@WebgriffeSyliusAdminOrderCreationPlugin/order/create.html.twig', [
             'form' => $form->createView(),
         ]));
     }

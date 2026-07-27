@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace spec\Sylius\AdminOrderCreationPlugin\ReorderProcessing;
+namespace spec\Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing;
 
 use PhpSpec\ObjectBehavior;
-use Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
+use Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;

@@ -1,7 +1,7 @@
 <?php
 
-use Sylius\AdminOrderCreationPlugin\SyliusAdminOrderCreationPlugin;
+use Webgriffe\SyliusAdminOrderCreationPlugin\WebgriffeSyliusAdminOrderCreationPlugin;
 
 return [
-    SyliusAdminOrderCreationPlugin::class => ['all' => true],
+    WebgriffeSyliusAdminOrderCreationPlugin::class => ['all' => true],
 ];

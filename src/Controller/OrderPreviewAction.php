@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Sylius\AdminOrderCreationPlugin\Controller;
+namespace Webgriffe\SyliusAdminOrderCreationPlugin\Controller;
 
-use Sylius\AdminOrderCreationPlugin\Factory\OrderFactoryInterface;
-use Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactoryInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,7 +49,7 @@ final class OrderPreviewAction
         $order = $form->handleRequest($request)->getData();
         $this->orderProcessor->process($order);
 
-        return new Response($this->twig->render('@SyliusAdminOrderCreationPlugin/order/preview.html.twig', [
+        return new Response($this->twig->render('@WebgriffeSyliusAdminOrderCreationPlugin/order/preview.html.twig', [
             'form' => $form->createView(),
         ]));
     }

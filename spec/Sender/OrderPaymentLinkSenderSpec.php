@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace spec\Sylius\AdminOrderCreationPlugin\Sender;
+namespace spec\Webgriffe\SyliusAdminOrderCreationPlugin\Sender;
 
 use PhpSpec\ObjectBehavior;
-use Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;

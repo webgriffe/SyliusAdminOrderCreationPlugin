@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Sylius\AdminOrderCreationPlugin\Controller;
+namespace Webgriffe\SyliusAdminOrderCreationPlugin\Controller;
 
-use Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerCreateType;
-use Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerSelectType;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderCustomerCreateType;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderCustomerSelectType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +30,7 @@ final class SelectNewOrderCustomerAction
         $selectCustomerForm = $this->formFactory->create(NewOrderCustomerSelectType::class);
         $createCustomerForm = $this->formFactory->create(NewOrderCustomerCreateType::class);
 
-        return new Response($this->twig->render('@SyliusAdminOrderCreationPlugin/order/select_customer.html.twig', [
+        return new Response($this->twig->render('@WebgriffeSyliusAdminOrderCreationPlugin/order/select_customer.html.twig', [
             'selectCustomerForm' => $selectCustomerForm->createView(),
             'createCustomerForm' => $createCustomerForm->createView(),
         ]));
