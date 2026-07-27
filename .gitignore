@@ -1,5 +1,6 @@
 /bin/*
 !/bin/.gitkeep
+!/bin/create_console_symlink.php
 
 /vendor/
 /node_modules/
@@ -8,8 +9,9 @@
 /etc/build/*
 !/etc/build/.gitkeep
 
-/tests/Application/yarn.lock
+/var/
 
 /web/media
 
 /.phpunit.result.cache
+/.php-version
