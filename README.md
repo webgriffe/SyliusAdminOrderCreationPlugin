@@ -150,6 +150,36 @@ it with a proper tag.
 Admin Order Creation process is based on Symfony Forms. To find out more about Symfony Forms extension possibilities, check out
 [Symfony Docs](https://symfony.com/doc/current/form/create_form_type_extension.html).   
 
+## Development
+
+### Docker
+
+1. Copy `compose.override.dist.yml` to `compose.override.yml` and adjust it to your needs.
+
+2. Start the containers:
+
+    ```bash
+    docker compose up -d
+    ```
+
+3. Install PHP dependencies and initialize the test application:
+
+    ```bash
+    docker compose exec php composer install
+    docker compose exec php composer test-app-init
+    ```
+
+4. The test application is available at `http://localhost`.
+
+### Running the test suite
+
+```bash
+docker compose exec php composer suite
+```
+
+runs ECS, PHPStan, Psalm, PHPSpec, PHPUnit and Behat in sequence (each can also be run individually via `composer ecs`,
+`composer phpstan`, `composer psalm`, `composer phpspec`, `composer phpunit`, `composer behat`).
+
 ## Security issues
 
 If you think that you have found a security issue, please do not use the issue tracker and do not post it publicly. 

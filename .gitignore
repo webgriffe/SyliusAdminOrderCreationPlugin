@@ -15,3 +15,7 @@
 
 /.phpunit.result.cache
 /.php-version
+
+/compose.override.yml
+/compose.test.yml
+/docker/xdebug.ini
