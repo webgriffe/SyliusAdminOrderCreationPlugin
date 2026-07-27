@@ -1,0 +1,15 @@
+imports:
+    - { resource: "@SyliusAdminOrderCreationPlugin/config/config.yaml" }
+    - { resource: "services_test.php" }
+
+sylius_customer:
+    resources:
+        customer:
+            classes:
+                repository: Tests\Sylius\AdminOrderCreationPlugin\Repository\CustomerRepository
+
+sylius_product:
+    resources:
+        product_variant:
+            classes:
+                repository: Tests\Sylius\AdminOrderCreationPlugin\Repository\ProductVariantRepository
