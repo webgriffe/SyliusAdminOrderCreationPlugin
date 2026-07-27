@@ -19,3 +19,6 @@
 /compose.override.yml
 /compose.test.yml
 /docker/xdebug.ini
+
+/tests/TestApplication/.env.local
+/tests/TestApplication/.env.*.local
