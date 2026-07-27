@@ -15,7 +15,7 @@ abstract class Element
 {
     /** @var Session */
     private $session;
-    
+
     private $parameters;
 
     /** @var DocumentElement|null */
@@ -49,7 +49,7 @@ abstract class Element
                 $this->getSession(),
                 sprintf('Element named "%s" with parameters %s', $name, implode(', ', $parameters)),
                 'xpath',
-                $element->getXpath()
+                $element->getXpath(),
             );
         }
 
@@ -88,7 +88,7 @@ abstract class Element
             throw new \InvalidArgumentException(sprintf(
                 'Could not find a defined element with name "%s". The defined ones are: %s.',
                 $name,
-                implode(', ', array_keys($definedElements))
+                implode(', ', array_keys($definedElements)),
             ));
         }
 
@@ -96,7 +96,7 @@ abstract class Element
 
         return new NodeElement(
             $this->getSelectorAsXpath($elementSelector, $this->session->getSelectorsHandler()),
-            $this->session
+            $this->session,
         );
     }
 
@@ -117,7 +117,8 @@ abstract class Element
         array_map(
             function ($definedElement) use ($parameters): string {
                 return strtr($definedElement, $parameters);
-            }, $definedElements[$name]
+            },
+            $definedElements[$name],
         );
 
         return $definedElements[$name];

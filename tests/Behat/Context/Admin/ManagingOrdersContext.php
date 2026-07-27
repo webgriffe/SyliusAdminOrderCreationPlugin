@@ -6,13 +6,13 @@ namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin;
 
 use Behat\Behat\Context\Context;
 use Sylius\Behat\NotificationType;
+use Sylius\Behat\Service\Checker\EmailCheckerInterface;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Component\Addressing\Comparator\AddressComparatorInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElementInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPageInterface;
@@ -59,7 +59,7 @@ final class ManagingOrdersContext implements Context
         OrderCreateFormElementInterface $orderCreateFormElement,
         NotificationCheckerInterface $notificationChecker,
         EmailCheckerInterface $emailChecker,
-        AddressComparatorInterface $addressComparator
+        AddressComparatorInterface $addressComparator,
     ) {
         $this->orderIndexPage = $orderIndexPage;
         $this->newOrderCustomerPage = $newOrderCustomerPage;
@@ -237,7 +237,7 @@ final class ManagingOrdersContext implements Context
     {
         $this->orderPreviewPage->lowerItemWithProductPriceBy(
             $product->getCode(),
-            str_replace(['$', '€', '£'], '', $discount)
+            str_replace(['$', '€', '£'], '', $discount),
         );
     }
 
@@ -322,7 +322,7 @@ final class ManagingOrdersContext implements Context
     {
         Assert::same(
             'You need to add some items and shipping address to select from eligible shipping method',
-            $this->orderCreateFormElement->getShippingMethodsValidationMessage()
+            $this->orderCreateFormElement->getShippingMethodsValidationMessage(),
         );
     }
 
@@ -333,7 +333,7 @@ final class ManagingOrdersContext implements Context
     {
         $this->notificationChecker->checkNotification(
             'Order has been successfully created',
-            NotificationType::success()
+            NotificationType::success(),
         );
     }
 
@@ -351,7 +351,7 @@ final class ManagingOrdersContext implements Context
     public function shouldBeNotifiedThatItemWithProductDiscountCannotBeBelow0(ProductInterface $product): void
     {
         Assert::true(
-            $this->orderPreviewPage->hasItemDiscountValidationMessage($product->getCode(), 'Discount cannot be below 0')
+            $this->orderPreviewPage->hasItemDiscountValidationMessage($product->getCode(), 'Discount cannot be below 0'),
         );
     }
 
@@ -386,7 +386,7 @@ final class ManagingOrdersContext implements Context
     {
         Assert::true($this->emailChecker->hasMessageTo(
             'New order has been created for you in Admin panel. Check it out in your orders history. To pay for this order, click',
-            $email
+            $email,
         ));
     }
 
@@ -416,7 +416,7 @@ final class ManagingOrdersContext implements Context
             'state' => 'New',
             'paymentState' => 'Awaiting payment',
             'shippingState' => 'Ready',
-            'channel' => $channelName
+            'channel' => $channelName,
         ]));
     }
 
@@ -434,7 +434,7 @@ final class ManagingOrdersContext implements Context
                 'state' => 'New',
                 'paymentState' => 'Awaiting payment',
                 'shippingState' => 'Ready',
-            ])
+            ]),
         );
     }
 
@@ -446,7 +446,7 @@ final class ManagingOrdersContext implements Context
         string $street,
         string $postcode,
         string $city,
-        string $countryName
+        string $countryName,
     ): void {
         Assert::true($this->orderShowPage->hasShippingAddress($customerName, $street, $postcode, $city, $countryName));
     }
@@ -459,7 +459,7 @@ final class ManagingOrdersContext implements Context
         string $street,
         string $postcode,
         string $city,
-        string $countryName
+        string $countryName,
     ): void {
         Assert::true($this->orderShowPage->hasBillingAddress($customerName, $street, $postcode, $city, $countryName));
     }
