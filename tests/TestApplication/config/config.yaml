@@ -1,4 +1,5 @@
 imports:
+    - { resource: "packages/*.yaml" }
     - { resource: "@SyliusAdminOrderCreationPlugin/config/config.yaml" }
     - { resource: "services_test.php" }
 
