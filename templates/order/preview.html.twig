@@ -4,7 +4,7 @@
 
 {% block title %}{{ 'sylius_admin_order_creation.ui.order_preview'|trans }}{% endblock %}
 
-{% form_theme form '@SyliusAdminOrderCreationPlugin/Order/itemCollectionTheme.html.twig' %}
+{% form_theme form '@SyliusAdminOrderCreationPlugin/order/item_collection_theme.html.twig' %}
 
 {% block content %}
     {% set order = form.vars.data %}
@@ -48,7 +48,7 @@
     <div class="ui stackable grid">
         <div class="twelve wide column">
             <div class="ui segment">
-                {% include '@SyliusAdminOrderCreationPlugin/Order/Show/_summary.html.twig' with {'form': form.items} %}
+                {% include '@SyliusAdminOrderCreationPlugin/order/show/_summary.html.twig' with {'form': form.items} %}
             </div>
         </div>
         <div class="four wide column">

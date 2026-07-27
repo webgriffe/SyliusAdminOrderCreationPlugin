@@ -1,6 +1,6 @@
 {% extends '@SyliusAdmin/layout.html.twig' %}
 
-{% form_theme selectCustomerForm '@SyliusAdminOrderCreationPlugin/Order/selectCustomerTheme.html.twig' %}
+{% form_theme selectCustomerForm '@SyliusAdminOrderCreationPlugin/order/select_customer_theme.html.twig' %}
 {% form_theme createCustomerForm '@SyliusAdmin/Form/theme.html.twig' %}
 
 {% block pre_content %}
@@ -41,8 +41,10 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script>
+        const syliusAdminOrderCreationOrderCreateUrlTemplate = "{{ path('sylius_admin_order_creation_order_create', {'customerId': 'CUSTOMER_ID_PLACEHOLDER', 'channelCode': 'CHANNEL_CODE_PLACEHOLDER'}) }}";
+        const syliusAdminOrderCreationCustomerCreateUrlTemplate = "{{ path('sylius_admin_order_creation_customer_create', {'customerEmail': 'CUSTOMER_EMAIL_PLACEHOLDER', 'channelCode': 'CHANNEL_CODE_PLACEHOLDER'}) }}";
+    </script>
     <script>
         $(document).ready(function() {
             function addErrorMessage(element, message){
@@ -58,14 +60,10 @@
                 let channelCode = form.find('select[name*="[channel]"]').val();
 
                 if (customerId.length) {
-                    form.attr('action', Routing.generate(
-                        'sylius_admin_order_creation_order_create',
-                        {
-                            'customerId': customerId,
-                            'channelCode': channelCode
-                        },
-                        true
-                    ));
+                    form.attr('action', syliusAdminOrderCreationOrderCreateUrlTemplate
+                        .replace('CUSTOMER_ID_PLACEHOLDER', encodeURIComponent(customerId))
+                        .replace('CHANNEL_CODE_PLACEHOLDER', encodeURIComponent(channelCode))
+                    );
 
                     form.submit();
 
@@ -84,14 +82,10 @@
                 let channelCode = form.find('[name*="[channel]"]').val();
 
                 if (customerEmail) {
-                    form.attr('action', Routing.generate(
-                        'sylius_admin_order_creation_customer_create',
-                        {
-                            'customerEmail': customerEmail,
-                            'channelCode': channelCode
-                        },
-                        true
-                    ));
+                    form.attr('action', syliusAdminOrderCreationCustomerCreateUrlTemplate
+                        .replace('CUSTOMER_EMAIL_PLACEHOLDER', encodeURIComponent(customerEmail))
+                        .replace('CHANNEL_CODE_PLACEHOLDER', encodeURIComponent(channelCode))
+                    );
 
                     form.submit();
 

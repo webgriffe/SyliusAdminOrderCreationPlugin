@@ -18,12 +18,12 @@ sylius_admin_order_creation_order_create:
     options:
         expose: true
     defaults:
-        _controller: sylius.controller.order:createAction
+        _controller: sylius.controller.order::createAction
         _sylius:
             event: admin_create
             section: admin
             permission: true
-            template: '@SyliusAdminOrderCreationPlugin/Order/create.html.twig'
+            template: '@SyliusAdminOrderCreationPlugin/order/create.html.twig'
             form:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
@@ -50,12 +50,12 @@ sylius_admin_order_creation_order_create_from_preview:
     options:
         expose: true
     defaults:
-        _controller: sylius.controller.order:createAction
+        _controller: sylius.controller.order::createAction
         _sylius:
             event: admin_create
             section: admin
             permission: true
-            template: '@SyliusAdminOrderCreationPlugin/Order/preview.html.twig'
+            template: '@SyliusAdminOrderCreationPlugin/order/preview.html.twig'
             form:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
@@ -78,12 +78,12 @@ sylius_admin_order_creation_reorder:
     options:
         expose: true
     defaults:
-        _controller: sylius.controller.order:createAction
+        _controller: sylius.controller.order::createAction
         _sylius:
             event: admin_create
             section: admin
             permission: true
-            template: '@SyliusAdminOrderCreationPlugin/Order/create.html.twig'
+            template: '@SyliusAdminOrderCreationPlugin/order/create.html.twig'
             form:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
@@ -92,7 +92,4 @@ sylius_admin_order_creation_reorder:
 
 sylius_admin_order_creation_ajax:
     prefix: admin/ajax
-    resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/ajax.yml"
-
-fos_js_routing:
-    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    resource: "@SyliusAdminOrderCreationPlugin/config/ajax.yaml"

@@ -32,7 +32,7 @@
         </service>
 
         <service id="Sylius\AdminOrderCreationPlugin\Provider\AvailableShippingMethodsListProvider">
-            <argument type="service" id="sylius.shipping_methods_resolver" />
+            <argument type="service" id="Sylius\Component\Shipping\Resolver\ShippingMethodsResolverInterface" />
         </service>
 
         <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerSelectType">
@@ -89,7 +89,7 @@
 
         <service id="Sylius\AdminOrderCreationPlugin\EventListener\OrderCreationListener">
             <argument type="service" id="sylius.order_processing.order_processor" />
-            <argument type="service" id="sm.factory" />
+            <argument type="service" id="Sylius\Abstraction\StateMachine\StateMachineInterface" />
             <tag name="kernel.event_listener" event="sylius.order.pre_admin_create" method="processOrderBeforeCreation" />
             <tag name="kernel.event_listener" event="sylius.order.pre_admin_create" method="completeOrderBeforeCreation" />
         </service>

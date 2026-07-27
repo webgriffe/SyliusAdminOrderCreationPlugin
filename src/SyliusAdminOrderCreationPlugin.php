@@ -13,6 +13,11 @@ final class SyliusAdminOrderCreationPlugin extends Bundle
 {
     use SyliusPluginTrait;
 
+    public function getPath(): string
+    {
+        return \dirname(__DIR__);
+    }
+
     public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new RegisterReorderProcessorsPass());

@@ -30,7 +30,7 @@ final class OrderPreviewAction
         OrderFactoryInterface $orderFactory,
         FormFactoryInterface $formFactory,
         OrderProcessorInterface $orderProcessor,
-        Environment $twig
+        Environment $twig,
     ) {
         $this->orderFactory = $orderFactory;
         $this->formFactory = $formFactory;
@@ -49,7 +49,7 @@ final class OrderPreviewAction
         $order = $form->handleRequest($request)->getData();
         $this->orderProcessor->process($order);
 
-        return new Response($this->twig->render('@SyliusAdminOrderCreationPlugin/Order/preview.html.twig', [
+        return new Response($this->twig->render('@SyliusAdminOrderCreationPlugin/order/preview.html.twig', [
             'form' => $form->createView(),
         ]));
     }

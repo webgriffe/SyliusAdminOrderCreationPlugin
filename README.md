@@ -34,28 +34,44 @@ After creating an Order via Admin panel, this new Order is listed like any other
 
 ## Installation
 
-#### Beware!
-
-> This installation instruction assumes that you're using Symfony Flex. If you don't, take a look at the
-[legacy installation instruction](docs/legacy_installation.md). However, we strongly encourage you to use
-Symfony Flex, it's much quicker! :)
+Requires Sylius `~2.2.0` and PHP `^8.2`.
 
 1. Require plugin with composer:
 
     ```bash
     composer require sylius/admin-order-creation-plugin
     ```
-    
+
     > Remember to allow community recipes with `composer config extra.symfony.allow-contrib true` or during plugin installation process
 
-2. Copy Sylius templates overridden in plugin to your templates directory (e.g `templates/bundles/`):
+2. Register the bundle in `config/bundles.php`:
+
+    ```php
+    Sylius\AdminOrderCreationPlugin\SyliusAdminOrderCreationPlugin::class => ['all' => true],
+    ```
+
+3. Import plugin configuration in `config/packages/sylius_admin_order_creation_plugin.yaml`:
+
+    ```yaml
+    imports:
+        - { resource: "@SyliusAdminOrderCreationPlugin/config/config.yaml" }
+    ```
+
+4. Import plugin routes in `config/routes/sylius_admin_order_creation_plugin.yaml`:
+
+    ```yaml
+    sylius_admin_order_creation_plugin:
+        resource: "@SyliusAdminOrderCreationPlugin/config/routing.yaml"
+    ```
+
+5. Copy Sylius templates overridden in plugin to your templates directory (e.g `templates/bundles/`):
 
     ```bash
     mkdir -p templates/bundles/SyliusAdminBundle/
-    cp -R vendor/sylius/admin-order-creation-plugin/src/Resources/views/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
+    cp -R vendor/sylius/admin-order-creation-plugin/templates/bundles/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
     ```
 
-3. Override repositories
+6. Override repositories
 
    1. Create repository classes
       ```bash
@@ -118,7 +134,7 @@ Symfony Flex, it's much quicker! :)
 ## Extension points
 
 Admin Order Creation Plugin makes it possible to add custom discount during order creation - thus some of Order
-Show templates need to be replaced with those placed in `Resources/views` package.
+Show templates need to be replaced with those placed in the `templates/bundles/SyliusAdminBundle` directory.
 
 Payment link generation and sending process is based on logic placed in the PaymentLinkCreationListener class. Thus, it can
 be easily replaced with suitable implementation.

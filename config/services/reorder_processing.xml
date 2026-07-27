@@ -22,8 +22,8 @@
 
         <service id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderItemsProcessor">
             <argument type="service" id="sylius.factory.order_item" />
-            <argument type="service" id="sylius.order_item_quantity_modifier" />
-            <argument type="service" id="sylius.order_modifier" />
+            <argument type="service" id="Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface" />
+            <argument type="service" id="Sylius\Component\Order\Modifier\OrderModifierInterface" />
             <tag name="sylius_admin_order_creation.reorder_processor" priority="10" />
         </service>
     </services>

@@ -25,7 +25,7 @@ final class OrderCreateAction
     public function __construct(
         OrderFactoryInterface $orderFactory,
         FormFactoryInterface $formFactory,
-        Environment $twig
+        Environment $twig,
     ) {
         $this->orderFactory = $orderFactory;
         $this->formFactory = $formFactory;
@@ -42,7 +42,7 @@ final class OrderCreateAction
         $form = $this->formFactory->create(NewOrderType::class, $order);
         $form->handleRequest($request);
 
-        return new Response($this->twig->render('@SyliusAdminOrderCreationPlugin/Order/create.html.twig', [
+        return new Response($this->twig->render('@SyliusAdminOrderCreationPlugin/order/create.html.twig', [
             'form' => $form->createView(),
         ]));
     }

@@ -18,7 +18,7 @@ final class SyliusAdminOrderCreationExtension extends Extension implements Prepe
     public function load(array $config, ContainerBuilder $container): void
     {
         $this->processConfiguration($this->getConfiguration([], $container), $config);
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
     }
 
     public function prepend(ContainerBuilder $container): void
@@ -33,7 +33,7 @@ final class SyliusAdminOrderCreationExtension extends Extension implements Prepe
 
     protected function getMigrationsDirectory(): string
     {
-        return '@SyliusAdminOrderCreationPlugin/Migrations';
+        return '@SyliusAdminOrderCreationPlugin/src/Migrations';
     }
 
     protected function getNamespacesOfMigrationsExecutedBefore(): array
