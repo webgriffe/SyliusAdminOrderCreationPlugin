@@ -1,3 +1,4 @@
 sylius_admin_order_creation:
     order_discount: La réduction ne peut pas être inférieure à zéro
     customer_email: L'email du client ne peut pas être vide
+    no_customer_selected: Vous n'avez sélectionné aucun client

@@ -7,18 +7,22 @@ namespace Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type;
 use Sylius\Bundle\ChannelBundle\Form\Type\ChannelChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class NewOrderCustomerSelectType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('customer', CustomerAutocompleteChoiceType::class, [
-                'multiple' => false,
-                'required' => true,
+            ->add('customer', CustomerAutocompleteType::class, [
+                'label' => 'sylius.ui.customer',
+                'required' => false,
+                'constraints' => [
+                    new NotBlank(message: 'sylius_admin_order_creation.no_customer_selected'),
+                ],
             ])
             ->add('channel', ChannelChoiceType::class, [
-                'label' => false,
+                'label' => 'sylius.ui.channel',
             ])
         ;
     }

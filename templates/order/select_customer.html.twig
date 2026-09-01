@@ -1,101 +1,75 @@
-{% extends '@SyliusAdmin/layout.html.twig' %}
+{% extends '@SyliusAdmin/shared/layout/base.html.twig' %}
 
-{% form_theme selectCustomerForm '@WebgriffeSyliusAdminOrderCreationPlugin/order/select_customer_theme.html.twig' %}
-{% form_theme createCustomerForm '@SyliusAdmin/Form/theme.html.twig' %}
+{% from '@SyliusAdmin/shared/helper/breadcrumbs.html.twig' import breadcrumbs %}
 
-{% block pre_content %}
-    <h2 class="ui header">
-        <i class="circular cart plus icon"></i>
-        <div class="content">
-            {{ 'sylius.ui.new_order'|trans }}
-            <div class="sub header">{{ 'sylius_admin_order_creation.ui.customer_selection'|trans }}</div>
+{% form_theme selectCustomerForm '@SyliusAdmin/shared/form_theme.html.twig' %}
+{% form_theme createCustomerForm '@SyliusAdmin/shared/form_theme.html.twig' %}
+
+{% block title %}{{ 'sylius.ui.new_order'|trans }} {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% include '@SyliusAdmin/shared/crud/common/sidebar.html.twig' %}
+    {% include '@SyliusAdmin/shared/crud/common/navbar.html.twig' %}
+
+    <div class="page-wrapper">
+        {% include '@SyliusAdmin/shared/crud/common/content/flashes.html.twig' %}
+
+        <div class="page-header" data-sticky-header>
+            <div class="container-xl">
+                <div class="row mt-3 row-gap-2">
+                    <div class="col">
+                        {{ breadcrumbs([
+                            { name: 'sylius.ui.dashboard', url: path('sylius_admin_dashboard') },
+                            { name: 'sylius.ui.orders', url: path('sylius_admin_order_index') },
+                            { name: 'sylius.ui.new_order', active: true },
+                        ]) }}
+                        <h1 class="page-title">{{ 'sylius.ui.new_order'|trans }}</h1>
+                        <div class="text-secondary">{{ 'sylius_admin_order_creation.ui.customer_selection'|trans }}</div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </h2>
-{% endblock %}
 
-{% block content %}
-    <div class="ui center aligned basic segment">
-        {{ form_start(selectCustomerForm, {'method': 'GET'})}}
-        {{ form_row(selectCustomerForm.customer) }} <br /><br />
-        {{ form_row(selectCustomerForm.channel, {'attr': {'class': 'ui fluid selection dropdown'}}) }} <br /><br />
-        <button class="ui blue submit button" id="order_select_customer_submit">{{ 'sylius.ui.next'|trans }}</button>
-        {{ form_end(selectCustomerForm) }}
+        <div class="page-body">
+            <div class="container-xl">
+                <div class="row row-cards">
+                    <div class="col-12 col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">{{ 'sylius_admin_order_creation.ui.existing_customer'|trans }}</div>
+                            </div>
+                            <div class="card-body">
+                                {{ form_start(selectCustomerForm, {'method': 'GET'}) }}
+                                    {{ form_row(selectCustomerForm.customer) }}
+                                    {{ form_row(selectCustomerForm.channel) }}
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        {{ 'sylius.ui.next'|trans }}
+                                    </button>
+                                {{ form_end(selectCustomerForm) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">{{ 'sylius_admin_order_creation.ui.create_new'|trans }}</div>
+                            </div>
+                            <div class="card-body">
+                                {{ form_start(createCustomerForm, {'method': 'GET'}) }}
+                                    {{ form_row(createCustomerForm.customerEmail) }}
+                                    {{ form_row(createCustomerForm.channel) }}
+                                    <button type="submit" class="btn btn-success w-100">
+                                        {{ ux_icon('tabler:plus') }} {{ 'sylius_admin_order_creation.ui.create_new'|trans }}
+                                    </button>
+                                {{ form_end(createCustomerForm) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include '@SyliusAdmin/shared/crud/common/content/footer.html.twig' %}
     </div>
-    <div class="ui horizontal divider">
-            {{ 'sylius.ui.or'|trans }}
-    </div>
-
-    <div class="ui center aligned basic segment">
-        {{ form_start(createCustomerForm, {'method': 'GET'})}}
-        <div class="ui input fluid ">
-            {{ form_widget(createCustomerForm.customerEmail, {'attr': {'placeholder': 'sylius_admin_order_creation.ui.new_customer_email'|trans}}) }}
-        </div> <br /><br />
-        {{ form_row(createCustomerForm.channel, {'attr': {'class': 'ui fluid selection dropdown'}}) }} <br /><br />
-        <button class="ui green right labeled icon button" id="order_create_new_customer_submit">
-            <i class="plus icon"></i> {{ 'sylius_admin_order_creation.ui.create_new'|trans }}
-        </button> <br /><br />
-        {{ form_end(createCustomerForm) }}
-    </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    <script>
-        const syliusAdminOrderCreationOrderCreateUrlTemplate = "{{ path('sylius_admin_order_creation_order_create', {'customerId': 'CUSTOMER_ID_PLACEHOLDER', 'channelCode': 'CHANNEL_CODE_PLACEHOLDER'}) }}";
-        const syliusAdminOrderCreationCustomerCreateUrlTemplate = "{{ path('sylius_admin_order_creation_customer_create', {'customerEmail': 'CUSTOMER_EMAIL_PLACEHOLDER', 'channelCode': 'CHANNEL_CODE_PLACEHOLDER'}) }}";
-    </script>
-    <script>
-        $(document).ready(function() {
-            function addErrorMessage(element, message){
-                element.after(`<div class="ui red pointing label sylius-validation-error">${message}</div>`);
-            }
-
-            $('#order_select_customer_submit').on('click', function(e) {
-                e.preventDefault();
-
-                let form = $(this).parents('form');
-                let $customer = form.find('[name*="[customer]"]');
-                let customerId = $customer.val();
-                let channelCode = form.find('select[name*="[channel]"]').val();
-
-                if (customerId.length) {
-                    form.attr('action', syliusAdminOrderCreationOrderCreateUrlTemplate
-                        .replace('CUSTOMER_ID_PLACEHOLDER', encodeURIComponent(customerId))
-                        .replace('CHANNEL_CODE_PLACEHOLDER', encodeURIComponent(channelCode))
-                    );
-
-                    form.submit();
-
-                } else {
-                    addErrorMessage($customer.parent(), "{{ 'sylius_admin_order_creation.ui.no_customer_selected'|trans }}");
-                }
-            });
-
-            $('#order_create_new_customer_submit').on('click', function(e) {
-                e.preventDefault();
-
-                let form = $(this).parents('form');
-
-                let $customerEmailInput = form.find('[name*="[customerEmail]"]');
-                let customerEmail = $customerEmailInput.val();
-                let channelCode = form.find('[name*="[channel]"]').val();
-
-                if (customerEmail) {
-                    form.attr('action', syliusAdminOrderCreationCustomerCreateUrlTemplate
-                        .replace('CUSTOMER_EMAIL_PLACEHOLDER', encodeURIComponent(customerEmail))
-                        .replace('CHANNEL_CODE_PLACEHOLDER', encodeURIComponent(channelCode))
-                    );
-
-                    form.submit();
-
-                    return;
-                }
-
-                if (form.find('.sylius-validation-error').length === 0) {
-                    addErrorMessage($customerEmailInput.parent(), "{{ 'sylius_admin_order_creation.ui.customer_email'|trans }}");
-                }
-            });
-        });
-    </script>
 {% endblock %}

@@ -8,6 +8,7 @@ use Sylius\Bundle\ChannelBundle\Form\Type\ChannelChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class NewOrderCustomerCreateType extends AbstractType
 {
@@ -15,10 +16,14 @@ final class NewOrderCustomerCreateType extends AbstractType
     {
         $builder
             ->add('customerEmail', TextType::class, [
-                'label' => false,
+                'label' => 'sylius_admin_order_creation.ui.new_customer_email',
+                'required' => false,
+                'constraints' => [
+                    new NotBlank(message: 'sylius_admin_order_creation.customer_email'),
+                ],
             ])
             ->add('channel', ChannelChoiceType::class, [
-                'label' => false,
+                'label' => 'sylius.ui.channel',
             ])
         ;
     }
