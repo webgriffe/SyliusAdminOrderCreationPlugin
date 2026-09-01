@@ -1,0 +1,170 @@
+{% from '@SyliusAdmin/shared/helper/address.html.twig' import address %}
+{% from '@SyliusAdmin/order/macro/order_payment_state_label.html.twig' import label as paymentStateLabel %}
+{% from '@SyliusAdmin/order/macro/order_shipping_state_label.html.twig' import label as shippingStateLabel %}
+
+{% form_theme form
+    '@SyliusAdmin/shared/form_theme.html.twig'
+    '@WebgriffeSyliusAdminOrderCreationPlugin/order/item_collection_theme.html.twig'
+    '@WebgriffeSyliusAdminOrderCreationPlugin/order/preview/item_collection_theme.html.twig'
+%}
+
+{% set order = form.vars.data %}
+
+<div {{ attributes }}>
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': form.vars.id}}) }}
+
+    {{ form_errors(form) }}
+
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <div class="card mb-3">
+                <div class="card-header"><div class="card-title">{{ 'sylius.ui.items'|trans }}</div></div>
+                <div class="table-responsive">
+                    <table class="table table-vcenter card-table">
+                        <thead>
+                            <tr>
+                                <th>{{ 'sylius.ui.order_item_product'|trans }}</th>
+                                <th class="text-end">{{ 'sylius.ui.unit_price'|trans }}</th>
+                                <th class="text-end">{{ 'sylius.ui.item_discount'|trans }}</th>
+                                <th class="text-end">{{ 'sylius.ui.quantity'|trans }}</th>
+                                <th class="text-end">{{ 'sylius.ui.total'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{ form_row(form.items, {'label': false, 'skip_add_button': true}) }}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">{{ 'sylius.ui.shipping_total'|trans }}</td>
+                                <td id="shipping-total" class="text-end">{{ order.shippingTotal|sylius_format_money(order.currencyCode) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="h3 mb-0" colspan="4">{{ 'sylius.ui.total'|trans }}</td>
+                                <td id="total" class="text-end h3 mb-0">{{ order.total|sylius_format_money(order.currencyCode) }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card mb-3" {{ sylius_test_html_attribute('order-discount') }}>
+                <div class="card-header"><div class="card-title">{{ 'sylius_admin_order_creation.ui.order_discount'|trans }}</div></div>
+                <div class="card-body">
+                    {{ form_row(form.adjustments, {'label': false, 'skip_add_button': true}) }}
+                    {{ form_row(form.adjustments.vars.button_add, {
+                        'label': 'sylius_admin_order_creation.ui.add_discount'|trans,
+                        'attr': {'class': 'btn btn-outline-primary'},
+                    }) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-header"><div class="card-title">{{ 'sylius.ui.payments'|trans }}</div></div>
+                        <div class="py-3" id="sylius-payments">
+                            {% if order.hasPayments %}
+                                <div class="table-responsive">
+                                    <table class="table table-vcenter table-borderless table-sm card-table">
+                                        <tbody>
+                                            {% for payment in order.payments %}
+                                                <tr class="item">
+                                                    <td class="py-2"><strong>{{ payment.method.name }}</strong></td>
+                                                    <td class="w-1">{{ paymentStateLabel(payment.state) }}</td>
+                                                    <td class="py-2 text-end"><strong>{{ payment.amount|sylius_format_money(order.currencyCode) }}</strong></td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <span class="px-3 text-secondary">{{ 'sylius.ui.no_payments'|trans }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-header"><div class="card-title">{{ 'sylius.ui.shipments'|trans }}</div></div>
+                        <div class="py-3">
+                            {% if order.hasShipments %}
+                                <div class="table-responsive">
+                                    <table class="table table-vcenter table-borderless table-sm card-table">
+                                        <tbody>
+                                            {% for shipment in order.shipments %}
+                                                <tr>
+                                                    <td class="py-2">
+                                                        <strong>{{ shipment.method.name }}</strong>
+                                                        <div class="text-secondary">{{ ux_icon('tabler:world') }} {{ shipment.method.zone }}</div>
+                                                    </td>
+                                                    <td class="w-1">{{ shippingStateLabel(shipment.state) }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <span class="px-3 text-secondary">{{ 'sylius.ui.there_are_no_shipments_to_display'|trans }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4">
+            <div class="card mb-3">
+                <div class="card-header"><div class="card-title">{{ 'sylius.ui.customer'|trans }}</div></div>
+                <div class="card-body">
+                    <div><strong>{{ 'sylius.ui.name'|trans }}:</strong></div>
+                    <div class="mb-3">{{ order.customer.fullName }}</div>
+                    <div><strong>{{ 'sylius.ui.email'|trans }}:</strong></div>
+                    <div class="mb-3"><a href="mailto:{{ order.customer.email }}">{{ order.customer.email }}</a></div>
+                    {% if order.customer.phoneNumber is not empty %}
+                        <div><strong>{{ 'sylius.form.address.phone_number'|trans }}:</strong></div>
+                        <div class="mb-3">{{ order.customer.phoneNumber }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header"><div class="card-title">{{ 'sylius.ui.shipping_address'|trans }}</div></div>
+                <div class="card-body">
+                    {% if order.shippingAddress is not null %}{{ address(order.shippingAddress) }}{% endif %}
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header"><div class="card-title">{{ 'sylius.ui.billing_address'|trans }}</div></div>
+                <div class="card-body">
+                    {% if order.billingAddress is not null %}{{ address(order.billingAddress) }}{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: none">
+        {{ form_rest(form) }}
+    </div>
+
+    {{ form_end(form, {'render_rest': false}) }}
+
+    <div class="d-flex justify-content-end gap-2">
+        <button
+            type="submit"
+            form="{{ form.vars.id }}"
+            formaction="{{ path('sylius_admin_order_creation_order_create_back', {'customerId': customerId, 'channelCode': channelCode}) }}"
+            class="btn btn-light"
+        >
+            {{ 'sylius.ui.back'|trans }}
+        </button>
+        <button
+            type="submit"
+            form="{{ form.vars.id }}"
+            formaction="{{ path('sylius_admin_order_creation_order_create_from_preview', {'customerId': customerId, 'channelCode': channelCode}) }}"
+            class="btn btn-primary"
+        >
+            {{ 'sylius_admin_order_creation.ui.confirm'|trans }}
+        </button>
+    </div>
+</div>
