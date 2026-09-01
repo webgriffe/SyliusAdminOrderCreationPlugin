@@ -6,11 +6,11 @@ namespace spec\Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
-use Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Payment\Factory\PaymentFactoryInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 
 final class ReorderPaymentProcessorSpec extends ObjectBehavior
 {

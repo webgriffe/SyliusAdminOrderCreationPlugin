@@ -6,8 +6,6 @@ namespace spec\Webgriffe\SyliusAdminOrderCreationPlugin\Factory;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactoryInterface;
-use Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
@@ -16,6 +14,8 @@ use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactoryInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 
 final class OrderFactorySpec extends ObjectBehavior
 {

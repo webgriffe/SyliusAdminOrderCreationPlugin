@@ -6,11 +6,11 @@ namespace spec\Webgriffe\SyliusAdminOrderCreationPlugin\Provider;
 
 use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
-use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\CustomerProvider;
-use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\CustomerProviderInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\CustomerProvider;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\CustomerProviderInterface;
 
 class CustomerProviderSpec extends ObjectBehavior
 {

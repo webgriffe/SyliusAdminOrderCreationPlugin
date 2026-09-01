@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace spec\Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing;
 
 use PhpSpec\ObjectBehavior;
-use Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 
 final class ReorderDataProcessorSpec extends ObjectBehavior
 {

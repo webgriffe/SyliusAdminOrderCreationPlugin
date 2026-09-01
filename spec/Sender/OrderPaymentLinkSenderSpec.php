@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace spec\Webgriffe\SyliusAdminOrderCreationPlugin\Sender;
 
 use PhpSpec\ObjectBehavior;
-use Webgriffe\SyliusAdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Mailer\Sender\SenderInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 
 final class OrderPaymentLinkSenderSpec extends ObjectBehavior
 {
