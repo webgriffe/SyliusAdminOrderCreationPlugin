@@ -395,13 +395,10 @@ final class ManagingOrdersContext implements Context
      */
     public function thereShouldBeNoPaymentLinkSentTo(string $email): void
     {
-        try {
-            $this->emailChecker->countMessagesTo($email);
-        } catch (\InvalidArgumentException $exception) {
-            return;
-        }
-
-        throw new \Exception('There should be no messages exception thrown');
+        Assert::false($this->emailChecker->hasMessageTo(
+            'New order has been created for you in Admin panel. Check it out in your orders history. To pay for this order, click',
+            $email,
+        ));
     }
 
     /**

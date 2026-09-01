@@ -5,10 +5,10 @@ Feature: Being unable to create order when item prices are not defined for chann
     I want to be unable to create an order when item prices are not defined for channel
 
     Background:
-        Given the store operates on a channel named "Web-US" in "USD" currency
+        Given the store operates on a channel named "Web-PW" in "USD" currency
+        And the store operates on a channel named "Web-US" in "USD" currency
         And the store operates on a channel named "Web-EC" in "USD" currency
-        And the store operates on a channel named "Web-PW" in "USD" currency
-        And the store has a product "Stark Coat" priced at "$100" available in channel "Web-US" and channel "Web-EC"
+        And the store has a product "Stark Coat" priced at "$100.00" available in channel "Web-US" and channel "Web-EC"
         And the store ships everywhere for free
         And the store allows paying with "Cash on Delivery"
         And there is a customer account "jon.snow@the-wall.com"

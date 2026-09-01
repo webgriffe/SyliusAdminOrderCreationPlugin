@@ -4,72 +4,71 @@ declare(strict_types=1);
 
 namespace Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Element\Admin;
 
-use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
-use Behat\Mink\Exception\Exception;
 use Behat\Mink\Session;
-use DMore\ChromeDriver\ChromeDriver;
+use Sylius\Behat\Service\Helper\AutocompleteHelperInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Element\Element;
-use Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
 
 class OrderCreateFormElement extends Element implements OrderCreateFormElementInterface
 {
-    public const TYPE_BILLING = 'billing';
-
-    public const TYPE_SHIPPING = 'shipping';
-
-    /** @var AutoCompleteSelector */
-    private $autoCompleteSelector;
-
     public function __construct(
         Session $session,
         $parameters,
-        AutoCompleteSelector $autoCompleteSelector,
+        private readonly AutocompleteHelperInterface $autocompleteHelper,
     ) {
         parent::__construct($session, $parameters);
-
-        $this->autoCompleteSelector = $autoCompleteSelector;
     }
 
     public function addProduct(string $productVariantDescriptor): void
     {
-        $this->clickOnTabAndWait('Items');
         $item = $this->addItemAndWaitForIt();
 
-        $this->autoCompleteSelector->selectOption($item, $productVariantDescriptor);
+        $this->autocompleteHelper->selectByName(
+            $this->getDriver(),
+            $this->getVariantSelect($item)->getXpath(),
+            $productVariantDescriptor,
+        );
+        $this->waitForComponentIdle();
     }
 
     public function addMultipleProducts(string $productVariantDescriptor, int $quantity): void
     {
-        $this->clickOnTabAndWait('Items');
-
         $item = $this->addItemAndWaitForIt();
 
-        $this->autoCompleteSelector->selectOption($item, $productVariantDescriptor);
-        $item->fillField('Quantity', $quantity);
+        $this->autocompleteHelper->selectByName(
+            $this->getDriver(),
+            $this->getVariantSelect($item)->getXpath(),
+            $productVariantDescriptor,
+        );
+        $this->waitForComponentIdle();
+        $item->fillField('Quantity', (string) $quantity);
+        $this->waitForComponentIdle();
     }
 
     public function removeProduct(string $productVariantDescriptor): void
     {
         $item = $this->getItemWithProductSelected($productVariantDescriptor);
-        $item->focus();
-
-        $item->clickLink('Delete');
+        $item->pressButton('Delete');
     }
 
     public function areProductsVisible(): bool
     {
-        $this->clickOnTabAndWait('Items');
-
+        $this->clickOnTab('items');
         $item = $this->addItemAndWaitForIt();
 
-        return $this->autoCompleteSelector->areItemsVisible($item);
+        $results = $this->autocompleteHelper->search(
+            $this->getDriver(),
+            $this->getVariantSelect($item)->getXpath(),
+            'a',
+        );
+
+        return [] !== $results;
     }
 
     public function specifyShippingAddress(AddressInterface $address): void
     {
-        $this->clickOnTabAndWait('Shipping address & Billing address');
+        $this->clickOnTab('addresses');
 
         $this->fillAddressData(
             $this->getDocument()->find('css', 'div[id*="shippingAddress"]'),
@@ -79,6 +78,8 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     public function specifyBillingAddress(AddressInterface $address): void
     {
+        $this->clickOnTab('addresses');
+
         $this->fillAddressData(
             $this->getDocument()->find('css', 'div[id*="billingAddress"]'),
             $address,
@@ -87,187 +88,193 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     public function getAvailableShippingMethods(): array
     {
-        $this->clickOnTabAndWait('Shipments & Payments');
+        $shipmentRow = $this->addShipmentRowAndWaitForIt();
 
-        $shipmentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_shipments');
+        $shippingMethods = $shipmentRow->findAll('css', 'select[name$="[method]"] option');
 
-        if (count($shipmentsCollection->findAll('css', '[data-form-collection="item"]')) === 0) {
-            $shipmentsCollection->clickLink('Add');
-        }
-
-        $this->waitForFormToLoad();
-
-        $shippingMethods = $this->getDocument()->findAll(
-            'css',
-            '#sylius_admin_order_creation_new_order_shipments [data-form-collection="item"]:last-child select option',
-        );
-
-        $shippingMethods = array_map(function (NodeElement $option): string {
-            return $option->getText();
-        }, $shippingMethods);
-
-        return $shippingMethods;
+        return array_map(static fn (NodeElement $option): string => $option->getText(), $shippingMethods);
     }
 
     public function moveToShippingAndPaymentsSection(): void
     {
-        $this->clickOnTabAndWait('Shipments & Payments');
+        $this->clickOnTab('shipping-payment');
     }
 
     public function selectShippingMethod(string $shippingMethodName): void
     {
-        $this->selectMethod('shipments', 'Shipping Method', $shippingMethodName, true);
+        $shipmentRow = $this->addShipmentRowAndWaitForIt();
+        $shipmentRow->selectFieldOption('Shipping Method', $shippingMethodName);
     }
 
     public function changeShippingMethod(string $shippingMethodName): void
     {
-        $this->selectMethod('shipments', 'Shipping Method', $shippingMethodName, false);
+        $this->clickOnTab('shipping-payment');
+        $this->waitForComponentIdle();
+
+        $shipmentRow = $this->findLast('[data-test-shipment-row]');
+        $shipmentRow->selectFieldOption('Shipping Method', $shippingMethodName);
     }
 
     public function selectPaymentMethod(string $paymentMethodName): void
     {
-        $this->selectMethod('payments', 'Payment Method', $paymentMethodName, true);
+        $paymentRow = $this->addPaymentRowAndWaitForIt();
+        $paymentRow->selectFieldOption('Payment Method', $paymentMethodName);
     }
 
     public function changePaymentMethod(string $paymentMethodName): void
     {
-        $this->selectMethod('payments', 'Payment Method', $paymentMethodName, false);
+        $this->clickOnTab('shipping-payment');
+        $this->waitForComponentIdle();
+
+        $paymentRow = $this->findLast('[data-test-payment-row]');
+        $paymentRow->selectFieldOption('Payment Method', $paymentMethodName);
     }
 
     public function specifyQuantity(string $productVariantDescriptor, int $quantity): void
     {
         $item = $this->getItemWithProductSelected($productVariantDescriptor);
 
-        $item->fillField('Quantity', $quantity);
+        $item->fillField('Quantity', (string) $quantity);
     }
 
     public function placeOrder(): void
     {
-        $this->getDocument()->waitFor(10, function () {
-            try {
-                $this->getDocument()->pressButton('Create');
-
-                return true;
-            } catch (Exception $exception) {
-                return false;
-            }
-        });
+        $this->getDocument()->pressButton('Order preview');
     }
 
     public function selectLocale(string $localeName): void
     {
-        $this->clickOnTabAndWait('Locale & Currency');
+        $this->clickOnTab('locale');
 
-        $this->getElement('locale')->selectOption($localeName);
+        $this->getDocument()->selectFieldOption('Locale', $localeName);
     }
 
     public function selectCurrency(string $currencyName): void
     {
-        $this->clickOnTabAndWait('Locale & Currency');
+        $this->clickOnTab('locale');
 
-        $this->getElement('currency')->selectOption($currencyName);
+        $this->getDocument()->selectFieldOption('Currency', $currencyName);
     }
 
     public function getShippingMethodsValidationMessage(): string
     {
         return $this
             ->getDocument()
-            ->find('css', '#shipmentsAndPayments .invalid-data-message')
+            ->find('css', '[data-test-shipping-methods-requirement]')
             ->getText()
         ;
     }
 
-    protected function getDefinedElements(): array
+    public function isAddPaymentButtonVisible(): bool
     {
-        return array_merge(parent::getDefinedElements(), [
-            'billing_city' => '#sylius_admin_order_creation_new_order_billingAddress_city',
-            'billing_country' => '#sylius_admin_order_creation_new_order_billingAddress_countryCode',
-            'billing_first_name' => '#sylius_admin_order_creation_new_order_billingAddress_firstName',
-            'billing_last_name' => '#sylius_admin_order_creation_new_order_billingAddress_lastName',
-            'billing_postcode' => '#sylius_admin_order_creation_new_order_billingAddress_postcode',
-            'billing_street' => '#sylius_admin_order_creation_new_order_billingAddress_street',
-            'currency' => '#sylius_admin_order_creation_new_order_currencyCode',
-            'locale' => '#sylius_admin_order_creation_new_order_localeCode',
-            'payments' => '#sylius_admin_order_creation_new_order_payments',
-            'shipments' => '#sylius_admin_order_creation_new_order_shipments',
-            'shipping_city' => '#sylius_admin_order_creation_new_order_shippingAddress_city',
-            'shipping_country' => '#sylius_admin_order_creation_new_order_shippingAddress_countryCode',
-            'shipping_first_name' => '#sylius_admin_order_creation_new_order_shippingAddress_firstName',
-            'shipping_last_name' => '#sylius_admin_order_creation_new_order_shippingAddress_lastName',
-            'shipping_postcode' => '#sylius_admin_order_creation_new_order_shippingAddress_postcode',
-            'shipping_street' => '#sylius_admin_order_creation_new_order_shippingAddress_street',
-        ]);
+        $this->clickOnTab('shipping-payment');
+
+        $addPaymentButton = $this->getDocument()->findButton('Add payment');
+
+        return $addPaymentButton !== null && $addPaymentButton->isVisible();
     }
 
     private function fillAddressData(NodeElement $addressForm, AddressInterface $address): void
     {
+        $countryCode = $address->getCountryCode();
+        \assert($countryCode !== null);
+
         $addressForm->fillField('First name', $address->getFirstName());
         $addressForm->fillField('Last name', $address->getLastName());
         $addressForm->fillField('Street', $address->getStreet());
-        $addressForm->fillField('Country', $address->getCountryCode());
+        $addressForm->selectFieldOption('Country', $countryCode);
         $addressForm->fillField('City', $address->getCity());
         $addressForm->fillField('Postcode', $address->getPostcode());
     }
 
-    private function selectMethod(string $type, string $field, string $name, bool $addNew): void
-    {
-        $this->clickOnTabAndWait('Shipments & Payments');
-        $this->waitForFormToLoad();
-
-        $collection = $this->getElement($type);
-
-        if ($addNew) {
-            $this->getDocument()->waitFor(10, function () use ($collection) {
-                try {
-                    $collection->clickLink('Add');
-
-                    return true;
-                } catch (Exception $exception) {
-                    return false;
-                }
-            });
-            $this->waitForFormToLoad();
-        }
-
-        $this->getDocument()->waitFor(1, function () use ($collection) {
-            return $collection->has('css', '[data-form-collection="item"]');
-        });
-
-        $collection->selectFieldOption($field, $name);
-    }
-
     private function addItemAndWaitForIt(): NodeElement
     {
+        $this->clickOnTab('items');
+        $this->waitForComponentIdle();
+
         $itemsCount = $this->countItems();
-        $this->getDocument()->waitFor(10, function () {
-            try {
-                $this->getDocument()->clickLink('Add');
+        $this->getDocument()->pressButton('Add item');
 
-                return true;
-            } catch (Exception $exception) {
-                return false;
-            }
+        return $this->waitForLast('[data-test-item-row]', $itemsCount);
+    }
+
+    private function addShipmentRowAndWaitForIt(): NodeElement
+    {
+        $this->clickOnTab('shipping-payment');
+        $this->waitForComponentIdle();
+
+        $shipmentsCount = $this->countShipments();
+
+        if (0 === $shipmentsCount) {
+            $this->getDocument()->pressButton('Add shipment');
+
+            return $this->waitForLast('[data-test-shipment-row]', $shipmentsCount);
+        }
+
+        $this->waitForComponentIdle();
+
+        return $this->findLast('[data-test-shipment-row]');
+    }
+
+    private function addPaymentRowAndWaitForIt(): NodeElement
+    {
+        $this->clickOnTab('shipping-payment');
+        $this->waitForComponentIdle();
+
+        $paymentsCount = $this->countPayments();
+        $this->getDocument()->pressButton('Add payment');
+
+        return $this->waitForLast('[data-test-payment-row]', $paymentsCount);
+    }
+
+    private function waitForLast(string $cssSelector, int $previousCount): NodeElement
+    {
+        $result = $this->getDocument()->waitFor(15, function () use ($cssSelector, $previousCount) {
+            $elements = $this->getDocument()->findAll('css', $cssSelector);
+
+            return count($elements) > $previousCount ? end($elements) : null;
         });
 
-        $this->getDocument()->waitFor(1, function () use ($itemsCount) {
-            return $this->countItems() > $itemsCount;
-        });
+        \assert($result instanceof NodeElement);
 
-        return $this->getDocument()->find('css', '#items [data-form-collection="item"]:last-child');
+        return $result;
     }
 
     private function countItems(): int
     {
-        return count($this->getDocument()->findAll('css', '#items [data-form-collection="item"]'));
+        return count($this->getDocument()->findAll('css', '[data-test-item-row]'));
+    }
+
+    private function countShipments(): int
+    {
+        return count($this->getDocument()->findAll('css', '[data-test-shipment-row]'));
+    }
+
+    private function countPayments(): int
+    {
+        return count($this->getDocument()->findAll('css', '[data-test-payment-row]'));
+    }
+
+    private function waitForComponentIdle(): void
+    {
+        // Live Component debounces model updates (150ms by default) before the
+        // "busy" attribute appears, so a check right after a field change can
+        // race ahead of a request that hasn't started yet.
+        $this->getSession()->wait(300);
+
+        $this->getDocument()->waitFor(15, function () {
+            return $this->getDocument()->find('css', '[busy]') === null;
+        });
     }
 
     private function getItemWithProductSelected(string $productVariantDescriptor): NodeElement
     {
-        /** @var NodeElement $item */
-        foreach ($this->getDocument()->findAll('css', '#items [data-form-collection="item"]') as $item) {
-            $selectedProduct = $item->find('css', '.sylius-autocomplete .text')->getText();
+        $this->waitForComponentIdle();
 
-            if (strpos($selectedProduct, $productVariantDescriptor) !== false) {
+        foreach ($this->getDocument()->findAll('css', '[data-test-item-row]') as $item) {
+            $selectedOption = $this->getVariantSelect($item)->find('css', 'option[selected]');
+
+            if ($selectedOption !== null && str_contains($selectedOption->getText(), $productVariantDescriptor)) {
                 return $item;
             }
         }
@@ -275,13 +282,25 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         throw new \InvalidArgumentException(sprintf('There is no item with product with descriptor "%s" selected', $productVariantDescriptor));
     }
 
-    private function clickOnTabAndWait(string $tabName): void
+    private function findLast(string $cssSelector): NodeElement
     {
-        if (!$this->getDriver() instanceof Selenium2Driver && !$this->getDriver() instanceof ChromeDriver) {
-            return;
-        }
+        $elements = $this->getDocument()->findAll('css', $cssSelector);
+        \assert([] !== $elements);
 
-        $tab = $this->getDocument()->find('css', sprintf('.title:contains("%s")', $tabName));
+        return end($elements);
+    }
+
+    private function getVariantSelect(NodeElement $item): NodeElement
+    {
+        $select = $item->find('css', 'select[name$="[variant]"]');
+        \assert($select !== null);
+
+        return $select;
+    }
+
+    private function clickOnTab(string $tabName): void
+    {
+        $tab = $this->getDocument()->find('css', sprintf('[data-test-tab="%s"]', $tabName));
 
         if ($tab->hasClass('active')) {
             return;
@@ -292,24 +311,9 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $this->getDocument()->waitFor(5, function () use ($tabName) {
             return $this
                 ->getDocument()
-                ->find('css', sprintf('.title:contains("%s") + .content', $tabName))
+                ->find('css', sprintf('[data-test-tab="%s"]', $tabName))
                 ->hasClass('active')
             ;
         });
-    }
-
-    private function waitForFormToLoad(): void
-    {
-        $form = $this->getDocument()->find('css', '[name="sylius_admin_order_creation_new_order"]');
-        $this->getDocument()->waitFor(1000, function () use ($form) {
-            return !$form->hasClass('loading');
-        });
-    }
-
-    public function isAddPaymentButtonVisible(): bool
-    {
-        return
-            $this->getElement('payments')->find('css', '[data-form-collection="add"]')->isVisible()
-        ;
     }
 }

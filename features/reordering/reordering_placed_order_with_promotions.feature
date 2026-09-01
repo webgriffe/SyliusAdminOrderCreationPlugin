@@ -33,7 +33,7 @@ Feature: Applying promotions during reordering previously placed order
         And I place and confirm this order
         Then I should be notified that order has been successfully created
         And the order's total should be "$200.00"
-        And the order's promotion total should be "$0.00"
+        And the order's promotion total should be "No promotion applied"
 
     Scenario: Not applying expired promotion during reordering previously placed order
         Given this promotion has already expired
@@ -41,4 +41,4 @@ Feature: Applying promotions during reordering previously placed order
         And I place and confirm this order
         Then I should be notified that order has been successfully created
         And the order's total should be "$300.00"
-        And the order's promotion total should be "$0.00"
+        And the order's promotion total should be "No promotion applied"

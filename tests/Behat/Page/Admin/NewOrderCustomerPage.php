@@ -6,23 +6,18 @@ namespace Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin;
 
 use Behat\Mink\Session;
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
+use Sylius\Behat\Service\Helper\AutocompleteHelperInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
 
 final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomerPageInterface
 {
-    /** @var AutoCompleteSelector */
-    private $autoCompleteSelector;
-
     public function __construct(
         Session $session,
         $parameters,
         RouterInterface $router,
-        AutoCompleteSelector $autoCompleteSelector,
+        private readonly AutocompleteHelperInterface $autocompleteHelper,
     ) {
         parent::__construct($session, $parameters, $router);
-
-        $this->autoCompleteSelector = $autoCompleteSelector;
     }
 
     public function getRouteName(): string
@@ -32,7 +27,11 @@ final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomer
 
     public function selectCustomer(string $customerEmail): void
     {
-        $this->autoCompleteSelector->selectOption($this->getDocument(), $customerEmail);
+        $this->autocompleteHelper->selectByName(
+            $this->getDriver(),
+            $this->getElement('customer_autocomplete')->getXpath(),
+            $customerEmail,
+        );
     }
 
     public function next(): void
@@ -48,16 +47,26 @@ final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomer
 
     public function selectChannel(string $channelName): void
     {
-        $this->getDocument()->selectFieldOption(
-            'sylius_admin_order_creation_new_order_customer_create_channel',
-            $channelName,
-        );
+        foreach ($this->getDocument()->findAll('css', 'select[name$="[channel]"]') as $select) {
+            $select->selectOption($channelName);
+        }
     }
 
     public function hasCustomerEmailValidationMessage(string $message): bool
     {
-        $validationMessage = $this->getDocument()->find('css', 'form .sylius-validation-error');
+        foreach ($this->getDocument()->findAll('css', '.invalid-feedback') as $validationMessage) {
+            if (trim($validationMessage->getText()) === $message) {
+                return true;
+            }
+        }
 
-        return $validationMessage !== null && $validationMessage->getText() === $message;
+        return false;
+    }
+
+    protected function getDefinedElements(): array
+    {
+        return array_merge(parent::getDefinedElements(), [
+            'customer_autocomplete' => 'select[name$="[customer]"]',
+        ]);
     }
 }

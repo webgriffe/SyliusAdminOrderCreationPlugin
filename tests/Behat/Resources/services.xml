@@ -5,7 +5,7 @@
         <defaults public="true" />
 
         <service id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPage" parent="sylius.behat.symfony_page" public="true">
-            <argument type="service" id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector"/>
+            <argument type="service" id="Sylius\Behat\Service\Helper\AutocompleteHelperInterface"/>
         </service>
         <service id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPage" parent="sylius.behat.page.admin.order.index" public="true"/>
         <service id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPage" parent="sylius.behat.page.admin.order.show" public="true"/>
@@ -24,15 +24,13 @@
             <argument type="service" id="Sylius\Component\Addressing\Comparator\AddressComparatorInterface" />
         </service>
 
-        <service id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector" />
-
         <service id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Element\Element" abstract="true">
             <argument type="service" id="behat.mink.default_session" />
             <argument type="service" id="behat.mink.parameters" />
         </service>
 
         <service id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElement" parent="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Element\Element" public="true">
-            <argument type="service" id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector" />
+            <argument type="service" id="Sylius\Behat\Service\Helper\AutocompleteHelperInterface" />
         </service>
     </services>
 </container>
