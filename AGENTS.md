@@ -87,7 +87,7 @@ All code must be in English — class names, method names, variable names, comme
 
 ### Configuration & Services
 - New services go in `config/services/` (or `config/services.xml` for the top-level list).
-- `composer.lock` is gitignored — dependency versions float on every `composer install`. `api-platform/metadata`, `api-platform/symfony`, `symfony/config`, `symfony/property-info` and `symfony/type-info` are pinned to exact versions in `composer.json` to avoid a known incompatibility between newer `api-platform/symfony` and `sylius/sylius` 2.2.x routing — don't loosen these pins without re-verifying compatibility.
+- `composer.lock` is gitignored — dependency versions float on every `composer install`. `symfony/type-info` is constrained to `>=7.2 <7.4` in `composer.json`: 7.4 added stricter construction validation for union/collection/generic types that breaks Sylius's API Bundle routing loader (`Cannot create union with both "object" and class type`, thrown while parsing `Sylius/Bundle/ApiBundle/Resources/config/routing.yml`) — not an `api-platform/symfony` version issue, that package resolves fine on its own. Don't loosen this constraint without re-verifying `bin/console debug:router` still works.
 - After any change to the plugin's namespace, class map, or `composer.json` autoload section, run `composer dump-autoload` **inside the Docker container** too, not just locally — the container's autoload map is what the running app actually uses.
 
 ### Git
