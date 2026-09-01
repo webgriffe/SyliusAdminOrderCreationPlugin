@@ -11,6 +11,7 @@
         <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction">
             <argument type="service" id="form.factory" />
             <argument type="service" id="twig" />
+            <argument type="service" id="router" />
         </service>
 
         <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Controller\OrderPreviewAction">
@@ -26,17 +27,18 @@
             <argument type="service" id="twig" />
         </service>
 
-        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Controller\ProvideAvailableShippingMethodsAction">
-            <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Preparator\NewOrderPreparator" />
-            <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Provider\AvailableShippingMethodsListProvider" />
-        </service>
-
-        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Provider\AvailableShippingMethodsListProvider">
-            <argument type="service" id="Sylius\Component\Shipping\Resolver\ShippingMethodsResolverInterface" />
-        </service>
-
         <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderCustomerSelectType">
             <tag name="form.type" />
+        </service>
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\CustomerAutocompleteType">
+            <argument>%sylius.model.customer.class%</argument>
+            <tag name="form.type" />
+            <tag name="ux.entity_autocomplete_field" />
+        </service>
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\ProductVariantInChannelAutocompleteType">
+            <argument>%sylius.model.product_variant.class%</argument>
+            <tag name="form.type" />
+            <tag name="ux.entity_autocomplete_field" />
         </service>
         <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderCustomerCreateType">
             <tag name="form.type" />
@@ -115,7 +117,13 @@
             <argument type="service" id="sylius.factory.customer"/>
         </service>
 
-        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Preparator\NewOrderPreparator">
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Twig\Component\OrderFormComponent" autoconfigure="true">
+            <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactory" />
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="sylius.order_processing.order_processor" />
+        </service>
+
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Twig\Component\OrderPreviewFormComponent" autoconfigure="true">
             <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactory" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="sylius.order_processing.order_processor" />

@@ -1,0 +1,129 @@
+{% form_theme form '@WebgriffeSyliusAdminOrderCreationPlugin/order/item_collection_theme.html.twig' %}
+
+{% macro address_fields(address) %}
+    <div class="col-12 col-md-6">{{ form_row(address.firstName) }}</div>
+    <div class="col-12 col-md-6">{{ form_row(address.lastName) }}</div>
+    <div class="col-12 col-md-6">{{ form_row(address.phoneNumber) }}</div>
+    <div class="col-12 col-md-6">{{ form_row(address.company) }}</div>
+    <div class="col-12 col-md-6">{{ form_row(address.countryCode) }}</div>
+    <div class="col-12 col-md-6">
+        {% if address.provinceCode is defined %}{{ form_row(address.provinceCode) }}{% endif %}
+        {% if address.provinceName is defined %}{{ form_row(address.provinceName) }}{% endif %}
+    </div>
+    <div class="col-12 col-md-6">{{ form_row(address.street) }}</div>
+    <div class="col-12 col-md-6">{{ form_row(address.city) }}</div>
+    <div class="col-12 col-md-6">{{ form_row(address.postcode) }}</div>
+{% endmacro %}
+
+<div {{ attributes }}>
+    {{ form_start(form, {
+        'action': path('sylius_admin_order_creation_order_preview', {'customerId': customerId, 'channelCode': channelCode}),
+        'attr': {'novalidate': 'novalidate'},
+    }) }}
+    {{ form_errors(form) }}
+
+    <ul class="nav nav-tabs mb-3" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-items" type="button" role="tab" data-test-tab="items">{{ 'sylius.ui.items'|trans }}</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-addresses" type="button" role="tab" data-test-tab="addresses">{{ 'sylius.ui.shipping_address'|trans }} &amp; {{ 'sylius.ui.billing_address'|trans }}</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-locale" type="button" role="tab" data-test-tab="locale">{{ 'sylius.ui.locale'|trans }} &amp; {{ 'sylius.ui.currency'|trans }}</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-shipping-payment" type="button" role="tab" data-test-tab="shipping-payment">{{ 'sylius.ui.shipments'|trans }} &amp; {{ 'sylius.ui.payments'|trans }}</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-discount" type="button" role="tab" data-test-tab="discount">{{ 'sylius_admin_order_creation.ui.order_discount'|trans }}</button>
+        </li>
+    </ul>
+
+    <div class="tab-content mb-3">
+        <div class="tab-pane show active" id="tab-items" role="tabpanel">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        {{ form_row(form.items, {'label': false, 'skip_add_button': true}) }}
+                    </div>
+                    {{ form_row(form.items.vars.button_add, {'label': 'sylius_admin_order_creation.ui.add_item'|trans, 'attr': {'class': 'btn btn-outline-primary'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="tab-addresses" role="tabpanel">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="card mb-3 mb-md-0">
+                        <div class="card-header"><div class="card-title">{{ 'sylius.ui.shipping_address'|trans }}</div></div>
+                        <div class="card-body row" id="{{ form.shippingAddress.vars.id }}">
+                            {{ _self.address_fields(form.shippingAddress) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">{{ 'sylius.ui.billing_address'|trans }}</div></div>
+                        <div class="card-body row" id="{{ form.billingAddress.vars.id }}">
+                            {{ _self.address_fields(form.billingAddress) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="tab-locale" role="tabpanel">
+            <div class="card">
+                <div class="card-body row">
+                    <div class="col-12 col-md-6">{{ form_row(form.localeCode) }}</div>
+                    <div class="col-12 col-md-6">{{ form_row(form.currencyCode) }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="tab-shipping-payment" role="tabpanel">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="card mb-3 mb-md-0">
+                        <div class="card-header"><div class="card-title">{{ 'sylius.ui.shipments'|trans }}</div></div>
+                        <div class="card-body">
+                            <div class="text-secondary mb-3" data-test-shipping-methods-requirement>{{ 'sylius_admin_order_creation.ui.shipping_methods_selection_requirement'|trans }}</div>
+                            {{ form_row(form.shipments, {'label': false, 'skip_add_button': true}) }}
+                            {{ form_row(form.shipments.vars.button_add, {'label': 'sylius_admin_order_creation.ui.add_shipment'|trans, 'attr': {'class': 'btn btn-outline-primary'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">{{ 'sylius.ui.payments'|trans }}</div></div>
+                        <div class="card-body">
+                            {{ form_row(form.payments, {'label': false, 'skip_add_button': true}) }}
+                            {% if form.payments|length == 0 %}
+                                {{ form_row(form.payments.vars.button_add, {'label': 'sylius_admin_order_creation.ui.add_payment'|trans, 'attr': {'class': 'btn btn-outline-primary'}}) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="tab-discount" role="tabpanel">
+            <div class="card">
+                <div class="card-body">
+                    {{ form_row(form.adjustments, {'label': false, 'skip_add_button': true}) }}
+                    {{ form_row(form.adjustments.vars.button_add, {'attr': {'class': 'btn btn-outline-primary'}}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ form_row(form.promotionCoupon) }}
+
+    <div class="d-flex justify-content-end gap-2">
+        <a href="{{ path('sylius_admin_order_index') }}" class="btn btn-light">{{ 'sylius.ui.cancel'|trans }}</a>
+        <button type="submit" class="btn btn-primary">{{ 'sylius_admin_order_creation.ui.order_preview'|trans }}</button>
+    </div>
+
+    {{ form_end(form, {'render_rest': false}) }}
+</div>

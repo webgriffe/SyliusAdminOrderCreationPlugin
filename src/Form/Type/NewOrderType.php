@@ -9,10 +9,12 @@ use Sylius\Bundle\PromotionBundle\Form\Type\PromotionCouponToCodeType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Sylius\Component\Shipping\Model\ShippingSubjectInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
 final class NewOrderType extends AbstractResourceType
 {
@@ -31,15 +33,18 @@ final class NewOrderType extends AbstractResourceType
                 'label' => 'sylius.ui.billing_address',
                 'required' => false,
             ])
-            ->add('payments', CollectionType::class, [
+            ->add('payments', LiveCollectionType::class, [
                 'entry_type' => PaymentType::class,
                 'label' => 'sylius.ui.payments',
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
             ])
-            ->add('shipments', CollectionType::class, [
+            ->add('shipments', LiveCollectionType::class, [
                 'entry_type' => ShipmentType::class,
+                'entry_options' => [
+                    'subject' => $options['shipmentChoicesSubject'],
+                ],
                 'label' => 'sylius.ui.shipments',
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -55,17 +60,18 @@ final class NewOrderType extends AbstractResourceType
 
                 $event
                     ->getForm()
-                    ->add('items', CollectionType::class, [
+                    ->add('items', LiveCollectionType::class, [
                         'label' => false,
                         'entry_type' => OrderItemType::class,
                         'entry_options' => [
                             'currency' => $order->getCurrencyCode(),
+                            'channelCode' => $channel->getCode(),
                         ],
                         'allow_add' => true,
                         'allow_delete' => true,
                         'by_reference' => false,
                     ])
-                    ->add('adjustments', CollectionType::class, [
+                    ->add('adjustments', LiveCollectionType::class, [
                         'label' => false,
                         'entry_type' => AdjustmentType::class,
                         'entry_options' => [
@@ -76,15 +82,17 @@ final class NewOrderType extends AbstractResourceType
                         'allow_add' => true,
                         'allow_delete' => true,
                         'by_reference' => false,
-                        'button_add_label' => 'sylius_admin_order_creation.ui.add_discount',
+                        'button_add_options' => [
+                            'label' => 'sylius_admin_order_creation.ui.add_discount',
+                        ],
                     ])
                     ->add('localeCode', LocaleCodeChoiceType::class, [
-                        'label' => false,
+                        'label' => 'sylius.ui.locale',
                         'choices' => $channel->getLocales(),
                         'empty_data' => $order->getLocaleCode(),
                     ])
                     ->add('currencyCode', CurrencyCodeChoiceType::class, [
-                        'label' => false,
+                        'label' => 'sylius.ui.currency',
                         'choices' => $channel->getCurrencies(),
                         'empty_data' => $order->getCurrencyCode(),
                     ])
@@ -93,13 +101,21 @@ final class NewOrderType extends AbstractResourceType
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
                 $orderData = $event->getData();
 
-                if (isset($orderData['shippingAddress']) && $this->isBillingAddressEmpty($orderData)) {
+                if ($this->isShippingAddressComplete($orderData) && $this->isBillingAddressEmpty($orderData)) {
                     $orderData['billingAddress'] = $orderData['shippingAddress'];
 
                     $event->setData($orderData);
                 }
             })
         ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefault('shipmentChoicesSubject', null);
+        $resolver->setAllowedTypes('shipmentChoicesSubject', ['null', ShippingSubjectInterface::class]);
     }
 
     public function getBlockPrefix(): string
@@ -121,5 +137,27 @@ final class NewOrderType extends AbstractResourceType
             $orderData['billingAddress']['city'] === '' &&
             $orderData['billingAddress']['postcode'] === ''
         ;
+    }
+
+    /**
+     * The order creation page re-renders live as the admin types (via the order-form Live Component), so
+     * this form's PRE_SUBMIT listener runs on every keystroke-triggered re-render, not just on the final
+     * submit. Only copying the shipping address into an empty billing address once shipping is itself
+     * fully filled in prevents a half-typed shipping address from being copied over field-by-field, which
+     * would otherwise permanently block the rest of the copy (billing would no longer read as "empty").
+     */
+    private function isShippingAddressComplete(array $orderData): bool
+    {
+        if (!isset($orderData['shippingAddress'])) {
+            return false;
+        }
+
+        foreach (['firstName', 'lastName', 'street', 'countryCode', 'city', 'postcode'] as $field) {
+            if (($orderData['shippingAddress'][$field] ?? '') === '') {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

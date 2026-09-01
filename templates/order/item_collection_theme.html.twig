@@ -1,15 +1,45 @@
-{% extends '@SyliusAdmin/Form/theme.html.twig' %}
+{% extends '@SyliusAdmin/shared/form_theme.html.twig' %}
 
-{% block _sylius_admin_order_creation_new_order_items_entry_widget %}
-    {% spaceless %}
-        <div class="two fields">
-            {{ form_row(form.quantity, {'attr': {'class' : 'item-quantity'}}) }}
-            {{ form_row(form.variant, {
-                'remote_url': path('sylius_admin_order_creation_ajax_product_variants_by_phrase_and_channel', {'channelCode': form.parent.parent.vars.value.channel.code}),
-                'remote_criteria_type': 'contains',
-                'remote_criteria_name': 'phrase',
-                'load_edit_url': path('sylius_admin_order_creation_ajax_product_variant_by_codes')
-            }) }}
+{% block _sylius_admin_order_creation_new_order_items_entry_row %}
+    <div class="col-12 border rounded p-3 mb-3" id="{{ id }}" data-test-item-row>
+        <div class="row align-items-end g-2">
+            <div class="col">{{ form_row(form.variant) }}</div>
+            <div class="col-2">{{ form_row(form.quantity) }}</div>
+            <div class="col-auto">{{ form_widget(button_delete, {'label': 'sylius.ui.delete'|trans, 'attr': {'class': 'btn btn-outline-danger'}}) }}</div>
         </div>
-    {% endspaceless %}
+        <div class="row">
+            <div class="col-12">
+                {{ form_row(form.adjustments, {'label': false, 'skip_add_button': true}) }}
+                {{ form_row(form.adjustments.vars.button_add, {'attr': {'class': 'btn btn-outline-primary'}}) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _sylius_admin_order_creation_new_order_order_item_adjustments_entry_row %}
+    <div class="d-flex align-items-end gap-2 mb-2" id="{{ id }}">
+        <div class="flex-grow-1">{{ form_row(form.amount) }}</div>
+        {{ form_widget(button_delete, {'label': 'sylius.ui.delete'|trans, 'attr': {'class': 'btn btn-outline-danger'}}) }}
+    </div>
+{% endblock %}
+
+{% block _sylius_admin_order_creation_new_order_adjustments_entry_row %}
+    <div class="d-flex align-items-end gap-2 mb-2" id="{{ id }}">
+        <div class="flex-grow-1">{{ form_row(form.amount) }}</div>
+        {{ form_widget(button_delete, {'label': 'sylius.ui.delete'|trans, 'attr': {'class': 'btn btn-outline-danger'}}) }}
+    </div>
+{% endblock %}
+
+{% block _sylius_admin_order_creation_new_order_shipments_entry_row %}
+    <div class="d-flex align-items-end gap-2 mb-2" id="{{ id }}" data-test-shipment-row>
+        <div class="flex-grow-1">{{ form_row(form.method) }}</div>
+        {{ form_widget(button_delete, {'label': 'sylius.ui.delete'|trans, 'attr': {'class': 'btn btn-outline-danger'}}) }}
+    </div>
+{% endblock %}
+
+{% block _sylius_admin_order_creation_new_order_payments_entry_row %}
+    <div class="d-flex align-items-end gap-2 mb-2" id="{{ id }}" data-test-payment-row>
+        <div class="flex-grow-1">{{ form_row(form.method) }}</div>
+        {{ form_widget(button_delete, {'label': 'sylius.ui.delete'|trans, 'attr': {'class': 'btn btn-outline-danger'}}) }}
+    </div>
 {% endblock %}

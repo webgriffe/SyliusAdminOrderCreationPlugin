@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type;
 
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use Sylius\Bundle\ResourceBundle\Form\Type\ResourceAutocompleteChoiceType;
 use Symfony\Component\Form\DataMapperInterface;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
 final class OrderItemType extends AbstractResourceType
 {
@@ -37,16 +36,17 @@ final class OrderItemType extends AbstractResourceType
                 'label' => 'sylius.ui.quantity',
                 'empty_data' => 1,
             ])
-            ->add('variant', ResourceAutocompleteChoiceType::class, [
+            ->add('variant', ProductVariantInChannelAutocompleteType::class, [
                 'label' => 'sylius.ui.variant',
-                'choice_name' => 'descriptor',
-                'choice_value' => 'code',
-                'resource' => 'sylius.product_variant',
+                'extra_options' => [
+                    'channel_code' => $options['channelCode'],
+                    'choice_label' => 'descriptor',
+                ],
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options): void {
                 $event
                     ->getForm()
-                    ->add('adjustments', CollectionType::class, [
+                    ->add('adjustments', LiveCollectionType::class, [
                         'label' => false,
                         'entry_type' => AdjustmentType::class,
                         'entry_options' => [
@@ -57,7 +57,9 @@ final class OrderItemType extends AbstractResourceType
                         'allow_add' => true,
                         'allow_delete' => true,
                         'by_reference' => false,
-                        'button_add_label' => 'sylius_admin_order_creation.ui.add_discount',
+                        'button_add_options' => [
+                            'label' => 'sylius_admin_order_creation.ui.add_discount',
+                        ],
                     ])
                 ;
             })
@@ -78,6 +80,7 @@ final class OrderItemType extends AbstractResourceType
         parent::configureOptions($resolver);
 
         $resolver->setRequired('currency');
+        $resolver->setRequired('channelCode');
     }
 
     /**

@@ -23,6 +23,7 @@ final class AdjustmentType extends AbstractResourceType
         $builder->add('amount', MoneyType::class, [
             'label' => $options['label'],
             'currency' => $options['currency'],
+            'empty_data' => 0,
             'constraints' => [
                 new Range(['min' => 0, 'minMessage' => 'sylius_admin_order_creation.order_discount', 'groups' => ['sylius']]),
             ],

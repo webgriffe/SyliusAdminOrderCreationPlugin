@@ -1,8 +1,6 @@
-{% extends '@SyliusAdmin/layout.html.twig' %}
+{% extends '@SyliusAdmin/shared/layout/base.html.twig' %}
 
-{% block title %}{{ 'sylius.ui.new_order'|trans }} {{ parent() }}{% endblock %}
-
-{% form_theme form '@WebgriffeSyliusAdminOrderCreationPlugin/order/item_collection_theme.html.twig' %}
+{% from '@SyliusAdmin/shared/helper/breadcrumbs.html.twig' import breadcrumbs %}
 
 {% if order is defined %}
     {% set customer_id = order.customer.id %}
@@ -12,95 +10,40 @@
     {% set channel_code = app.request.attributes.get('channelCode') %}
 {% endif %}
 
-{% block content %}
-    <div class="ui stackable two column grid">
-        <div class="column">
-            <h1 class="ui header">
-                <i class="circular plus icon"></i>
-                <div class="content">{{ 'sylius.ui.new_order'|trans }}</div>
-            </h1>
-            {% include '@WebgriffeSyliusAdminOrderCreationPlugin/order/create/_breadcrumb.html.twig' %}
+{% block title %}{{ 'sylius.ui.new_order'|trans }} {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% include '@SyliusAdmin/shared/crud/common/sidebar.html.twig' %}
+    {% include '@SyliusAdmin/shared/crud/common/navbar.html.twig' %}
+
+    <div class="page-wrapper">
+        {% include '@SyliusAdmin/shared/crud/common/content/flashes.html.twig' %}
+
+        <div class="page-header" data-sticky-header>
+            <div class="container-xl">
+                <div class="row mt-3 row-gap-2">
+                    <div class="col">
+                        {{ breadcrumbs([
+                            { name: 'sylius.ui.dashboard', url: path('sylius_admin_dashboard') },
+                            { name: 'sylius.ui.orders', url: path('sylius_admin_order_index') },
+                            { name: 'sylius.ui.new_order', active: true },
+                        ]) }}
+                        <h1 class="page-title">{{ 'sylius.ui.new_order'|trans }}</h1>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <div class="page-body">
+            <div class="container-xl">
+                {{ component('webgriffe_sylius_admin_order_creation:order_form', {
+                    customerId: customer_id,
+                    channelCode: channel_code,
+                    form: form,
+                }) }}
+            </div>
+        </div>
+
+        {% include '@SyliusAdmin/shared/crud/common/content/footer.html.twig' %}
     </div>
-    {% include '@WebgriffeSyliusAdminOrderCreationPlugin/order/create/_form.html.twig' with {
-        'action': path('sylius_admin_order_creation_order_preview', {'customerId': customer_id, 'channelCode': channel_code})
-    } %}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        const syliusAdminOrderCreationAvailableShippingMethodsUrl = "{{ path('sylius_admin_order_creation_ajax_provide_available_shipping_methods', {'customerId': customer_id, 'channelCode': channel_code, 'shipmentNumber': '0'}) }}";
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('body').on('DOMNodeInserted', '#sylius_admin_order_creation_new_order_payments [data-form-collection="item"]', function() {
-                $('#sylius_admin_order_creation_new_order_payments [data-form-collection="add"]').hide();
-            });
-
-            $('body').on('DOMNodeRemoved', '#sylius_admin_order_creation_new_order_payments [data-form-collection="item"]', function() {
-                $('#sylius_admin_order_creation_new_order_payments [data-form-collection="add"]').show();
-            });
-
-            $('#sylius_admin_order_creation_new_order_shipments [data-form-collection="add"]').on('click', function(e) {
-                if (!canShippingMethodBeProvided()) {
-                    e.stopPropagation();
-                    return;
-                }
-
-                loadAvailableShippingMethods();
-            });
-
-            $('#shipmentsAndPaymentsTab').on('click', function(e) {
-                if (canShippingMethodBeProvided()) {
-                    $('#shipmentsAndPayments').find('.invalid-data-message').hide();
-                } else {
-                    $('#shipmentsAndPayments').find('.invalid-data-message').show();
-                }
-
-                if ($('#shipmentsAndPayments select').length != 0) {
-                    loadAvailableShippingMethods();
-                }
-            });
-
-            $('[data-form-collection="item"] .sylius-autocomplete.dropdown').each(function() {
-                $(this).dropdown('set text', $(this).find('input[type="hidden"]').val());
-            });
-
-            function loadAvailableShippingMethods($shipmentNumber) {
-                if (!canShippingMethodBeProvided()) {
-                    return;
-                }
-
-                let form = $('form');
-                form.addClass('loading');
-
-                $.ajax({
-                    type: "GET",
-                    url: syliusAdminOrderCreationAvailableShippingMethodsUrl,
-                    data: form.serializeArray(),
-                    dataType: "json",
-                    accept: "application/json",
-                    success: function(data) {
-                        let lastShipment = $('#sylius_admin_order_creation_new_order_shipments [data-form-collection="list"]').find('[data-form-collection="item"]:last-child');
-                        let selectBody = '';
-
-                        $.each(data, function(key, value) {
-                            selectBody += '<option value="'+key+'">'+value+'</option>';
-                        });
-
-                        lastShipment.find('select').html(selectBody);
-                        form.removeClass('loading');
-                    }
-                });
-            }
-
-            function canShippingMethodBeProvided() {
-                return $('#sylius_admin_order_creation_new_order_items [data-form-collection="item"]').length > 0 &&
-                    $('#sylius_admin_order_creation_new_order_shippingAddress_countryCode').val() !== '' &&
-                    $('#sylius_admin_order_creation_new_order_localeCode').val() !== ''
-                ;
-            }
-        });
-    </script>
 {% endblock %}
