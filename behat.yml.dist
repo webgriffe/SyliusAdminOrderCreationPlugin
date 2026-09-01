@@ -3,6 +3,9 @@ imports:
     - tests/Behat/Resources/suites.yml
 
 default:
+    calls:
+        error_reporting: 8191 # E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED
+
     formatters:
         pretty:
             verbose: true
@@ -27,11 +30,11 @@ default:
                     symfony: ~
                 chromedriver:
                     chrome:
-                        api_url: http://127.0.0.1:9222
+                        api_url: "%env(BEHAT_CHROME_URL)%"
                         validate_certificate: false
                 chrome_headless_second_session:
                     chrome:
-                        api_url: http://127.0.0.1:9222
+                        api_url: "%env(BEHAT_CHROME_URL)%"
                         validate_certificate: false
             show_auto: false
 
@@ -39,9 +42,12 @@ default:
             bootstrap: vendor/sylius/test-application/config/bootstrap.php
             kernel:
                 class: Sylius\TestApplication\Kernel
+                environment: test
 
         FriendsOfBehat\VariadicExtension: ~
 
         FriendsOfBehat\SuiteSettingsExtension:
             paths:
                 - "features"
+
+        SyliusLabs\SuiteTagsExtension: ~

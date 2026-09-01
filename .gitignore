@@ -1,24 +1,23 @@
-/bin/*
-!/bin/.gitkeep
-!/bin/create_console_symlink.php
-
 /vendor/
+/var/
 /node_modules/
+/drivers/
 /composer.lock
+/docker/
 
 /etc/build/*
-!/etc/build/.gitkeep
-
-/var/
-
-/web/media
+!/etc/build/.gitignore
 
 /.phpunit.result.cache
-/.php-version
-
+/behat.yml
+/behat.sh
+/phpunit.xml
 /compose.override.yml
 /compose.test.yml
-/docker/xdebug.ini
+
+# Symfony CLI https://symfony.com/doc/current/setup/symfony_server.html#different-php-settings-per-project
+/.php-version
+/php.ini
 
 /tests/TestApplication/.env.local
 /tests/TestApplication/.env.*.local
