@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusAdminOrderCreationPlugin;
 
-use Webgriffe\SyliusAdminOrderCreationPlugin\DependencyInjection\Compiler\RegisterReorderProcessorsPass;
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Webgriffe\SyliusAdminOrderCreationPlugin\DependencyInjection\Compiler\RegisterReorderProcessorsPass;
 
 final class WebgriffeSyliusAdminOrderCreationPlugin extends Bundle
 {

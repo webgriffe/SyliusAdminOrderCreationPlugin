@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Webgriffe\SyliusAdminOrderCreationPlugin\EventListener;
 
 use Doctrine\Persistence\ObjectManager;
-use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
-use Webgriffe\SyliusAdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Payment\Model\GatewayConfigInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Webmozart\Assert\Assert;
 
 final class PaymentLinkCreationListener

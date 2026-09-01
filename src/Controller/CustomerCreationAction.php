@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusAdminOrderCreationPlugin\Controller;
 
-use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\CustomerProviderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\CustomerProviderInterface;
 
 final class CustomerCreationAction
 {

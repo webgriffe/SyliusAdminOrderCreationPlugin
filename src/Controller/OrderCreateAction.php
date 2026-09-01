@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusAdminOrderCreationPlugin\Controller;
 
-use Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactoryInterface;
-use Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactoryInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType;
 
 final class OrderCreateAction
 {

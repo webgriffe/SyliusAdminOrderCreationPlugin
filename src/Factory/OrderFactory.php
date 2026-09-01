@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusAdminOrderCreationPlugin\Factory;
 
-use Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
@@ -13,6 +12,7 @@ use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Webmozart\Assert\Assert;
 
 final class OrderFactory implements OrderFactoryInterface
