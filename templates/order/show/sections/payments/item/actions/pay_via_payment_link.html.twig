@@ -1,0 +1,7 @@
+{% set payment = hookable_metadata.context.payment %}
+
+{% if payment.details['payment-link'] is defined %}
+    <a href="{{ payment.details['payment-link'] }}" class="btn" {{ sylius_test_html_attribute('pay-via-payment-link', payment.id) }}>
+        {{ ux_icon('tabler:credit-card') }} {{ 'sylius_admin_order_creation.ui.pay'|trans }}
+    </a>
+{% endif %}

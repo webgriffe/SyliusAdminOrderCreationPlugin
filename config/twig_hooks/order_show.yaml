@@ -1,0 +1,22 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.order.show.content.sections.payments.item.actions':
+            pay_via_payment_link:
+                template: '@WebgriffeSyliusAdminOrderCreationPlugin/order/show/sections/payments/item/actions/pay_via_payment_link.html.twig'
+                priority: 150
+
+        'sylius_admin.order.show.content.sections.summary':
+            order_discount:
+                template: '@WebgriffeSyliusAdminOrderCreationPlugin/order/show/sections/summary/order_discount.html.twig'
+                priority: -100
+
+        'sylius_admin.order.show.content.sections.items.body':
+            unit_discount:
+                template: '@WebgriffeSyliusAdminOrderCreationPlugin/order/show/sections/items/body/unit_discount.html.twig'
+                priority: 600
+            discounted_unit_price:
+                template: '@WebgriffeSyliusAdminOrderCreationPlugin/order/show/sections/items/body/discounted_unit_price.html.twig'
+                priority: 400
+            subtotal:
+                template: '@WebgriffeSyliusAdminOrderCreationPlugin/order/show/sections/items/body/subtotal.html.twig'
+                priority: 200

@@ -1,0 +1,11 @@
+{% import '@SyliusAdmin/shared/helper/money.html.twig' as money %}
+
+{% set order = hookable_metadata.context.resource %}
+{% set orderDiscountTotal = order.getAdjustmentsTotalRecursively(constant('Webgriffe\\SyliusAdminOrderCreationPlugin\\Form\\Type\\AdjustmentType::ORDER_DISCOUNT_ADJUSTMENT')) %}
+
+{% if orderDiscountTotal != 0 %}
+    <tr {{ sylius_test_html_attribute('order-discount') }}>
+        <td><strong>{{ 'sylius_admin_order_creation.ui.order_discount'|trans }}:</strong></td>
+        <td class="text-end">{{ money.format(orderDiscountTotal, order.currencyCode) }}</td>
+    </tr>
+{% endif %}

@@ -1,5 +1,6 @@
 imports:
     - { resource: '@WebgriffeSyliusAdminOrderCreationPlugin/config/services.xml' }
+    - { resource: 'twig_hooks/**/*.yaml' }
 
 sylius_grid:
     grids:
