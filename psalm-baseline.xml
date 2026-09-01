@@ -15,18 +15,10 @@
       <code><![CDATA[OrderPreviewAction]]></code>
     </UnusedClass>
   </file>
-  <file src="src/Controller/ProvideAvailableShippingMethodsAction.php">
-    <UnusedClass>
-      <code><![CDATA[ProvideAvailableShippingMethodsAction]]></code>
-    </UnusedClass>
-  </file>
   <file src="src/Controller/SelectNewOrderCustomerAction.php">
     <UnusedClass>
       <code><![CDATA[SelectNewOrderCustomerAction]]></code>
     </UnusedClass>
-    <UnusedParam>
-      <code><![CDATA[$request]]></code>
-    </UnusedParam>
   </file>
   <file src="src/DependencyInjection/Configuration.php">
     <MissingOverrideAttribute>
@@ -112,13 +104,15 @@
       <code><![CDATA[__construct]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="src/Form/Type/CustomerAutocompleteChoiceType.php">
+  <file src="src/Form/Type/CustomerAutocompleteType.php">
     <MissingOverrideAttribute>
-      <code><![CDATA[public function buildView(FormView $view, FormInterface $form, array $options): void]]></code>
       <code><![CDATA[public function configureOptions(OptionsResolver $resolver): void]]></code>
       <code><![CDATA[public function getBlockPrefix(): string]]></code>
       <code><![CDATA[public function getParent(): string]]></code>
     </MissingOverrideAttribute>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Form/Type/LocaleCodeChoiceType.php">
     <MissingOverrideAttribute>
@@ -145,6 +139,7 @@
   <file src="src/Form/Type/NewOrderType.php">
     <MissingOverrideAttribute>
       <code><![CDATA[public function buildForm(FormBuilderInterface $builder, array $options): void]]></code>
+      <code><![CDATA[public function configureOptions(OptionsResolver $resolver): void]]></code>
       <code><![CDATA[public function getBlockPrefix(): string]]></code>
     </MissingOverrideAttribute>
   </file>
@@ -164,24 +159,26 @@
       <code><![CDATA[public function getBlockPrefix(): string]]></code>
     </MissingOverrideAttribute>
   </file>
-  <file src="src/Form/Type/ShipmentType.php">
+  <file src="src/Form/Type/ProductVariantInChannelAutocompleteType.php">
     <MissingOverrideAttribute>
-      <code><![CDATA[public function buildForm(FormBuilderInterface $builder, array $options): void]]></code>
+      <code><![CDATA[public function configureOptions(OptionsResolver $resolver): void]]></code>
       <code><![CDATA[public function getBlockPrefix(): string]]></code>
+      <code><![CDATA[public function getParent(): string]]></code>
     </MissingOverrideAttribute>
-  </file>
-  <file src="src/Preparator/NewOrderPreparator.php">
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function prepareFromRequest(Request $request): OrderInterface]]></code>
-    </MissingOverrideAttribute>
-    <UnusedClass>
-      <code><![CDATA[NewOrderPreparator]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Provider/AvailableShippingMethodsListProvider.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[__construct]]></code>
     </PossiblyUnusedMethod>
+    <UnusedClosureParam>
+      <code><![CDATA[$query]]></code>
+      <code><![CDATA[$repository]]></code>
+    </UnusedClosureParam>
+  </file>
+  <file src="src/Form/Type/ShipmentType.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function buildForm(FormBuilderInterface $builder, array $options): void]]></code>
+      <code><![CDATA[public function configureOptions(OptionsResolver $resolver): void]]></code>
+      <code><![CDATA[public function getBlockPrefix(): string]]></code>
+    </MissingOverrideAttribute>
   </file>
   <file src="src/Provider/CustomerProvider.php">
     <MissingOverrideAttribute>
@@ -257,6 +254,16 @@
     </MissingOverrideAttribute>
     <UnusedClass>
       <code><![CDATA[OrderPaymentLinkSender]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Twig/Component/OrderFormComponent.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function instantiateForm(): FormInterface]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/Twig/Component/OrderPreviewFormComponent.php">
+    <UnusedClass>
+      <code><![CDATA[OrderPreviewFormComponent]]></code>
     </UnusedClass>
   </file>
   <file src="src/WebgriffeSyliusAdminOrderCreationPlugin.php">

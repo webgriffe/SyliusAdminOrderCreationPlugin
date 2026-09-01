@@ -1,22 +1,22 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$email of method Sylius\\\\AdminOrderCreationPlugin\\\\Provider\\\\CustomerProviderInterface\\:\\:provideNewCustomer\\(\\) expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$email of method Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Provider\\\\CustomerProviderInterface\\:\\:provideNewCustomer\\(\\) expects string, mixed given\\.$#"
 			count: 1
 			path: src/Controller/CustomerCreationAction.php
 
 		-
-			message: "#^Parameter \\#1 \\$customerId of method Sylius\\\\AdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$customerId of method Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
 			count: 1
 			path: src/Controller/OrderCreateAction.php
 
 		-
-			message: "#^Parameter \\#2 \\$channelCode of method Sylius\\\\AdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
+			message: "#^Parameter \\#2 \\$channelCode of method Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
 			count: 1
 			path: src/Controller/OrderCreateAction.php
 
 		-
-			message: "#^Parameter \\#1 \\$customerId of method Sylius\\\\AdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$customerId of method Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
 			count: 1
 			path: src/Controller/OrderPreviewAction.php
 
@@ -26,14 +26,39 @@ parameters:
 			path: src/Controller/OrderPreviewAction.php
 
 		-
-			message: "#^Parameter \\#2 \\$channelCode of method Sylius\\\\AdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
+			message: "#^Parameter \\#2 \\$channelCode of method Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
 			count: 1
 			path: src/Controller/OrderPreviewAction.php
 
 		-
-			message: "#^Cannot cast mixed to int\\.$#"
+			message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:isInstanceOf\\(\\) with Sylius\\\\Component\\\\Core\\\\Model\\\\OrderInterface and 'Sylius\\\\\\\\Component\\\\\\\\Core\\\\\\\\Model\\\\\\\\OrderInterface' will always evaluate to true\\.$#"
 			count: 1
-			path: src/Controller/ProvideAvailableShippingMethodsAction.php
+			path: src/EventListener/PaymentLinkCreationListener.php
+
+		-
+			message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:isInstanceOf\\(\\) with Sylius\\\\Component\\\\Core\\\\Model\\\\ChannelInterface and 'Sylius\\\\\\\\Component\\\\\\\\Core\\\\\\\\Model\\\\\\\\ChannelInterface' will always evaluate to true\\.$#"
+			count: 1
+			path: src/Factory/OrderFactory.php
+
+		-
+			message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:isInstanceOf\\(\\) with Sylius\\\\Component\\\\Core\\\\Model\\\\CustomerInterface and 'Sylius\\\\\\\\Component\\\\\\\\Core\\\\\\\\Model\\\\\\\\CustomerInterface' will always evaluate to true\\.$#"
+			count: 1
+			path: src/Factory/OrderFactory.php
+
+		-
+			message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:isInstanceOf\\(\\) with Sylius\\\\Component\\\\Core\\\\Model\\\\OrderInterface and 'Sylius\\\\\\\\Component\\\\\\\\Core\\\\\\\\Model\\\\\\\\OrderInterface' will always evaluate to true\\.$#"
+			count: 2
+			path: src/Factory/OrderFactory.php
+
+		-
+			message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:isInstanceOf\\(\\) with Sylius\\\\Component\\\\Currency\\\\Model\\\\CurrencyInterface and 'Sylius\\\\\\\\Component\\\\\\\\Currency\\\\\\\\Model\\\\\\\\CurrencyInterface' will always evaluate to true\\.$#"
+			count: 1
+			path: src/Factory/OrderFactory.php
+
+		-
+			message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:isInstanceOf\\(\\) with Sylius\\\\Component\\\\Locale\\\\Model\\\\LocaleInterface and 'Sylius\\\\\\\\Component\\\\\\\\Locale\\\\\\\\Model\\\\\\\\LocaleInterface' will always evaluate to true\\.$#"
+			count: 1
+			path: src/Factory/OrderFactory.php
 
 		-
 			message: "#^Cannot call method getAmount\\(\\) on mixed\\.$#"
@@ -66,7 +91,12 @@ parameters:
 			path: src/Form/Type/NewOrderType.php
 
 		-
-			message: "#^Parameter \\#1 \\$orderData of method Sylius\\\\AdminOrderCreationPlugin\\\\Form\\\\Type\\\\NewOrderType\\:\\:isBillingAddressEmpty\\(\\) expects array, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$orderData of method Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Form\\\\Type\\\\NewOrderType\\:\\:isBillingAddressEmpty\\(\\) expects array, mixed given\\.$#"
+			count: 1
+			path: src/Form/Type/NewOrderType.php
+
+		-
+			message: "#^Parameter \\#1 \\$orderData of method Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Form\\\\Type\\\\NewOrderType\\:\\:isShippingAddressComplete\\(\\) expects array, mixed given\\.$#"
 			count: 1
 			path: src/Form/Type/NewOrderType.php
 
@@ -76,14 +106,19 @@ parameters:
 			path: src/Form/Type/OrderItemType.php
 
 		-
-			message: "#^Parameter \\#1 \\$customerId of method Sylius\\\\AdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
+			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
 			count: 1
-			path: src/Preparator/NewOrderPreparator.php
+			path: src/Form/Type/OrderItemType.php
 
 		-
-			message: "#^Parameter \\#2 \\$channelCode of method Sylius\\\\AdminOrderCreationPlugin\\\\Factory\\\\OrderFactoryInterface\\:\\:createForCustomerAndChannel\\(\\) expects string, mixed given\\.$#"
+			message: "#^Cannot access offset 'channel_code' on mixed\\.$#"
 			count: 1
-			path: src/Preparator/NewOrderPreparator.php
+			path: src/Form/Type/ProductVariantInChannelAutocompleteType.php
+
+		-
+			message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:notNull\\(\\) with Sylius\\\\Component\\\\Core\\\\Model\\\\CustomerInterface will always evaluate to true\\.$#"
+			count: 1
+			path: src/Provider/CustomerProvider.php
 
 		-
 			message: "#^Parameter \\#1 \\$gatewayName of method Payum\\\\Core\\\\Security\\\\GenericTokenFactoryInterface\\:\\:createAuthorizeToken\\(\\) expects string, string\\|null given\\.$#"
@@ -96,6 +131,11 @@ parameters:
 			path: src/Provider/PaymentTokenProvider.php
 
 		-
+			message: "#^Call to method Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElementInterface\\:\\:selectCurrency\\(\\) with incorrect case\\: selectcurrency$#"
+			count: 1
+			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
+
+		-
 			message: "#^Cannot call method getCode\\(\\) on Sylius\\\\Component\\\\Product\\\\Model\\\\ProductVariantInterface\\|false\\.$#"
 			count: 2
 			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
@@ -106,32 +146,32 @@ parameters:
 			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
 
 		-
-			message: "#^Parameter \\#1 \\$customerEmail of method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Page\\\\Admin\\\\NewOrderCustomerPageInterface\\:\\:selectCustomer\\(\\) expects string, string\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$customerEmail of method Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Page\\\\Admin\\\\NewOrderCustomerPageInterface\\:\\:selectCustomer\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
 
 		-
-			message: "#^Parameter \\#1 \\$productCode of method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Page\\\\Admin\\\\OrderPreviewPageInterface\\:\\:hasItemDiscountValidationMessage\\(\\) expects string, string\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$productCode of method Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Page\\\\Admin\\\\OrderPreviewPageInterface\\:\\:hasItemDiscountValidationMessage\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
 
 		-
-			message: "#^Parameter \\#1 \\$productCode of method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Page\\\\Admin\\\\OrderPreviewPageInterface\\:\\:lowerItemWithProductPriceBy\\(\\) expects string, string\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$productCode of method Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Page\\\\Admin\\\\OrderPreviewPageInterface\\:\\:lowerItemWithProductPriceBy\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
 
 		-
-			message: "#^Parameter \\#1 \\$productVariantDescriptor of method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElementInterface\\:\\:removeProduct\\(\\) expects string, string\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$productVariantDescriptor of method Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElementInterface\\:\\:removeProduct\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
 
 		-
-			message: "#^Parameter \\#1 \\$productVariantDescriptor of method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElementInterface\\:\\:specifyQuantity\\(\\) expects string, string\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$productVariantDescriptor of method Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElementInterface\\:\\:specifyQuantity\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
 
 		-
-			message: "#^Property Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Context\\\\Admin\\\\ManagingOrdersContext\\:\\:\\$addressComparator is never read, only written\\.$#"
+			message: "#^Property Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Context\\\\Admin\\\\ManagingOrdersContext\\:\\:\\$addressComparator is never read, only written\\.$#"
 			count: 1
 			path: tests/Behat/Context/Admin/ManagingOrdersContext.php
 
@@ -166,17 +206,17 @@ parameters:
 			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
 
 		-
-			message: "#^Method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElement\\:\\:__construct\\(\\) has parameter \\$parameters with no type specified\\.$#"
+			message: "#^Method Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElement\\:\\:__construct\\(\\) has parameter \\$parameters with no type specified\\.$#"
 			count: 1
 			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
 
 		-
-			message: "#^Method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElement\\:\\:addItemAndWaitForIt\\(\\) should return Behat\\\\Mink\\\\Element\\\\NodeElement but returns Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			message: "#^Method Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElement\\:\\:addItemAndWaitForIt\\(\\) should return Behat\\\\Mink\\\\Element\\\\NodeElement but returns Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
 			count: 1
 			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
 
 		-
-			message: "#^Parameter \\#1 \\$addressForm of method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElement\\:\\:fillAddressData\\(\\) expects Behat\\\\Mink\\\\Element\\\\NodeElement, Behat\\\\Mink\\\\Element\\\\NodeElement\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$addressForm of method Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Admin\\\\OrderCreateFormElement\\:\\:fillAddressData\\(\\) expects Behat\\\\Mink\\\\Element\\\\NodeElement, Behat\\\\Mink\\\\Element\\\\NodeElement\\|null given\\.$#"
 			count: 2
 			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
 
@@ -191,17 +231,17 @@ parameters:
 			path: tests/Behat/Element/Admin/OrderCreateFormElement.php
 
 		-
-			message: "#^Method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Element\\:\\:__construct\\(\\) has parameter \\$parameters with no type specified\\.$#"
+			message: "#^Method Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Element\\:\\:__construct\\(\\) has parameter \\$parameters with no type specified\\.$#"
 			count: 1
 			path: tests/Behat/Element/Element.php
 
 		-
-			message: "#^Method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Element\\:\\:getSelectorAsXpath\\(\\) has parameter \\$selector with no type specified\\.$#"
+			message: "#^Method Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Element\\:\\:getSelectorAsXpath\\(\\) has parameter \\$selector with no type specified\\.$#"
 			count: 1
 			path: tests/Behat/Element/Element.php
 
 		-
-			message: "#^Method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Element\\:\\:resolveParameters\\(\\) should return string but returns array\\.$#"
+			message: "#^Method Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Element\\:\\:resolveParameters\\(\\) should return string but returns array\\.$#"
 			count: 1
 			path: tests/Behat/Element/Element.php
 
@@ -211,12 +251,12 @@ parameters:
 			path: tests/Behat/Element/Element.php
 
 		-
-			message: "#^Property Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Element\\:\\:\\$parameters has no type specified\\.$#"
+			message: "#^Property Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Element\\\\Element\\:\\:\\$parameters has no type specified\\.$#"
 			count: 1
 			path: tests/Behat/Element/Element.php
 
 		-
-			message: "#^Method Tests\\\\Sylius\\\\AdminOrderCreationPlugin\\\\Behat\\\\Page\\\\Admin\\\\NewOrderCustomerPage\\:\\:__construct\\(\\) has parameter \\$parameters with no type specified\\.$#"
+			message: "#^Method Tests\\\\Webgriffe\\\\SyliusAdminOrderCreationPlugin\\\\Behat\\\\Page\\\\Admin\\\\NewOrderCustomerPage\\:\\:__construct\\(\\) has parameter \\$parameters with no type specified\\.$#"
 			count: 1
 			path: tests/Behat/Page/Admin/NewOrderCustomerPage.php
 
@@ -257,6 +297,11 @@ parameters:
 
 		-
 			message: "#^Cannot call method find\\(\\) on Behat\\\\Mink\\\\Element\\\\NodeElement\\|null\\.$#"
+			count: 1
+			path: tests/Behat/Page/Admin/OrderShowPage.php
+
+		-
+			message: "#^Strict comparison using \\!\\=\\= between null and Behat\\\\Mink\\\\Element\\\\NodeElement will always evaluate to true\\.$#"
 			count: 1
 			path: tests/Behat/Page/Admin/OrderShowPage.php
 
