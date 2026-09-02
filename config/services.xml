@@ -122,12 +122,14 @@
             <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactory" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="sylius.order_processing.order_processor" />
+            <argument type="service" id="sylius.resolver.shipping_methods" />
         </service>
 
         <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Twig\Component\OrderPreviewFormComponent" autoconfigure="true">
             <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactory" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="sylius.order_processing.order_processor" />
+            <argument type="service" id="sylius.resolver.shipping_methods" />
         </service>
     </services>
 </container>

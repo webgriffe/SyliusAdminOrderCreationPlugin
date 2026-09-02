@@ -260,6 +260,9 @@
     <MissingOverrideAttribute>
       <code><![CDATA[protected function instantiateForm(): FormInterface]]></code>
     </MissingOverrideAttribute>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[reprocessOrder]]></code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Twig/Component/OrderPreviewFormComponent.php">
     <UnusedClass>
