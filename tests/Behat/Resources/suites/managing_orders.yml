@@ -55,5 +55,6 @@ default:
                 - sylius.behat.context.ui.shop.currency
 
                 - Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext
+                - Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Context\Setup\PaymentContext
             filters:
                 tags: "@admin_order_creation_managing_orders && @ui"

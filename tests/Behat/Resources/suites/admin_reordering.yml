@@ -37,5 +37,6 @@ default:
                 - sylius.behat.context.ui.email
 
                 - Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext
+                - Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Context\Setup\PaymentContext
             filters:
                 tags: "@admin_order_creation_admin_reordering && @ui"

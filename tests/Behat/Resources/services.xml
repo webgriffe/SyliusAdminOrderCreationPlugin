@@ -12,6 +12,12 @@
         <service id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin\ReorderPage" parent="sylius.behat.symfony_page" public="true"/>
         <service id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin\OrderPreviewPage" parent="sylius.behat.symfony_page" public="true"/>
 
+        <service id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Context\Setup\PaymentContext">
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <argument type="service" id="sylius.repository.payment_method" />
+            <argument type="service" id="sylius.fixture.example_factory.payment_method" />
+        </service>
+
         <service id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext">
             <argument type="service" id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPage"/>
             <argument type="service" id="Tests\Webgriffe\SyliusAdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPage" />
