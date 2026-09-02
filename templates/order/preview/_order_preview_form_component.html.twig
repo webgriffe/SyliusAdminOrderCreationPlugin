@@ -80,6 +80,12 @@
                             {% else %}
                                 <span class="px-3 text-secondary">{{ 'sylius.ui.no_payments'|trans }}</span>
                             {% endif %}
+                            <div class="form-check px-3 pt-2" {{ sylius_test_html_attribute('send-payment-link-email') }}>
+                                {{ form_widget(form.sendPaymentLinkEmail, {
+                                    'attr': {'class': 'form-check-input'},
+                                }) }}
+                                {{ form_label(form.sendPaymentLinkEmail, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                            </div>
                         </div>
                     </div>
                 </div>

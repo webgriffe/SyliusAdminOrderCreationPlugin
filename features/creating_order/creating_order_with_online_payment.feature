@@ -20,8 +20,22 @@ Feature: Creating order with online payment
         And I specify this order shipping address as "Ankh Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
         And I select "Paypal" payment method
-        And I place and confirm this order
+        And I place this order
+        And I want to send a payment link email to the customer
+        And I confirm this order
         Then I should be notified that order has been successfully created
         And there should be a payment link displayed next to order's payment
         And there should be a payment link sent to "jon.snow@the-wall.com"
         And there should be one not paid nor shipped order with channel "United States" for "jon.snow@the-wall.com" in the registry
+
+    @ui @javascript @email
+    Scenario: Not sending a payment link email by default
+        When I create a new order for "jon.snow@the-wall.com" and channel "United States"
+        And I add "Stark Coat" to this order
+        And I specify this order shipping address as "Ankh Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
+        And I select "Free" shipping method
+        And I select "Paypal" payment method
+        And I place and confirm this order
+        Then I should be notified that order has been successfully created
+        And there should be a payment link displayed next to order's payment
+        And there should be no payment link sent to "jon.snow@the-wall.com"

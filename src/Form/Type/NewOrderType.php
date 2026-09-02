@@ -10,6 +10,7 @@ use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Shipping\Model\ShippingSubjectInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -18,6 +19,8 @@ use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
 final class NewOrderType extends AbstractResourceType
 {
+    public const BLOCK_PREFIX = 'sylius_admin_order_creation_new_order';
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -39,6 +42,11 @@ final class NewOrderType extends AbstractResourceType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+            ])
+            ->add('sendPaymentLinkEmail', CheckboxType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => 'sylius_admin_order_creation.ui.send_payment_link_email',
             ])
             ->add('shipments', LiveCollectionType::class, [
                 'entry_type' => ShipmentType::class,
@@ -120,7 +128,7 @@ final class NewOrderType extends AbstractResourceType
 
     public function getBlockPrefix(): string
     {
-        return 'sylius_admin_order_creation_new_order';
+        return self::BLOCK_PREFIX;
     }
 
     private function isBillingAddressEmpty(array $orderData): bool

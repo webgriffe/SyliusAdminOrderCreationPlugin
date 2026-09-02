@@ -10,6 +10,8 @@ use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Payment\Model\GatewayConfigInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType;
 use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
 use Webgriffe\SyliusAdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Webmozart\Assert\Assert;
@@ -25,14 +27,19 @@ final class PaymentLinkCreationListener
     /** @var OrderPaymentLinkSenderInterface */
     private $orderPaymentLinkSender;
 
+    /** @var RequestStack */
+    private $requestStack;
+
     public function __construct(
         PaymentTokenProviderInterface $paymentTokenProvider,
         ObjectManager $orderManager,
         OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
+        RequestStack $requestStack,
     ) {
         $this->paymentTokenProvider = $paymentTokenProvider;
         $this->orderManager = $orderManager;
         $this->orderPaymentLinkSender = $orderPaymentLinkSender;
+        $this->requestStack = $requestStack;
     }
 
     public function setPaymentLink(GenericEvent $event): void
@@ -58,7 +65,22 @@ final class PaymentLinkCreationListener
         $token = $this->paymentTokenProvider->getPaymentToken($payment);
         $payment->setDetails(['payment-link' => $token->getAfterUrl()]);
 
-        $this->orderPaymentLinkSender->sendPaymentLink($order);
+        if ($this->shouldSendPaymentLinkEmail()) {
+            $this->orderPaymentLinkSender->sendPaymentLink($order);
+        }
+
         $this->orderManager->flush();
+    }
+
+    private function shouldSendPaymentLinkEmail(): bool
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
+            return false;
+        }
+
+        $formData = $request->request->all(NewOrderType::BLOCK_PREFIX);
+
+        return (bool) ($formData['sendPaymentLinkEmail'] ?? false);
     }
 }

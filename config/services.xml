@@ -100,6 +100,7 @@
             <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Provider\PaymentTokenProvider" />
             <argument type="service" id="sylius.manager.order" />
             <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Sender\OrderPaymentLinkSender" />
+            <argument type="service" id="request_stack" />
             <tag name="kernel.event_listener" event="sylius.order.post_admin_create" method="setPaymentLink" />
         </service>
 

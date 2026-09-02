@@ -101,6 +101,11 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
         $row->fillField('Item discount', $discount);
     }
 
+    public function checkSendPaymentLinkEmail(): void
+    {
+        $this->getDocument()->checkField('Send a payment link to the customer via email');
+    }
+
     public function confirm(): void
     {
         $this->getDocument()->pressButton('Confirm');

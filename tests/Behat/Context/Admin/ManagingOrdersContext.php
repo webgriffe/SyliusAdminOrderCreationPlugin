@@ -271,6 +271,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When I want to send a payment link email to the customer
+     */
+    public function iWantToSendAPaymentLinkEmailToTheCustomer(): void
+    {
+        $this->orderPreviewPage->checkSendPaymentLinkEmail();
+    }
+
+    /**
      * @When I go back to the order creation
      */
     public function goBackToTheOrderCreation(): void

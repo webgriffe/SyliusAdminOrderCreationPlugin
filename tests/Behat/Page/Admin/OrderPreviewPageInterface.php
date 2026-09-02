@@ -28,6 +28,8 @@ interface OrderPreviewPageInterface
 
     public function lowerItemWithProductPriceBy(string $productCode, string $discount): void;
 
+    public function checkSendPaymentLinkEmail(): void;
+
     public function confirm(): void;
 
     public function goBack(): void;
