@@ -50,6 +50,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     {
         $item = $this->getItemWithProductSelected($productVariantDescriptor);
         $item->pressButton('Delete');
+        $this->waitForComponentIdle();
     }
 
     public function areProductsVisible(): bool
