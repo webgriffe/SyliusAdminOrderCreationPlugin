@@ -17,7 +17,9 @@ final class SyliusAdminOrderCreationExtension extends Extension implements Prepe
 
     public function load(array $config, ContainerBuilder $container): void
     {
-        $this->processConfiguration($this->getConfiguration([], $container), $config);
+        $config = $this->processConfiguration($this->getConfiguration([], $container), $config);
+        $container->setParameter('sylius_admin_order_creation_plugin.offline_gateway_names', $config['offline_gateway_names']);
+
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
     }
 

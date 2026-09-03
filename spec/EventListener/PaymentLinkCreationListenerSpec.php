@@ -27,7 +27,7 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
         RequestStack $requestStack,
     ) {
-        $this->beConstructedWith($paymentTokenProvider, $orderManager, $orderPaymentLinkSender, $requestStack);
+        $this->beConstructedWith($paymentTokenProvider, $orderManager, $orderPaymentLinkSender, $requestStack, ['offline']);
     }
 
     function it_sets_after_url_from_token_of_last_order_new_payment_and_sends_it_when_checkbox_is_checked(
@@ -130,6 +130,38 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         $payment->getMethod()->willReturn($paymentMethod);
         $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
         $gatewayConfig->getGatewayName()->willReturn('offline');
+
+        $payum->getTokenFactory()->shouldNotBeCalled();
+
+        $this->setPaymentLink($event);
+    }
+
+    function it_does_nothing_if_order_payment_gateway_is_one_of_the_configured_offline_gateway_names(
+        PaymentTokenProviderInterface $paymentTokenProvider,
+        ObjectManager $orderManager,
+        OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
+        RequestStack $requestStack,
+        Payum $payum,
+        GenericEvent $event,
+        OrderInterface $order,
+        PaymentInterface $payment,
+        PaymentMethodInterface $paymentMethod,
+        GatewayConfigInterface $gatewayConfig,
+    ) {
+        $this->beConstructedWith(
+            $paymentTokenProvider,
+            $orderManager,
+            $orderPaymentLinkSender,
+            $requestStack,
+            ['offline', 'bank_transfer'],
+        );
+
+        $event->getSubject()->willReturn($order);
+        $order->getLastPayment(PaymentInterface::STATE_NEW)->willReturn($payment);
+
+        $payment->getMethod()->willReturn($paymentMethod);
+        $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
+        $gatewayConfig->getGatewayName()->willReturn('bank_transfer');
 
         $payum->getTokenFactory()->shouldNotBeCalled();
 

@@ -30,16 +30,24 @@ final class PaymentLinkCreationListener
     /** @var RequestStack */
     private $requestStack;
 
+    /** @var list<string> */
+    private $offlineGatewayNames;
+
+    /**
+     * @param list<string> $offlineGatewayNames
+     */
     public function __construct(
         PaymentTokenProviderInterface $paymentTokenProvider,
         ObjectManager $orderManager,
         OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
         RequestStack $requestStack,
+        array $offlineGatewayNames,
     ) {
         $this->paymentTokenProvider = $paymentTokenProvider;
         $this->orderManager = $orderManager;
         $this->orderPaymentLinkSender = $orderPaymentLinkSender;
         $this->requestStack = $requestStack;
+        $this->offlineGatewayNames = $offlineGatewayNames;
     }
 
     public function setPaymentLink(GenericEvent $event): void
@@ -58,7 +66,7 @@ final class PaymentLinkCreationListener
         /** @var GatewayConfigInterface $gatewayConfig */
         $gatewayConfig = $paymentMethod->getGatewayConfig();
 
-        if ('offline' === $gatewayConfig->getGatewayName()) {
+        if (\in_array($gatewayConfig->getGatewayName(), $this->offlineGatewayNames, true)) {
             return;
         }
 
