@@ -10,10 +10,24 @@
 
 {% set order = form.vars.data %}
 
+{% macro nested_errors(field) %}
+    {{ form_errors(field) }}
+    {% for child in field %}
+        {{ _self.nested_errors(child) }}
+    {% endfor %}
+{% endmacro %}
+
 <div {{ attributes }}>
     {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': form.vars.id}}) }}
 
     {{ form_errors(form) }}
+    {{ _self.nested_errors(form.promotionCoupon) }}
+    {{ _self.nested_errors(form.shippingAddress) }}
+    {{ _self.nested_errors(form.billingAddress) }}
+    {{ _self.nested_errors(form.payments) }}
+    {{ _self.nested_errors(form.shipments) }}
+    {{ _self.nested_errors(form.localeCode) }}
+    {{ _self.nested_errors(form.currencyCode) }}
 
     <div class="row">
         <div class="col-12 col-lg-8">
