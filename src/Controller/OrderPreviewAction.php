@@ -46,7 +46,18 @@ final class OrderPreviewAction
         $order = $this->orderFactory->createForCustomerAndChannel($customerId, $channelCode);
 
         $form = $this->formFactory->create(NewOrderType::class, $order);
-        $order = $form->handleRequest($request)->getData();
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return new Response(
+                $this->twig->render('@WebgriffeSyliusAdminOrderCreationPlugin/order/create.html.twig', [
+                    'form' => $form->createView(),
+                ]),
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+            );
+        }
+
+        $order = $form->getData();
         $this->orderProcessor->process($order);
 
         return new Response($this->twig->render('@WebgriffeSyliusAdminOrderCreationPlugin/order/preview.html.twig', [

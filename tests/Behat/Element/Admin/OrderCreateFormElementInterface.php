@@ -44,4 +44,8 @@ interface OrderCreateFormElementInterface
     public function getShippingMethodsValidationMessage(): string;
 
     public function isAddPaymentButtonVisible(): bool;
+
+    public function hasValidationErrors(): bool;
+
+    public function isDisplayed(): bool;
 }

@@ -175,6 +175,16 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         return $addPaymentButton !== null && $addPaymentButton->isVisible();
     }
 
+    public function hasValidationErrors(): bool
+    {
+        return $this->getDocument()->has('css', '.invalid-feedback');
+    }
+
+    public function isDisplayed(): bool
+    {
+        return $this->getDocument()->findButton('Order preview') !== null;
+    }
+
     private function fillAddressData(NodeElement $addressForm, AddressInterface $address): void
     {
         $countryCode = $address->getCountryCode();

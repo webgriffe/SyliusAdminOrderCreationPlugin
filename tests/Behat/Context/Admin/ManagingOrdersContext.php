@@ -542,6 +542,22 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @Then I should see a validation error
+     */
+    public function iShouldSeeAValidationError(): void
+    {
+        Assert::true($this->orderCreateFormElement->hasValidationErrors());
+    }
+
+    /**
+     * @Then I should still be on the order creation form
+     */
+    public function iShouldStillBeOnTheOrderCreationForm(): void
+    {
+        Assert::true($this->orderCreateFormElement->isDisplayed());
+    }
+
+    /**
      * @Then the product named :productName should not be in the items list
      */
     public function theProductShouldNotBeInTheItemsList(string $productName): void
