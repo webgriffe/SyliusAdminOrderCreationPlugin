@@ -5,19 +5,23 @@ declare(strict_types=1);
 namespace spec\Webgriffe\SyliusAdminOrderCreationPlugin\EventListener;
 
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Sylius\Abstraction\StateMachine\StateMachineInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\OrderCheckoutTransitions;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Event\OrderCreatedByAdminEvent;
 
 final class OrderCreationListenerSpec extends ObjectBehavior
 {
     function let(
         OrderProcessorInterface $orderProcessor,
         StateMachineInterface $stateMachine,
+        EventDispatcherInterface $eventDispatcher,
     ) {
-        $this->beConstructedWith($orderProcessor, $stateMachine);
+        $this->beConstructedWith($orderProcessor, $stateMachine, $eventDispatcher);
     }
 
     function it_processes_order_before_creation(
@@ -86,7 +90,7 @@ final class OrderCreationListenerSpec extends ObjectBehavior
 
     function it_throws_exception_if_event_subject_is_not_order(GenericEvent $event)
     {
-        $event->getSubject()->willReturn('badObject', 'badObject');
+        $event->getSubject()->willReturn('badObject', 'badObject', 'badObject');
 
         $this
             ->shouldThrow(\InvalidArgumentException::class)
@@ -95,5 +99,23 @@ final class OrderCreationListenerSpec extends ObjectBehavior
         $this
             ->shouldThrow(\InvalidArgumentException::class)
             ->during('completeOrderBeforeCreation', [$event]);
+
+        $this
+            ->shouldThrow(\InvalidArgumentException::class)
+            ->during('dispatchOrderCreatedEvent', [$event]);
+    }
+
+    function it_dispatches_an_order_created_by_admin_event_after_order_creation(
+        EventDispatcherInterface $eventDispatcher,
+        GenericEvent $event,
+        OrderInterface $order,
+    ) {
+        $event->getSubject()->willReturn($order);
+
+        $eventDispatcher->dispatch(Argument::that(function (OrderCreatedByAdminEvent $dispatchedEvent) use ($order) {
+            return $dispatchedEvent->getOrder() === $order->getWrappedObject();
+        }))->shouldBeCalled();
+
+        $this->dispatchOrderCreatedEvent($event);
     }
 }

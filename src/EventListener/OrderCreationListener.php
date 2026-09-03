@@ -8,7 +8,9 @@ use Sylius\Abstraction\StateMachine\StateMachineInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\OrderCheckoutTransitions;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Event\OrderCreatedByAdminEvent;
 use Webmozart\Assert\Assert;
 
 final class OrderCreationListener
@@ -19,10 +21,17 @@ final class OrderCreationListener
     /** @var StateMachineInterface */
     private $stateMachine;
 
-    public function __construct(OrderProcessorInterface $orderProcessor, StateMachineInterface $stateMachine)
-    {
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
+    public function __construct(
+        OrderProcessorInterface $orderProcessor,
+        StateMachineInterface $stateMachine,
+        EventDispatcherInterface $eventDispatcher,
+    ) {
         $this->orderProcessor = $orderProcessor;
         $this->stateMachine = $stateMachine;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function processOrderBeforeCreation(GenericEvent $event): void
@@ -47,5 +56,13 @@ final class OrderCreationListener
             $this->stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT);
         }
         $this->stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, OrderCheckoutTransitions::TRANSITION_COMPLETE);
+    }
+
+    public function dispatchOrderCreatedEvent(GenericEvent $event): void
+    {
+        $order = $event->getSubject();
+        Assert::isInstanceOf($order, OrderInterface::class);
+
+        $this->eventDispatcher->dispatch(new OrderCreatedByAdminEvent($order));
     }
 }

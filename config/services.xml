@@ -94,8 +94,10 @@
         <service id="Webgriffe\SyliusAdminOrderCreationPlugin\EventListener\OrderCreationListener">
             <argument type="service" id="sylius.order_processing.order_processor" />
             <argument type="service" id="Sylius\Abstraction\StateMachine\StateMachineInterface" />
+            <argument type="service" id="event_dispatcher" />
             <tag name="kernel.event_listener" event="sylius.order.pre_admin_create" method="processOrderBeforeCreation" />
             <tag name="kernel.event_listener" event="sylius.order.pre_admin_create" method="completeOrderBeforeCreation" />
+            <tag name="kernel.event_listener" event="sylius.order.post_admin_create" method="dispatchOrderCreatedEvent" />
         </service>
 
         <service id="Webgriffe\SyliusAdminOrderCreationPlugin\EventListener\PaymentLinkCreationListener">

@@ -59,6 +59,11 @@
       <code><![CDATA[ProductVariantRepositoryInterface]]></code>
     </UnusedClass>
   </file>
+  <file src="src/Event/OrderCreatedByAdminEvent.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getOrder]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="src/EventListener/OrderCreationListener.php">
     <UnusedClass>
       <code><![CDATA[OrderCreationListener]]></code>
