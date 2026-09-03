@@ -89,6 +89,8 @@
             <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\CompositeReorderProcessor"/>
         </service>
 
+        <service id="Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactoryInterface" alias="Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactory" />
+
         <service id="Webgriffe\SyliusAdminOrderCreationPlugin\EventListener\OrderCreationListener">
             <argument type="service" id="sylius.order_processing.order_processor" />
             <argument type="service" id="Sylius\Abstraction\StateMachine\StateMachineInterface" />

@@ -27,7 +27,7 @@ sylius_admin_order_creation_order_create:
             form:
                 type: Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
-                method: ['expr:service("Webgriffe\\SyliusAdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
+                method: ['expr:service("Webgriffe\\SyliusAdminOrderCreationPlugin\\Factory\\OrderFactoryInterface")', 'createForCustomerAndChannel']
                 arguments: [$customerId, $channelCode]
     requirements:
         customerId: \d+
@@ -41,7 +41,7 @@ sylius_admin_order_creation_order_preview:
             form:
                 type: Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
-                method: ['expr:service("Webgriffe\\SyliusAdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
+                method: ['expr:service("Webgriffe\\SyliusAdminOrderCreationPlugin\\Factory\\OrderFactoryInterface")', 'createForCustomerAndChannel']
                 arguments: [$customerId, $channelCode]
 
 sylius_admin_order_creation_order_create_from_preview:
@@ -59,7 +59,7 @@ sylius_admin_order_creation_order_create_from_preview:
             form:
                 type: Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
-                method: ['expr:service("Webgriffe\\SyliusAdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
+                method: ['expr:service("Webgriffe\\SyliusAdminOrderCreationPlugin\\Factory\\OrderFactoryInterface")', 'createForCustomerAndChannel']
                 arguments: [$customerId, $channelCode]
 
 sylius_admin_order_creation_order_create_back:
@@ -87,5 +87,5 @@ sylius_admin_order_creation_reorder:
             form:
                 type: Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
-                method: ['expr:service("Webgriffe\\SyliusAdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createFromExistingOrder']
+                method: ['expr:service("Webgriffe\\SyliusAdminOrderCreationPlugin\\Factory\\OrderFactoryInterface")', 'createFromExistingOrder']
                 arguments: ["expr:service('sylius.repository.order').find($id)"]
