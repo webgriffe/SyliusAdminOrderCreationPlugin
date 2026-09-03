@@ -64,6 +64,16 @@
       <code><![CDATA[getOrder]]></code>
     </PossiblyUnusedMethod>
   </file>
+  <file src="src/Event/OrderCreationInitializedEvent.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getOrder]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Event/PaymentLinkGeneratedEvent.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getPayment]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="src/EventListener/OrderCreationListener.php">
     <UnusedClass>
       <code><![CDATA[OrderCreationListener]]></code>

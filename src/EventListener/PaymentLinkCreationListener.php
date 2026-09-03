@@ -9,8 +9,10 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Payment\Model\GatewayConfigInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Event\PaymentLinkGeneratedEvent;
 use Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType;
 use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
 use Webgriffe\SyliusAdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
@@ -30,6 +32,9 @@ final class PaymentLinkCreationListener
     /** @var RequestStack */
     private $requestStack;
 
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
     /** @var list<string> */
     private $offlineGatewayNames;
 
@@ -44,6 +49,7 @@ final class PaymentLinkCreationListener
         ObjectManager $orderManager,
         OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
         RequestStack $requestStack,
+        EventDispatcherInterface $eventDispatcher,
         array $offlineGatewayNames,
         bool $enabled,
     ) {
@@ -51,6 +57,7 @@ final class PaymentLinkCreationListener
         $this->orderManager = $orderManager;
         $this->orderPaymentLinkSender = $orderPaymentLinkSender;
         $this->requestStack = $requestStack;
+        $this->eventDispatcher = $eventDispatcher;
         $this->offlineGatewayNames = $offlineGatewayNames;
         $this->enabled = $enabled;
     }
@@ -81,6 +88,8 @@ final class PaymentLinkCreationListener
 
         $token = $this->paymentTokenProvider->getPaymentToken($payment);
         $payment->setDetails(['payment-link' => $token->getAfterUrl()]);
+
+        $this->eventDispatcher->dispatch(new PaymentLinkGeneratedEvent($payment));
 
         if ($this->shouldSendPaymentLinkEmail()) {
             $this->orderPaymentLinkSender->sendPaymentLink($order);

@@ -12,6 +12,8 @@ use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Event\OrderCreationInitializedEvent;
 use Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Webmozart\Assert\Assert;
 
@@ -29,17 +31,22 @@ final class OrderFactory implements OrderFactoryInterface
     /** @var ReorderProcessor */
     private $reorderProcessor;
 
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
     public function __construct(
         FactoryInterface $baseOrderFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
         ReorderProcessor $reorderProcessor,
+        EventDispatcherInterface $eventDispatcher,
     ) {
         $this->baseOrderFactory = $baseOrderFactory;
         $this->customerRepository = $customerRepository;
         $this->channelRepository = $channelRepository;
 
         $this->reorderProcessor = $reorderProcessor;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function createNew(): OrderInterface
@@ -77,6 +84,8 @@ final class OrderFactory implements OrderFactoryInterface
         Assert::isInstanceOf($defaultLocale, LocaleInterface::class);
         $order->setLocaleCode($defaultLocale->getCode());
 
+        $this->eventDispatcher->dispatch(new OrderCreationInitializedEvent($order));
+
         return $order;
     }
 
@@ -86,6 +95,8 @@ final class OrderFactory implements OrderFactoryInterface
         Assert::isInstanceOf($reorder, OrderInterface::class);
 
         $this->reorderProcessor->process($order, $reorder);
+
+        $this->eventDispatcher->dispatch(new OrderCreationInitializedEvent($reorder));
 
         return $reorder;
     }

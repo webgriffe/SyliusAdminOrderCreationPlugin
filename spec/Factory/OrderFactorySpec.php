@@ -14,6 +14,8 @@ use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Event\OrderCreationInitializedEvent;
 use Webgriffe\SyliusAdminOrderCreationPlugin\Factory\OrderFactoryInterface;
 use Webgriffe\SyliusAdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 
@@ -24,12 +26,14 @@ final class OrderFactorySpec extends ObjectBehavior
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
         ReorderProcessor $reorderProcessor,
+        EventDispatcherInterface $eventDispatcher,
     ) {
         $this->beConstructedWith(
             $baseOrderFactory,
             $customerRepository,
             $channelRepository,
             $reorderProcessor,
+            $eventDispatcher,
         );
     }
 
@@ -49,6 +53,7 @@ final class OrderFactorySpec extends ObjectBehavior
         FactoryInterface $baseOrderFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
+        EventDispatcherInterface $eventDispatcher,
         OrderInterface $order,
         CustomerInterface $customer,
         ChannelInterface $channel,
@@ -70,6 +75,10 @@ final class OrderFactorySpec extends ObjectBehavior
         $order->setChannel($channel)->shouldBeCalled();
         $order->setCurrencyCode('USD')->shouldBeCalled();
         $order->setLocaleCode('en_US')->shouldBeCalled();
+
+        $eventDispatcher->dispatch(Argument::that(function (OrderCreationInitializedEvent $event) use ($order) {
+            return $event->getOrder() === $order->getWrappedObject();
+        }))->shouldBeCalled();
 
         $this
             ->createForCustomerAndChannel('1', 'WEB-US')
@@ -149,12 +158,17 @@ final class OrderFactorySpec extends ObjectBehavior
     function it_creates_reorder_from_an_existing_order(
         FactoryInterface $baseOrderFactory,
         ReorderProcessor $reorderProcessor,
+        EventDispatcherInterface $eventDispatcher,
         OrderInterface $order,
         OrderInterface $reorder,
     ): void {
         $baseOrderFactory->createNew()->willReturn($reorder);
 
         $reorderProcessor->process($order, $reorder)->shouldBeCalled();
+
+        $eventDispatcher->dispatch(Argument::that(function (OrderCreationInitializedEvent $event) use ($reorder) {
+            return $event->getOrder() === $reorder->getWrappedObject();
+        }))->shouldBeCalled();
 
         $this->createFromExistingOrder($order);
     }

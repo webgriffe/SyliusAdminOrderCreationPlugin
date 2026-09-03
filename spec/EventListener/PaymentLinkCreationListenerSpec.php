@@ -8,13 +8,16 @@ use Doctrine\Persistence\ObjectManager;
 use Payum\Core\Payum;
 use Payum\Core\Security\TokenInterface;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Payment\Model\GatewayConfigInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Webgriffe\SyliusAdminOrderCreationPlugin\Event\PaymentLinkGeneratedEvent;
 use Webgriffe\SyliusAdminOrderCreationPlugin\Form\Type\NewOrderType;
 use Webgriffe\SyliusAdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
 use Webgriffe\SyliusAdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
@@ -26,8 +29,9 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         ObjectManager $orderManager,
         OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
         RequestStack $requestStack,
+        EventDispatcherInterface $eventDispatcher,
     ) {
-        $this->beConstructedWith($paymentTokenProvider, $orderManager, $orderPaymentLinkSender, $requestStack, ['offline'], true);
+        $this->beConstructedWith($paymentTokenProvider, $orderManager, $orderPaymentLinkSender, $requestStack, $eventDispatcher, ['offline'], true);
     }
 
     function it_sets_after_url_from_token_of_last_order_new_payment_and_sends_it_when_checkbox_is_checked(
@@ -35,6 +39,7 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         ObjectManager $orderManager,
         OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
         RequestStack $requestStack,
+        EventDispatcherInterface $eventDispatcher,
         TokenInterface $token,
         GenericEvent $event,
         OrderInterface $order,
@@ -57,6 +62,9 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         ]));
 
         $payment->setDetails(['payment-link' => 'http://url-to-pay.com'])->shouldBeCalled();
+        $eventDispatcher->dispatch(Argument::that(function (PaymentLinkGeneratedEvent $dispatchedEvent) use ($payment) {
+            return $dispatchedEvent->getPayment() === $payment->getWrappedObject();
+        }))->shouldBeCalled();
         $orderPaymentLinkSender->sendPaymentLink($order)->shouldBeCalled();
 
         $orderManager->flush()->shouldBeCalled();
@@ -69,6 +77,7 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         ObjectManager $orderManager,
         OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
         RequestStack $requestStack,
+        EventDispatcherInterface $eventDispatcher,
         TokenInterface $token,
         GenericEvent $event,
         OrderInterface $order,
@@ -89,6 +98,7 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         $requestStack->getCurrentRequest()->willReturn(new Request([], []));
 
         $payment->setDetails(['payment-link' => 'http://url-to-pay.com'])->shouldBeCalled();
+        $eventDispatcher->dispatch(Argument::type(PaymentLinkGeneratedEvent::class))->willReturn(new PaymentLinkGeneratedEvent($payment->getWrappedObject()));
         $orderPaymentLinkSender->sendPaymentLink($order)->shouldNotBeCalled();
 
         $orderManager->flush()->shouldBeCalled();
@@ -141,6 +151,7 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         ObjectManager $orderManager,
         OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
         RequestStack $requestStack,
+        EventDispatcherInterface $eventDispatcher,
         Payum $payum,
         GenericEvent $event,
         OrderInterface $order,
@@ -153,6 +164,7 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
             $orderManager,
             $orderPaymentLinkSender,
             $requestStack,
+            $eventDispatcher,
             ['offline', 'bank_transfer'],
             true,
         );
@@ -174,6 +186,7 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         ObjectManager $orderManager,
         OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
         RequestStack $requestStack,
+        EventDispatcherInterface $eventDispatcher,
         Payum $payum,
         GenericEvent $event,
         OrderInterface $order,
@@ -183,6 +196,7 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
             $orderManager,
             $orderPaymentLinkSender,
             $requestStack,
+            $eventDispatcher,
             ['offline'],
             false,
         );
