@@ -33,6 +33,9 @@ final class PaymentLinkCreationListener
     /** @var list<string> */
     private $offlineGatewayNames;
 
+    /** @var bool */
+    private $enabled;
+
     /**
      * @param list<string> $offlineGatewayNames
      */
@@ -42,16 +45,22 @@ final class PaymentLinkCreationListener
         OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
         RequestStack $requestStack,
         array $offlineGatewayNames,
+        bool $enabled,
     ) {
         $this->paymentTokenProvider = $paymentTokenProvider;
         $this->orderManager = $orderManager;
         $this->orderPaymentLinkSender = $orderPaymentLinkSender;
         $this->requestStack = $requestStack;
         $this->offlineGatewayNames = $offlineGatewayNames;
+        $this->enabled = $enabled;
     }
 
     public function setPaymentLink(GenericEvent $event): void
     {
+        if (!$this->enabled) {
+            return;
+        }
+
         /** @var OrderInterface $order */
         $order = $event->getSubject();
         Assert::isInstanceOf($order, OrderInterface::class);

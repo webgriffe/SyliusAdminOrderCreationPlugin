@@ -19,6 +19,7 @@ final class SyliusAdminOrderCreationExtension extends Extension implements Prepe
     {
         $config = $this->processConfiguration($this->getConfiguration([], $container), $config);
         $container->setParameter('sylius_admin_order_creation_plugin.offline_gateway_names', $config['offline_gateway_names']);
+        $container->setParameter('sylius_admin_order_creation_plugin.payment_link_generation_enabled', $config['payment_link_generation_enabled']);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
     }

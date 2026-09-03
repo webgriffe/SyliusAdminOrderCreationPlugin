@@ -24,6 +24,10 @@ final class Configuration implements ConfigurationInterface
                     ->scalarPrototype()->end()
                     ->defaultValue(['offline'])
                 ->end()
+                ->booleanNode('payment_link_generation_enabled')
+                    ->info('Whether to generate (and optionally send) a payment link after an order is created from the admin panel.')
+                    ->defaultTrue()
+                ->end()
             ->end()
         ;
 

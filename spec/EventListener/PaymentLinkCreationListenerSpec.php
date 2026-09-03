@@ -27,7 +27,7 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
         RequestStack $requestStack,
     ) {
-        $this->beConstructedWith($paymentTokenProvider, $orderManager, $orderPaymentLinkSender, $requestStack, ['offline']);
+        $this->beConstructedWith($paymentTokenProvider, $orderManager, $orderPaymentLinkSender, $requestStack, ['offline'], true);
     }
 
     function it_sets_after_url_from_token_of_last_order_new_payment_and_sends_it_when_checkbox_is_checked(
@@ -154,6 +154,7 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
             $orderPaymentLinkSender,
             $requestStack,
             ['offline', 'bank_transfer'],
+            true,
         );
 
         $event->getSubject()->willReturn($order);
@@ -163,6 +164,32 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
         $gatewayConfig->getGatewayName()->willReturn('bank_transfer');
 
+        $payum->getTokenFactory()->shouldNotBeCalled();
+
+        $this->setPaymentLink($event);
+    }
+
+    function it_does_nothing_when_payment_link_generation_is_disabled(
+        PaymentTokenProviderInterface $paymentTokenProvider,
+        ObjectManager $orderManager,
+        OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
+        RequestStack $requestStack,
+        Payum $payum,
+        GenericEvent $event,
+        OrderInterface $order,
+    ) {
+        $this->beConstructedWith(
+            $paymentTokenProvider,
+            $orderManager,
+            $orderPaymentLinkSender,
+            $requestStack,
+            ['offline'],
+            false,
+        );
+
+        $event->getSubject()->willReturn($order);
+
+        $order->getLastPayment(PaymentInterface::STATE_NEW)->shouldNotBeCalled();
         $payum->getTokenFactory()->shouldNotBeCalled();
 
         $this->setPaymentLink($event);

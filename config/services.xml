@@ -102,6 +102,7 @@
             <argument type="service" id="Webgriffe\SyliusAdminOrderCreationPlugin\Sender\OrderPaymentLinkSender" />
             <argument type="service" id="request_stack" />
             <argument>%sylius_admin_order_creation_plugin.offline_gateway_names%</argument>
+            <argument>%sylius_admin_order_creation_plugin.payment_link_generation_enabled%</argument>
             <tag name="kernel.event_listener" event="sylius.order.post_admin_create" method="setPaymentLink" />
         </service>
 
