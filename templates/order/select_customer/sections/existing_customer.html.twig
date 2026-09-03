@@ -1,0 +1,19 @@
+{% set selectCustomerForm = hookable_metadata.context.select_customer_form %}
+{% form_theme selectCustomerForm '@SyliusAdmin/shared/form_theme.html.twig' %}
+
+<div class="col-12 col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">{{ 'sylius_admin_order_creation.ui.existing_customer'|trans }}</div>
+        </div>
+        <div class="card-body">
+            {{ form_start(selectCustomerForm, {'method': 'GET'}) }}
+                {{ form_row(selectCustomerForm.customer) }}
+                {{ form_row(selectCustomerForm.channel) }}
+                <button type="submit" class="btn btn-primary w-100">
+                    {{ 'sylius.ui.next'|trans }}
+                </button>
+            {{ form_end(selectCustomerForm) }}
+        </div>
+    </div>
+</div>

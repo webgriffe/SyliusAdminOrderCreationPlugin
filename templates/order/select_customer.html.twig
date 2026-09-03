@@ -2,9 +2,6 @@
 
 {% from '@SyliusAdmin/shared/helper/breadcrumbs.html.twig' import breadcrumbs %}
 
-{% form_theme selectCustomerForm '@SyliusAdmin/shared/form_theme.html.twig' %}
-{% form_theme createCustomerForm '@SyliusAdmin/shared/form_theme.html.twig' %}
-
 {% block title %}{{ 'sylius.ui.new_order'|trans }} {{ parent() }}{% endblock %}
 
 {% block body %}
@@ -33,39 +30,10 @@
         <div class="page-body">
             <div class="container-xl">
                 <div class="row row-cards">
-                    <div class="col-12 col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">{{ 'sylius_admin_order_creation.ui.existing_customer'|trans }}</div>
-                            </div>
-                            <div class="card-body">
-                                {{ form_start(selectCustomerForm, {'method': 'GET'}) }}
-                                    {{ form_row(selectCustomerForm.customer) }}
-                                    {{ form_row(selectCustomerForm.channel) }}
-                                    <button type="submit" class="btn btn-primary w-100">
-                                        {{ 'sylius.ui.next'|trans }}
-                                    </button>
-                                {{ form_end(selectCustomerForm) }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">{{ 'sylius_admin_order_creation.ui.create_new'|trans }}</div>
-                            </div>
-                            <div class="card-body">
-                                {{ form_start(createCustomerForm, {'method': 'GET'}) }}
-                                    {{ form_row(createCustomerForm.customerEmail) }}
-                                    {{ form_row(createCustomerForm.channel) }}
-                                    <button type="submit" class="btn btn-success w-100">
-                                        {{ ux_icon('tabler:plus') }} {{ 'sylius_admin_order_creation.ui.create_new'|trans }}
-                                    </button>
-                                {{ form_end(createCustomerForm) }}
-                            </div>
-                        </div>
-                    </div>
+                    {% hook 'sylius_admin_order_creation.order.select_customer.content' with {
+                        select_customer_form: selectCustomerForm,
+                        create_customer_form: createCustomerForm,
+                    } %}
                 </div>
             </div>
         </div>

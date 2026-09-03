@@ -1,0 +1,9 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin_order_creation.order.select_customer.content':
+            existing_customer:
+                template: '@WebgriffeSyliusAdminOrderCreationPlugin/order/select_customer/sections/existing_customer.html.twig'
+                priority: 100
+            new_customer:
+                template: '@WebgriffeSyliusAdminOrderCreationPlugin/order/select_customer/sections/new_customer.html.twig'
+                priority: 0
