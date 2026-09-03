@@ -91,4 +91,4 @@ All code must be in English — class names, method names, variable names, comme
 - After any change to the plugin's namespace, class map, or `composer.json` autoload section, run `composer dump-autoload` **inside the Docker container** too, not just locally — the container's autoload map is what the running app actually uses.
 
 ### Git
-- This plugin is mid-migration from Sylius 1.x to Sylius 2.x (branch `sylius-2`). Infrastructure (composer deps, DI/config layout, state machine, test harness, Behat, CI) is migrated. The Twig/UI layer is not: templates still target removed Sylius 1.x paths (`@SyliusAdmin/layout.html.twig`, Semantic UI markup) and need rewriting against Sylius 2's Bootstrap/Tabler admin UI and Twig Hooks system for the Order Show page override.
+- This plugin was migrated from Sylius 1.x to Sylius 2.x (branch `sylius-2`): infrastructure (composer deps, DI/config layout, state machine, test harness, Behat, CI) and the Twig/UI layer (Bootstrap/Tabler admin UI, all templates registered as Twig Hooks under `config/twig_hooks/`) are both done. See the README's "Extension points" section for the hook names in use.

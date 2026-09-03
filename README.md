@@ -167,17 +167,26 @@ Payment link generation and sending is based on logic placed in the `PaymentLink
 turned off entirely via the `payment_link_generation_enabled` configuration flag, or replaced altogether by
 decorating/replacing the service for more advanced needs.
 
-### Order Show templates (Twig Hooks)
+### Templates (Twig Hooks)
 
-Order Show template sections related to this plugin (discount rows, payment-link action, ...) are registered as
-[Twig Hooks](https://docs.sylius.com/the-book/customization/twig-hooks) in `config/twig_hooks/order_show.yaml`.
-Override or add your own hookable template at the same hook name (with a different priority) to customize them -
-see that file for the exact hook names in use.
+All the plugin's admin pages are registered as [Twig Hooks](https://docs.sylius.com/the-book/customization/twig-hooks).
+Override or add your own hookable template at the same hook name (with a different priority, or `enabled: false` to
+remove a default one) instead of copying the whole page template. See the corresponding `config/twig_hooks/*.yaml`
+file for the exact hook names in use:
 
-The order creation, preview and select-customer pages are not yet migrated to Twig Hooks and are still overridable
-only the classic Symfony way, by placing a template at the same bundle-relative path under your own
-`templates/bundles/WebgriffeSyliusAdminOrderCreationPlugin/` directory (see `templates/order/` in this repository
-for the paths to override). This is part of the still-ongoing Sylius 2 UI migration mentioned below.
+- `config/twig_hooks/order_show.yaml` - Order Show sections related to this plugin (discount rows, payment-link
+  action, ...), hooked into Sylius core's own `sylius_admin.order.show...` hook tree.
+- `config/twig_hooks/order_create.yaml` / `order_preview.yaml` - the `sylius_admin_order_creation.order.create.content`
+  / `...order.preview.content` hooks, each with a single `form` hookable wrapping the order creation/preview Live
+  Component. Order creation and preview aren't Sylius resource CRUD routes, so unlike Order Show these hooks are
+  defined by the plugin itself rather than plugged into a pre-existing Sylius hook tree.
+- `config/twig_hooks/order_select_customer.yaml` - the `sylius_admin_order_creation.order.select_customer.content`
+  hook, with two independent hookables: `existing_customer` and `new_customer` (one card each). Disable
+  `new_customer` (`enabled: false`) if your application always creates orders for existing customers, for example.
+
+The page shells (`templates/order/create.html.twig`, `preview.html.twig`, `select_customer.html.twig`) still extend
+`@SyliusAdmin/shared/layout/base.html.twig` and include the standard sidebar/navbar/flashes/footer by hand, since
+these are plain controller-rendered pages, not Sylius resource CRUD routes with their own generic hookable layout.
 
 ### Adjustments
 
