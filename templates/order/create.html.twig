@@ -36,11 +36,11 @@
 
         <div class="page-body">
             <div class="container-xl">
-                {{ component('webgriffe_sylius_admin_order_creation:order_form', {
-                    customerId: customer_id,
-                    channelCode: channel_code,
+                {% hook 'sylius_admin_order_creation.order.create.content' with {
+                    customer_id: customer_id,
+                    channel_code: channel_code,
                     form: form,
-                }) }}
+                } %}
             </div>
         </div>
 
