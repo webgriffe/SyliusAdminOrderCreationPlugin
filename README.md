@@ -133,22 +133,68 @@ Requires Sylius `~2.2.0` and PHP `^8.2`.
 
 ## Extension points
 
-Admin Order Creation Plugin makes it possible to add custom discount during order creation - thus some of Order
-Show templates need to be replaced with those placed in the `templates/bundles/SyliusAdminBundle` directory.
+### Configuration
 
-Payment link generation and sending process is based on logic placed in the PaymentLinkCreationListener class. Thus, it can
-be easily replaced with suitable implementation.
+The plugin exposes semantic configuration under `sylius_admin_order_creation_plugin`:
 
-Adjustments set is not closed and strictly defined - adding custom adjustment means defining a new constant in the
-AdjustmentType class.
+```yaml
+sylius_admin_order_creation_plugin:
+    # Gateway names for which no payment link is generated after an order is created from the admin panel.
+    offline_gateway_names: ['offline']
+    # Whether to generate (and optionally send) a payment link at all after an order is created from the admin panel.
+    payment_link_generation_enabled: true
+```
+
+### Events
+
+The plugin dispatches its own `Webgriffe\SyliusAdminOrderCreationPlugin\Event\OrderCreatedByAdminEvent` (carrying
+the created `OrderInterface`) right after an order is created from the admin panel, in addition to the generic
+Sylius core `sylius.order.pre_admin_create` / `sylius.order.post_admin_create` events the plugin itself listens to.
+Listen to it with a plain `#[AsEventListener]` to hook side effects (notifications, audit logging, custom
+guards, ...) without having to decorate or replace any of the plugin's own listeners.
+
+### Payment link generation
+
+Payment link generation and sending is based on logic placed in the `PaymentLinkCreationListener` class. It can be
+turned off entirely via the `payment_link_generation_enabled` configuration flag, or replaced altogether by
+decorating/replacing the service for more advanced needs.
+
+### Order Show templates (Twig Hooks)
+
+Order Show template sections related to this plugin (discount rows, payment-link action, ...) are registered as
+[Twig Hooks](https://docs.sylius.com/the-book/customization/twig-hooks) in `config/twig_hooks/order_show.yaml`.
+Override or add your own hookable template at the same hook name (with a different priority) to customize them -
+see that file for the exact hook names in use.
+
+The order creation, preview and select-customer pages are not yet migrated to Twig Hooks and are still overridable
+only the classic Symfony way, by placing a template at the same bundle-relative path under your own
+`templates/bundles/WebgriffeSyliusAdminOrderCreationPlugin/` directory (see `templates/order/` in this repository
+for the paths to override). This is part of the still-ongoing Sylius 2 UI migration mentioned below.
+
+### Adjustments
+
+The set of order/item adjustment types is not closed - adding a custom adjustment means defining a new constant on
+your own adjustment-type class; `AdjustmentType`'s own constants (`ORDER_DISCOUNT_ADJUSTMENT`,
+`ORDER_ITEM_DISCOUNT_ADJUSTMENT`) are not extensible themselves, since the class is `final`.
+
+### Reorder processing
 
 Significant part of Reorder Processing is inspired by official Sylius 
 [Customer Reorder Plugin](https://github.com/Sylius/CustomerReorderPlugin/). In case of the need for more processors,
 just add new class implementing `ReorderProcessor` interface, declare it in `reorder_processing.xml` file and match
 it with a proper tag.
 
+### Forms
+
 Admin Order Creation process is based on Symfony Forms. To find out more about Symfony Forms extension possibilities, check out
-[Symfony Docs](https://symfony.com/doc/current/form/create_form_type_extension.html).   
+[Symfony Docs](https://symfony.com/doc/current/form/create_form_type_extension.html).
+
+### Factory
+
+`Factory\OrderFactoryInterface` is aliased as a service, and routes resolve their order factory through that alias
+rather than the concrete `OrderFactory` class, so a host application can decorate `OrderFactoryInterface` and have
+its decorator picked up wherever the plugin creates an order (e.g. to attach the placing administrator to the
+order, or to reuse an in-progress order from session storage).
 
 ## Development
 
