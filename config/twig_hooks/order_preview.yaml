@@ -1,0 +1,6 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin_order_creation.order.preview.content':
+            form:
+                template: '@WebgriffeSyliusAdminOrderCreationPlugin/order/preview/sections/form.html.twig'
+                priority: 0
