@@ -147,11 +147,19 @@ sylius_admin_order_creation_plugin:
 
 ### Events
 
-The plugin dispatches its own `Webgriffe\SyliusAdminOrderCreationPlugin\Event\OrderCreatedByAdminEvent` (carrying
-the created `OrderInterface`) right after an order is created from the admin panel, in addition to the generic
-Sylius core `sylius.order.pre_admin_create` / `sylius.order.post_admin_create` events the plugin itself listens to.
-Listen to it with a plain `#[AsEventListener]` to hook side effects (notifications, audit logging, custom
-guards, ...) without having to decorate or replace any of the plugin's own listeners.
+In addition to the generic Sylius core `sylius.order.pre_admin_create` / `sylius.order.post_admin_create` events the
+plugin itself listens to, it dispatches its own typed events at the points a host application is most likely to
+need a hook. Listen to any of them with a plain `#[AsEventListener]` instead of decorating or replacing the
+plugin's own services:
+
+- `Event\OrderCreationInitializedEvent`, dispatched by `OrderFactory` whenever an order is initialized for admin
+  creation or reorder (carries the `OrderInterface`). Use it to guard/veto (e.g. throw an `AccessDeniedException`)
+  or enrich the order before it's shown or further processed.
+- `Event\OrderCreatedByAdminEvent`, dispatched right after an order is created from the admin panel (carries the
+  created `OrderInterface`). Use it for side effects that only make sense once the order actually exists
+  (notifications, audit logging, ...).
+- `Event\PaymentLinkGeneratedEvent`, dispatched right after a payment link is generated for a payment (carries the
+  `PaymentInterface`), independently of whether the "send by email" checkbox was ticked.
 
 ### Payment link generation
 
